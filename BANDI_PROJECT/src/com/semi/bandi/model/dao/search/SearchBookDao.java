@@ -48,7 +48,6 @@ public class SearchBookDao {
 		}
 		
 		String sql = prop.getProperty("searchBook")+dynamicSQL;
-		System.out.println("searchBook SQL : "+sql);
 		
 		try {
 			stmt = con.createStatement();
@@ -102,8 +101,7 @@ public class SearchBookDao {
 			dynamicSQL = " WHERE REPLACE(PUBLISHER, ' ') LIKE '%'|| '"+getText+"' ||'%')";
 		}
 		
-		String sql = prop.getProperty("genreCount").replaceAll("\"", "")+dynamicSQL+" group by genre_code";
-		System.out.println("genreCount SQL : "+sql);		
+		String sql = prop.getProperty("genreCount").replaceAll("\"", "")+dynamicSQL+" group by genre_code";		
 
 		try {
 			stmt = con.createStatement();
@@ -147,9 +145,8 @@ public class SearchBookDao {
 			dynamicSQL = " WHERE GENRE_CODE LIKE '"+genreCode+"'"
 					+ "AND(REPLACE(PUBLISHER, ' ') LIKE '%'|| '"+getText+"' ||'%')";
 		}
-		System.out.println("dynamicSQL : "+dynamicSQL);
-		String sql = prop.getProperty("searchBook")+dynamicSQL;
-		System.out.println("genreSearch SQL : "+sql);		
+
+		String sql = prop.getProperty("searchBook")+dynamicSQL;		
 
 		try {
 		

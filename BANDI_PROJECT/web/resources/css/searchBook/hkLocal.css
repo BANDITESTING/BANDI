@@ -1,0 +1,133 @@
+.jg {
+	font-family: 'Jeju Gothic', sans-serif;
+}
+
+.bg-ultravio {
+	background-color: #5F4B8B;
+	color: white;
+}
+
+.bg-redvio {
+	background-color: #A35776;
+}
+
+.bg-pripink {
+	background-color: #EFA5C8;
+}
+
+.bg-mul {
+	background-color: #A76C97;
+	color: white;
+}
+
+.bookImg {
+	height: 160px;
+	width: 115px;
+}
+
+ul {
+	list-style: none;
+}
+
+.searchbar {
+	padding: 1%;
+	padding-right: 3%;
+	padding-left: 3%;
+}
+
+.menubar {
+	padding: 1%;
+	padding-right: 3%;
+	padding-left: 3%;
+}
+
+.vertical {
+	display: flex;
+	align-items: center;
+}
+
+.test {
+	border: 2px dotted green;
+}
+
+.center {
+	margin: auto;
+	vertical-align: middle;
+}
+
+.leftdiv {
+	padding: 3px;
+	padding-right: 3%;
+	background: #5F4B8B;
+}
+
+.leftbar {
+	padding-left: 10%;
+	padding-top: 10%;
+	padding-bottom: 15%;
+	height: 110%;
+	min-width:inherit;
+	width:inherit;
+}
+
+.leftbar>li{
+	margin-top:10%;
+}
+
+.leftbar>li>span {
+	text-align: center;
+	text-decoration: none;
+	font-size: 14pt;
+	color: white;
+}
+
+.leftbar>li>span:hover {
+	cursor:pointer;
+	text-align: center;
+	color: lightgray;
+	font-size: 15pt;
+}
+.leftbar>li>ul{
+	min-width:inherit;
+	width:inherit;
+}
+.leftbar>li>ul>li{
+	margin-top:2%;
+}
+.leftbar>li>ul>li>span {
+	text-align: left;
+	text-decoration: none;
+	font-size: 10pt;
+	color: rgb(230, 230, 230);
+}
+
+.leftbar>li>ul>li>span:hover {
+	cursor:pointer;
+	font-size: 11pt;
+	color: lightgray;
+}
+
+.bookInfo {
+	margin: auto;
+}
+
+.bookTitle {
+	font-size: 17pt;
+	font-style: bold;
+}
+
+.booklist {
+	border-top: 1px solid lightgray;
+	border-bottom: 1px solid lightgray;
+}
+
+#content .row {
+	margin-right: 0px;
+	margin-left: 0px;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    opacity: 1;
+}
+

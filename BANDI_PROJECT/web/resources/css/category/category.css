@@ -1,0 +1,339 @@
+		.leftdiv {
+			padding: 3px;
+			padding-right: 3%;
+			background: #5F4B8B;
+		}
+		
+		.leftbar {
+			padding-left: 10%;
+			padding-top: 10%;
+			padding-bottom: 15%;
+			height: 110%;
+			min-width:inherit;
+			width:inherit;
+			width:100%;
+		}
+		
+		ul {
+		
+			list-style: none;
+		}
+		
+		.leftbar>li{
+			margin-top:10%;
+			display:inline-block;
+		}
+		
+		.leftbar>li>span {
+			text-align: center;
+			text-decoration: none; 
+			font-size: 18pt; 
+			color: white;
+			
+		}
+		
+		.leftbar>li>ul>li>span:hover {
+			cursor:pointer;
+			/* font-size: 14pt; */
+			color: orange;
+		}
+		
+		.leftbar>li>ul>li{
+			margin-top:2%;
+		}
+		
+		.leftbar>li>ul>li>span {
+			text-align: left;
+			text-decoration: none;
+			font-size: 12pt;
+			color: rgb(230, 230, 230);
+		}
+		
+		.leftbar>li>span:hover {
+			text-align: center;
+			color: orange;
+			cursor: pointer;
+			/* font-size: 15pt; */
+		}
+		
+		.jg {
+			font-family: 'Jeju Gothic', sans-serif;
+		}
+		
+		.gugi{
+			font-family: 'Gugi', sans-serif;
+		}
+		
+		.owl_carousel_img_sheet{
+		    /* padding-top:5px; padding-bottom: 5px; */
+		    margin-bottom: 10px;
+		    margin-top: 10px;
+		    height:300px;
+		}
+		
+		.TAGbutton{
+			font-family:"Gaegu";
+		    align-self:center;
+		    background:transparent;
+		    padding:1rem 1rem;
+		    padding-left: 25px;
+		    padding-right: 25px;
+		    transition:all .5s ease;
+		    color:#41403E;
+		    font-size:1.5em;
+		    letter-spacing:1px;
+		    outline:none;
+		    box-shadow: 20px 38px 34px -26px hsla(0,0%,0%,.2);
+		    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+		}
+
+.TAGbutton.thick1:hover{
+       box-shadow:2px 8px 4px -6px hsla(0,0%,0%,.3);
+       color:snow;
+       background: #5F4B8B;
+} 
+
+.thick1Ck{
+	box-shadow:2px 8px 4px -6px hsla(0,0%,0%,.3);
+    color:snow;
+    background: #5F4B8B;
+}
+
+.thick1{
+    border:solid 6px #5F4B8B;
+}
+
+.TAGbutton.thick2:hover{
+    box-shadow:2px 8px 4px -6px hsla(0,0%,0%,.3);
+    color:snow;
+    background: #A35776;
+} 
+
+.thick2Ck{
+	box-shadow:2px 8px 4px -6px hsla(0,0%,0%,.3);
+    color:snow;
+    background: #A35776;
+}
+
+.thick2{
+    border:solid 6px #A35776;
+}
+
+.TAGbutton.thick3:hover{
+    box-shadow:2px 8px 4px -6px hsla(0,0%,0%,.3);
+    color:snow;
+    background: #9F86AA;
+}
+
+.thick3Ck{
+	box-shadow:2px 8px 4px -6px hsla(0,0%,0%,.3);
+    color:snow;
+    background: #9F86AA;
+} 
+
+.thick3{
+    border:solid 6px #9F86AA;
+}
+
+.TAGbutton.thick4:hover{
+    box-shadow:2px 8px 4px -6px hsla(0,0%,0%,.3);
+    color:snow;
+    background: #848DC5;
+} 
+
+.thick4Ck{
+	box-shadow:2px 8px 4px -6px hsla(0,0%,0%,.3);
+    color:snow;
+    background: #848DC5;
+}
+
+.thick4{
+       border:solid 6px #848DC5;
+}
+
+.rankImage{
+    margin-bottom: 10px;
+    margin-top: 10px;
+    height:300px;
+}
+
+.userbookimg:hover {
+  animation: shake 0.5s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+.share:hover > h1 > span:nth-child(1):after {
+  background: #5F4B8B;
+  width: 100%;
+  transition: 0.6s;
+  transition-delay: 100ms;
+  transform: rotate(-25deg);
+}
+
+.share:hover > h1 > span:nth-child(1) {
+  color: snow;
+  transition-delay: 110ms;
+}
+
+.share:hover > h1 > span:nth-child(2):after {
+  background: #A76C97;
+  width: 100%;
+  transition: 0.6s;
+  transition-delay: 200ms;
+  transform: rotate(-20deg);
+}
+
+.share:hover > h1 > span:nth-child(2) {
+  color: snow;
+  transition-delay: 220ms;
+}
+
+.share:hover > h1 > span:nth-child(3):after {
+  background: #9F86AA;
+  width: 100%;
+  transition: 0.6s;
+  transition-delay: 300ms;
+  transform: rotate(-15deg);
+}
+
+.share:hover > h1 > span:nth-child(3) {
+  color: snow;
+  transition-delay: 330ms;
+}
+
+.share:hover > h1 > span:nth-child(4):after {
+  background: #773376;
+  width: 100%;
+  transition: 0.6s;
+  transition-delay: 400ms;
+  transform: rotate(-10deg);
+}
+
+.share:hover > h1 > span:nth-child(4) {
+  color: snow;
+  transition-delay: 440ms;
+}
+
+.share:hover > h1 > span:nth-child(5):after {
+  background: #5F4B8B;
+  width: 100%;
+  transition: 0.6s;
+  transition-delay: 500ms;
+  transform: rotate(-5deg);
+}
+
+.share:hover > h1 > span:nth-child(5) {
+  color: snow;
+  transition-delay: 550ms;
+}
+
+.share:hover > h1 > span:nth-child(6):after {
+  background: #5F4B8B;
+  width: 100%;
+  transition: 0.6s;
+  transition-delay: 600ms;
+  transform: rotate(0deg);
+}
+
+.share:hover > h1 > span:nth-child(6) {
+  color: snow;
+  transition-delay: 660ms;
+}
+
+.share:hover > h1 > span:nth-child(7):after {
+  background:#5F4B8B;
+  width: 100%;
+  transition: 0.6s;
+  transition-delay: 700ms;
+  transform: rotate(5deg);
+}
+
+.share:hover > h1 > span:nth-child(7) {
+  color: snow;
+  transition-delay: 770ms;
+}
+
+.share:hover > h1 > span:nth-child(8):after {
+  background: #5F4B8B;
+  width: 100%;
+  transition: 0.6s;
+  transition-delay: 800ms;
+  transform: rotate(10deg);
+}
+
+.share:hover > h1 > span:nth-child(8) {
+  color: snow;
+  transition-delay: 880ms;
+}
+
+.share:hover > h1 > span:nth-child(9):after {
+  background: #5F4B8B;
+  width: 100%;
+  transition: 0.6s;
+  transition-delay: 900ms;
+  transform: rotate(15deg);
+}
+
+.share:hover > h1 > span:nth-child(9) {
+  color: snow;
+  transition-delay: 990ms;
+}
+
+.share:hover > h1 > span:nth-child(10):after {
+  background: #5F4B8B;
+  width: 100%;
+  transition: 0.6s;
+  transition-delay: 1000ms;
+  transform: rotate(20deg);
+}
+
+.share:hover > h1 > span:nth-child(10) {
+  color: snow;
+  transition-delay: 1100ms;
+}
+
+.first-container, .second-container {
+  cursor: pointer;
+  position: relative;
+}
+.first-container h1, .second-container h1 {
+  position: relative;
+  letter-spacing: 2px;
+  font-size: 5em;
+  font-family: 'Gugi';
+}
+
+.first-container {
+  margin-bottom: -15px;
+  
+}
+
+h1 > span {
+  display: inline-block;
+  position: relative;
+  margin-right: 5px;
+}
+h1 > span:after {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 0;
+  top: 0;
+  left: 0;
+  transition: 0.6s;
+  z-index: -5;
+}	

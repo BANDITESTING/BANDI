@@ -9,11 +9,12 @@
 <script src="<%=request.getContextPath()%>/resources/js/member/bootstrap.min.js"></script>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/member/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <style>      
 .sidebar {
 	position: absolute;
-    height: 500px;
+    height: 700px;
     left: 0;
     display: block;
     padding: 20px;
@@ -28,6 +29,45 @@
 #tel{
 	width:50px;
     height:23;
+}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: absolute; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 </style>
@@ -59,6 +99,16 @@
                         <td class="col-sm-8"><%=user.getmUser_UID() %></td>
                     </tr>
                     <tr>
+                    	<td class="col-sm-2">회원등급</td>
+                        <td class="col-sm-8"><%=user.getmGrade() %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        	<button id="myBtn" class="btn btn-xs btn-primary">혜택 보기</button>
+                        </td>
+                    </tr>
+                    <tr>
+                    	<td class="col-sm-2">회원포인트</td>
+                        <td class="col-sm-8"><%=user.getmBandi_Point() %></td>
+                    </tr>
+                    <tr>
                         <td class="col-sm-2">이메일</td>
                         <td class="col-sm-8"><%=user.getmEmail() %></td>
                     </tr>
@@ -81,8 +131,8 @@
                         <td class="col-sm-2">생년월일</td>
                         <td class="col-sm-8 form-group radio">
                         	<%=user.getmIdentified().substring(0,2) %>년
-                            <%=user.getmIdentified().substring(3,4) %>월
-                            <%=user.getmIdentified().substring(5,6) %>일
+                            <%=user.getmIdentified().substring(2,4) %>월
+                            <%=user.getmIdentified().substring(4,6) %>일
                         </td>
                     </tr>
                 </table>
@@ -102,49 +152,35 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="col-sm-2">우편번호</td>
-                        <td class="col-sm-8">
-                        	<input type="text" id="zipCode" name="zipCode"/>
-                        	<button class="btn btn-sm btn-primary" type="button" id="searchAdd">검색</button>
-                        </td>
-                    </tr>
-                    <tr>
                     	<td class="col-sm-2">주소</td>
-                    	<td class="col-sm-8"><input type="text" id="address1" name="address1" style="width:500px"/></td>
-                    </tr>
-                    <tr>
-                    	<td class="col-sm-2">상세주소</td>
-                    	<td class="col-sm-8"><input type="text" id="address2" name="address2"/></td>
+                    	<td class="col-sm-8">
+                    		<input type="text" id="address1" name="address1" style="width:500px"/>&nbsp;&nbsp;&nbsp;
+                    		<button class="btn btn-xs btn-primary" type="button" id="searchAdd">검색</button>
+                    	</td>
                     </tr>
                 </table>
 			</div>
 			<br /><br />
-            <!-- <hr style="width:100%; height:3px;">
-            	<div class="table-responsive">
-                <h5>선택정보</h5>
-                <table class="table table-bordered">
-                	<tr>
-                    	<td class="col-sm-2">직업</td>
-                        <td class="col-sm-8 form-group">
-                        	<input type="text" style="width:150px; height:22px" name="job">
-                        </td>
-                    </tr>          
-                    <tr>
-                     	<td class="col-sm-2">관심종목</td>
-                        <td class="col-sm-8">
-                        	<label class="checkbox-inline"> 
-                            	<input type="checkbox" id="inlineCheckbox1" value="option1"> 자바 
-                            </label> 
-                            <label class="checkbox-inline"> 
-                                <input type="checkbox" id="inlineCheckbox2" value="option2"> 오라클
-                            </label> 
-                            <label class="checkbox-inline"> 
-                                <input type="checkbox" id="inlineCheckbox3" value="option3"> HTML
-                            </label>
-                        </td>
-                     </tr>
-				</table>
-			</div> -->
+            <!-- Modal -->
+            <div id="myModal" class="modal">
+			  <!-- Modal content -->
+			  <div class="modal-content">
+			  	<div class="modal-header">
+			    	<span class="close">&times;</span>
+			    	<h4 class="modal-title">포인트 정책</h4>
+			  	</div>
+			  	<div class="modal-body">
+        			<ol>
+        				<li>B 브론즈 : 전체 구매 금액의 <strong>0.1%</strong> 할인</li>
+        				<li>S 실버 : 전체 구매 금액의 <strong>0.2%</strong> 할인</li>
+        				<li>G 골드 : 전체 구매 금액의 <strong>0.3%</strong> 할인</li>
+        				<li>P 플래티넘 : 전체 구매 금액의 <strong>0.4%</strong> 할인</li>
+        				<li>D 다이아 : 전체 구매 금액의 <strong>0.5%</strong> 할인</li>
+        			</ol>
+      			</div>
+			  </div>
+			</div>
+			<!-- Modal -->
             <div class="col-sm-11 text-center">
             	<button class="btn btn-lg btn-primary" id="changeInfo">나의 정보 변경</button>
             </div>
@@ -193,7 +229,7 @@
 					fullAddr += (extraAddr != '' ? ' (' + extraAddr + ')' : '');
 				}
 				
-				$('#zipCode').val(data.zonecode);
+				$('#address0').val(data.zonecode);
 				
 				$('#address1').val(fullAddr);
 				
@@ -201,6 +237,37 @@
 			}
 		}).open();
 	});
+	
+	var addArr = '<%=user.getmAddress()%>'.split(', ');
+	
+	$('input[name*="address"]').each(function(index){
+		$(this).val(addArr[index]);
+	});
+	// Get the modal
+	var modal = document.getElementById('myModal');
+
+	// Get the button that opens the modal
+	var btn = document.getElementById("myBtn");
+
+	// Get the <span> element that closes the modal
+	var span = document.getElementsByClassName("close")[0];
+
+	// When the user clicks the button, open the modal 
+	btn.onclick = function() {
+	    modal.style.display = "block";
+	}
+
+	// When the user clicks on <span> (x), close the modal
+	span.onclick = function() {
+	    modal.style.display = "none";
+	}
+
+	// When the user clicks anywhere outside of the modal, close it
+	window.onclick = function(event) {
+	    if (event.target == modal) {
+	        modal.style.display = "none";
+	    }
+	}
 </script>
 <%@ include file="../common/Footer.jsp" %>
 </body>

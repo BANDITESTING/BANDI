@@ -41,7 +41,7 @@
 			<ul class="nav nav-sidebar">
 				<li class="active"><a href="jmypage.jsp">My Page</a></li>
 				<li class="active"><a href="jchange_Pwd.jsp">비밀번호 변경</a></li>
-            	<li class="active">회원 탈퇴</li>
+            	<!-- <li class="active">회원 탈퇴</li> -->
             </ul>
         </div>
         <div role="main" class="col-xs-10 col-xs-offset-2 col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2 col-lg-10 col-lg-offset-2">
@@ -55,7 +55,7 @@
                 		<tr>
                 			<td class="col-sm-2">이메일</td>
                 			<td class="col-sm-8 form-group">
-                   	  		  	<input type="text" style="width:200px; height:23px" id="mEmail"/>
+                   	  		  	<input type="text" style="width:200px; height:23px" id="mEmail" value="<%=user.getmEmail()%>"/>
                 			</td>
                 		</tr>
                 		<tr>

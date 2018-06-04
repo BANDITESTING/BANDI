@@ -24,10 +24,11 @@ public class SearchGenreServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String option = request.getParameter("option");
 		String getText = request.getParameter("getText");
+		String text = getText.replaceAll(" ", "");
 		String genreCode = request.getParameter("genreCode");
 		
-		ArrayList<SearchBook> list = new SearchBookService().searchGenre(option, getText, genreCode);
-		HashMap<String, Integer> genreCount = new SearchBookService().searchBookGenre(option, getText);
+		ArrayList<SearchBook> list = new SearchBookService().searchGenre(option, text, genreCode);
+		HashMap<String, Integer> genreCount = new SearchBookService().searchBookGenre(option, text);
 
 		System.out.println("받아온 책 개수 : "+list.size());
 		System.out.println("검색어 : "+getText);

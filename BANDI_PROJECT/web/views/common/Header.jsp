@@ -43,7 +43,7 @@
 	                         <option value="publisherSearch">출판사명</option>
 	                </select>
 	                
-	                <input type="search" placeholder="반디불이 세상!" aria-label="Search" class = "searchbar" id = "searchBar" name ="searchText">
+	                <input type="search" placeholder="검색어를 입력하세요." aria-label="Search" class = "searchbar" id = "searchBar" name ="searchText">
 	                
 	                <button class="bubbly-button">검색</button>
 				 </div>

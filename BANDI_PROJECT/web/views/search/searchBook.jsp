@@ -3,10 +3,17 @@
 <%
 	String option = (String) request.getAttribute("option");
 	String getText = (String) request.getAttribute("getText");
+	String genreCode = (String) request.getAttribute("genreCode");
 	ArrayList<SearchBook> list = (ArrayList<SearchBook>)request.getAttribute("list");
 	HashMap<String, Integer> genreCount = (HashMap<String, Integer>)request.getAttribute("genreCount");
+	
+	String optionName = "";
+	if(option.equals("totalSearch")) optionName="통합검색";			
+	else if(option.equals("bookSearch")) optionName="도서명";
+	else if(option.equals("authorSearch")) optionName="저자명";
+	else if(option.equals("publisherSearch")) optionName="출판사명";
+	
 %>
-<!DOCTYPE html>
 <html>
 <head>
 <title>검색화면</title>
@@ -33,31 +40,31 @@
 			<div class="col-sm-10">
 				<div class="bg-pripink" style="padding: 2%; padding-left: 5%;">
 					"<%=getText%>"(으)로
-					<%=option%>
-					<%=list.size()%>건 검색
+					<%=optionName%>
+					<%=genreCount.size()%>건 검색
 				</div>
 				<br>
 				<div class="row">
 					<div class="col-lg-3 col-md-4 leftdiv">
 						<ul class="leftbar" style="min-width: inherit;">
-							<li><span id="A%" class="gSearch">문학</span>
+							<li><span id="A_" class="gSearch">문학</span>
 								<ul>
 									<li><span id="A1" class="gSearch">&nbsp;&nbsp;&nbsp; 소설</span></li>
 									<li><span id="A2" class="gSearch">&nbsp;&nbsp;&nbsp; 시</span></li>
 									<li><span id="A3" class="gSearch">&nbsp;&nbsp;&nbsp; 에세이(자서전)</span></li>
 								</ul></li>
-							<li><span id="B%" class="gSearch">인문</span>
+							<li><span id="B_" class="gSearch">인문</span>
 								<ul>
 									<li><span id="B1" class="gSearch">&nbsp;&nbsp;&nbsp; 역사/문화</span></li>
 									<li><span id="B2" class="gSearch">&nbsp;&nbsp;&nbsp; 종교</span></li>
 									<li><span id="B3" class="gSearch">&nbsp;&nbsp;&nbsp; 심리</span></li>
 								</ul></li>
-							<li><span id="C%" class="gSearch">과학</span>
+							<li><span id="C_" class="gSearch">과학</span>
 								<ul>
 									<li><span id="C1" class="gSearch">&nbsp;&nbsp;&nbsp; 기술/공학</span></li>
 									<li><span id="C2" class="gSearch">&nbsp;&nbsp;&nbsp; 컴퓨터/IT</span></li>
 								</ul></li>
-							<li><span id="D%" class="gSearch">취미</span>
+							<li><span id="D_" class="gSearch">취미</span>
 								<ul>
 									<li><span id="D1" class="gSearch">&nbsp;&nbsp;&nbsp; 가정(요리)</span></li>
 									<li><span id="D2" class="gSearch">&nbsp;&nbsp;&nbsp; 운동(건강)</span></li>
@@ -65,12 +72,12 @@
 									<li><span id="D4" class="gSearch">&nbsp;&nbsp;&nbsp; 음악(대중문화)</span></li>
 									<li><span id="D5" class="gSearch">&nbsp;&nbsp;&nbsp; 스포츠</span></li>
 								</ul></li>
-							<li><span id="E%" class="gSearch">교육</span>
+							<li><span id="E_" class="gSearch">교육</span>
 								<ul>
 									<li><span id="E1" class="gSearch">&nbsp;&nbsp;&nbsp; 어린이/청소년</span></li>
 									<li><span id="E2" class="gSearch">&nbsp;&nbsp;&nbsp; 참고서(초/중/고)</span></li>
 								</ul></li>
-							<li><span id="F%" class="gSearch">사회</span>
+							<li><span id="F_" class="gSearch">사회</span>
 								<ul>
 									<li><span id="F1" class="gSearch">&nbsp;&nbsp;&nbsp; 정치/사회</span></li>
 									<li><span id="F2" class="gSearch">&nbsp;&nbsp;&nbsp; 경제/경영</span></li>
@@ -149,7 +156,13 @@
 		$(function(){
 			$('#searchBar').val('<%=getText%>');
 		});
-	
+		
+		$(function(){
+			$('#<%=genreCode%>').css({
+				"color" : "yellow"
+			});
+		});
+		
 		$('.leftbar').children('li').each(function(idx, item){
 			var gCount = 0;
 			<%

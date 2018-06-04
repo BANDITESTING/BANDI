@@ -82,6 +82,7 @@ ul {
 }
 
 .leftbar>li>span:hover {
+	cursor:pointer;
 	text-align: center;
 	color: lightgray;
 	font-size: 15pt;

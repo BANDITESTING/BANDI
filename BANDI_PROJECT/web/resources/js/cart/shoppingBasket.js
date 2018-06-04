@@ -30,10 +30,7 @@ $(function() {
 	// '바로구매' 버튼 기능 구현
 	$('.pickBtn').on('click', function() {
 		bookUID = $(this).parent().siblings().find('#bookUID').val();
-//		
-//		oneSelBook(this);
-//		
-//		console.log(bookList);
+
 		console.log("bookUID : " + bookUID);
 		
 		location.href="/BANDI/order.ct?bookUID=" + bookUID;
@@ -64,7 +61,22 @@ $(function() {
 		console.log("bookUID : " + bookUIDList);
 		
 		location.href="/BANDI/order.ct?bookUID=" + bookUIDList;
+	});
+	
+	// '전체상품 주문하기' 버튼 기능구현
+	$('#allBtn').on('click', function() {
+		bookUIDList = "";
 		
+		$('.chk').each(function(index, item) {
+				
+			bookUIDList += $(this).siblings('input').val() + ",";
+			console.log("bookUID : " + $(this).siblings('input').val() + "/" + index);
+				
+		});
+		
+		console.log("bookUID : " + bookUIDList);
+		
+		location.href="/BANDI/order.ct?bookUID=" + bookUIDList;
 	});
 	
 	// 전체 선택 체크 박스 선택 시

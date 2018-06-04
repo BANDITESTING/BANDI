@@ -107,7 +107,52 @@ public class CashDao {
 
 			e.printStackTrace();
 			
+		} finally {
+			
+			close(rset);
+			
 		}
+		
+		return user;
+		
+	}
+	
+	public User orderUser(Connection con, int user_UID, String query) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		User user = null;
+		
+		try {
+			
+			pstmt = con.prepareStatement(query + prop.getProperty("selectUser"));
+			
+			pstmt.setInt(1, user_UID);
+			
+			rset = pstmt.executeQuery();
+			
+			if (rset.next()) {
+				
+				user = new User();
+				
+				user.setmGrade(rset.getString("GRADE_CODE"));
+				user.setmEmail(rset.getString("E_MAIL"));
+				user.setmName(rset.getString("NAME"));
+				user.setmPhone(rset.getString("PHONE"));
+				
+			}
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			
+		} finally {
+			
+			close(rset);
+			
+		}
+		
+		System.out.println("dao user : " + user);
 		
 		return user;
 		

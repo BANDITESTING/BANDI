@@ -29,6 +29,7 @@
               <div class="input-group">
               <input type="email" class="form-control" id="email" name="userEmail" placeholder="이메일이 아이디 입니다">
               <span class="input-group-btn">
+              	<button class="btn btn-primary" type="button" id="emailcheck">이메일 중복 확인</button>
                 <button class="btn btn-success" type="button" id="emailOk">인증번호 전송<i class="fa fa-mail-forward spaceLeft"></i></button>
               </span>
             </div>
@@ -249,7 +250,44 @@
              event.preventDefault();
         });
 		
+        $('#emailcheck').on('click', function(){
+        	$.ajax({
+        		url : '/BANDI/emailcheck.me',
+        		type : 'post',
+        		data : {email : $('#email').val()},
+        		success : function(data){
+        			if(data == 0) alert("사용하셔도 좋은 이메일 입니다.");
+        			else alert("이미 가입된 회원입니다.");
+        		}
+        	});
+        });
             
       </script>
   </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -37,5 +37,37 @@ public class JoinService {
 		
 		return result;
 	}
-
+	public int emailCheck(String email) 
+	{
+		Connection con = getInstance();
+		
+		int result = JoinDao.emailCheck(con, email);
+		
+		System.out.println(result);
+		
+		close(con);
+		
+		return result;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -93,4 +93,59 @@ public class JoinDao {
 		return result;
 	}
 
+	public static int emailCheck(Connection con, String email) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		int result = 0;
+		
+		String query = "SELECT COUNT(*) FROM BANDI_USER WHERE E_MAIL=?";
+		
+		System.out.println(email);
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setString(1, email);
+			
+			rset=pstmt.executeQuery();
+			
+			while(rset.next()) 
+			{
+				result = rset.getInt("COUNT(*)");
+				
+				System.out.println(result);
+			}
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		System.out.println(result);
+		return result;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

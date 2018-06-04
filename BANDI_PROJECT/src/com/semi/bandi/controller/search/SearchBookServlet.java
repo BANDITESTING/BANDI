@@ -24,18 +24,10 @@ public class SearchBookServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String option = request.getParameter("searchBy");
 		String getText = request.getParameter("searchText");
+		String text = getText.replaceAll(" ", "");
 
-		ArrayList<SearchBook> list = new SearchBookService().searchBook(option, getText);
-		HashMap<String, Integer> genreCount = new SearchBookService().searchBookGenre(option, getText);
-		
-		if(option.equals("totalSearch")) option="통합검색";			
-		else if(option.equals("bookSearch")) option="도서명";
-		else if(option.equals("authorSearch")) option="저자명";
-		else if(option.equals("publisherSearch")) option="출판사명";
-		
-		System.out.println("받아온 책 개수 : "+list.size());
-		System.out.println("검색어 : "+getText);
-		System.out.println("검색종류 : "+option);
+		ArrayList<SearchBook> list = new SearchBookService().searchBook(option, text);
+		HashMap<String, Integer> genreCount = new SearchBookService().searchBookGenre(option, text);
 		
 		request.setAttribute("option", option);
 		request.setAttribute("getText", getText);

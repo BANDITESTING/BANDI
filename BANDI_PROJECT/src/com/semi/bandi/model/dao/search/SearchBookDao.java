@@ -36,19 +36,18 @@ public class SearchBookDao {
 		String dynamicSQL = "";
 		
 		if(option.equals("totalSearch")){
-			dynamicSQL = " WHERE TITLE LIKE '%'|| '"+getText+"' ||'%'"
-					+ " OR WRITER_NAME LIKE '%'|| '"+getText+"' ||'%'"
-					+ " OR PUBLISHER LIKE '%'|| '"+getText+"' ||'%'";
+			dynamicSQL = " WHERE REPLACE(TITLE, ' ') LIKE '%'|| '"+getText+"' ||'%'"
+					+ " OR REPLACE(WRITER_NAME, ' ') LIKE '%'|| '"+getText+"' ||'%'"
+					+ " OR REPLACE(PUBLISHER, ' ') LIKE '%'|| '"+getText+"' ||'%'";
 		} else if(option.equals("bookSearch")){
-			dynamicSQL = " WHERE TITLE LIKE '%'|| '"+getText+"' ||'%'";
+			dynamicSQL = " WHERE REPLACE(TITLE, ' ') LIKE '%'|| '"+getText+"' ||'%'";
 		} else if(option.equals("authorSearch")){
-			dynamicSQL = " WHERE WRITER_NAME LIKE '%'|| '"+getText+"' ||'%'";
+			dynamicSQL = " WHERE REPLACE(WRITER_NAME, ' ') LIKE '%'|| '"+getText+"' ||'%'";
 		} else if(option.equals("publisherSearch")){
-			dynamicSQL = " WHERE PUBLISHER LIKE '%'|| '"+getText+"' ||'%'";
+			dynamicSQL = " WHERE REPLACE(PUBLISHER, ' ') LIKE '%'|| '"+getText+"' ||'%'";
 		}
 		
-		String sql = prop.getProperty("searchBook").replaceAll("\"", "")+dynamicSQL;
-		System.out.println("searchBook SQL : "+sql);
+		String sql = prop.getProperty("searchBook")+dynamicSQL;
 		
 		try {
 			stmt = con.createStatement();
@@ -88,23 +87,21 @@ public class SearchBookDao {
 		Statement stmt = null;
 		ResultSet rset = null;
 		HashMap<String, Integer> genreCount = null;
-
 		String dynamicSQL = "";
 		
 		if(option.equals("totalSearch")){
-			dynamicSQL = " WHERE TITLE LIKE '%'|| '"+getText+"' ||'%'"
-					+ " OR WRITER_NAME LIKE '%'|| '"+getText+"' ||'%'"
-					+ " OR PUBLISHER LIKE '%'|| '"+getText+"' ||'%')";
+			dynamicSQL = " WHERE REPLACE(TITLE, ' ') LIKE '%'|| '"+getText+"' ||'%'"
+					+ " OR REPLACE(WRITER_NAME, ' ') LIKE '%'|| '"+getText+"' ||'%'"
+					+ " OR REPLACE(PUBLISHER, ' ') LIKE '%'|| '"+getText+"' ||'%')";
 		} else if(option.equals("bookSearch")){
-			dynamicSQL = " WHERE TITLE LIKE '%'|| '"+getText+"' ||'%')";
+			dynamicSQL = " WHERE REPLACE(TITLE, ' ') LIKE '%'|| '"+getText+"' ||'%')";
 		} else if(option.equals("authorSearch")){
-			dynamicSQL = " WHERE WRITER_NAME LIKE '%'|| '"+getText+"' ||'%')";
+			dynamicSQL = " WHERE REPLACE(WRITER_NAME, ' ') LIKE '%'|| '"+getText+"' ||'%')";
 		} else if(option.equals("publisherSearch")){
-			dynamicSQL = " WHERE PUBLISHER LIKE '%'|| '"+getText+"' ||'%')";
+			dynamicSQL = " WHERE REPLACE(PUBLISHER, ' ') LIKE '%'|| '"+getText+"' ||'%')";
 		}
 		
-		String sql = prop.getProperty("genreCount").replaceAll("\"", "")+dynamicSQL+" group by genre_code";
-		System.out.println("genreCount SQL : "+sql);		
+		String sql = prop.getProperty("genreCount").replaceAll("\"", "")+dynamicSQL+" group by genre_code";		
 
 		try {
 			stmt = con.createStatement();
@@ -132,6 +129,56 @@ public class SearchBookDao {
 		ResultSet rset = null;
 		ArrayList<SearchBook> list = null;
 		String dynamicSQL = "";
+
+		if(option.equals("totalSearch")){
+			dynamicSQL = " WHERE GENRE_CODE LIKE '"+genreCode+"'"
+					+ " AND(REPLACE(TITLE, ' ') LIKE '%'|| '"+getText+"' ||'%'"
+					+ " OR REPLACE(WRITER_NAME, ' ') LIKE '%'|| '"+getText+"' ||'%'"
+					+ " OR REPLACE(PUBLISHER, ' ') LIKE '%'|| '"+getText+"' ||'%')";
+		} else if(option.equals("bookSearch")){
+			dynamicSQL = " WHERE GENRE_CODE LIKE '"+genreCode+"'"
+					+ "AND(REPLACE(TITLE, ' ') LIKE '%'|| '"+getText+"' ||'%')";
+		} else if(option.equals("authorSearch")){
+			dynamicSQL = " WHERE GENRE_CODE LIKE '"+genreCode+"'"
+					+ "AND(REPLACE(WRITER_NAME, ' ') LIKE '%'|| '"+getText+"' ||'%')";
+		} else if(option.equals("publisherSearch")){
+			dynamicSQL = " WHERE GENRE_CODE LIKE '"+genreCode+"'"
+					+ "AND(REPLACE(PUBLISHER, ' ') LIKE '%'|| '"+getText+"' ||'%')";
+		}
+
+		String sql = prop.getProperty("searchBook")+dynamicSQL;		
+
+		try {
+		
+			stmt = con.createStatement();
+			
+			rset = stmt.executeQuery(sql);
+			
+			list = new ArrayList<SearchBook>();
+			
+			while(rset.next()){
+				SearchBook book = new SearchBook();
+				
+				book.setmBook_UID(rset.getInt("BOOK_UID"));
+				book.setmISBN(rset.getString("ISBN"));
+				book.setmTitle(rset.getString("TITLE"));
+				book.setmPrice(rset.getInt("PRICE"));
+				book.setmWriter(rset.getString("WRITER_NAME"));
+				book.setmPublisher(rset.getString("PUBLISHER"));
+				book.setmGenreCode(rset.getString("GENRE_CODE"));
+				book.setmPage(rset.getInt("PAGE"));
+				book.setmImagePath(rset.getString("IMAGE"));
+				book.setmIssueDate(rset.getDate("ISSUE_DATE"));
+				
+				list.add(book);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}		
 
 		return list;
 	}

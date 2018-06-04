@@ -44,6 +44,20 @@ public class CashService {
 		return user;
 	}
 	
+	public User orderUser(int user_UID, String query) {
+		
+		Connection con = getInstance();
+		
+		User user = cDao.orderUser(con, user_UID, query);
+		
+		close(con);
+		
+		System.out.println("service user : " + user);
+		
+		return user;
+		
+	}
+	
 	// 장바구니 페이지에서 일어나는 삭제를 수행하는 서비스
 	public int deleteBasket(Cart[] cart) {
 		
@@ -67,7 +81,8 @@ public class CashService {
 		
 	}
 	
-	public ArrayList<Cart> selectCart(String bookList, int useruid) {
+	// 주문/결제 페이지 이동 시 선택 된 도서 정보를 읽어오는 서비스
+	public ArrayList<Cart> selectCart(String[] bookList, int useruid) {
 		
 		Connection con = getInstance();
 		

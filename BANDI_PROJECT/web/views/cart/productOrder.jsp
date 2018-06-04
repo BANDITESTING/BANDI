@@ -3,6 +3,10 @@
 <%@ page import="com.semi.bandi.model.vo.*, java.util.*, java.text.*" %>
 <%
 	ArrayList<Cart> cartList = (ArrayList<Cart>)request.getAttribute("cartList");
+	User orderUser = (User)request.getAttribute("user");
+	DecimalFormat df = new DecimalFormat("###,###");
+	int bookTotal = 0;
+	double point = (Double)request.getAttribute("point");
 %>
 <!DOCTYPE html>
 <html>
@@ -15,7 +19,7 @@
         <script src="<%=request.getContextPath()%>/resources/js/cart/jquery-3.3.1.min.js"></script>
         <script src="<%=request.getContextPath()%>/resources/js/cart/bootstrap.min.js"></script>
         <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-        <script src="<%=request.getContextPath()%>/resources/js/cart/paymentPage.js"></script>
+        <script src="<%=request.getContextPath()%>/resources/js/cart/productOrder.js"></script>
         <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/cart/bootstrap.min.css">
         <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/cart/shopping.css">
         <link href="<%=request.getContextPath()%>/resources/css/cart/fontawesome-all.min.css" rel="stylesheet">
@@ -46,29 +50,35 @@
                             <th scope="col">판매가</th>
                             <th scope="col">수량</th>
                             <th scope="col">합계</th>
-                            <th scope="col">판매자</th>
                         </tr>
                     </thead>
                     <tbody>
-                    <%
-                    	for(Cart ct : cartList){
-                    		
-                    	}
-                    %>
-                        <%-- <tr>
-                            <td class="text-left" style="padding-left:3%;"><img src="<%=request.getContextPath()%>/resources/images/cart/BOOK/sample2.PNG" alt="퍼즈" style="padding-right:5%;">퍼즈</td>
-                            <td class="text-right" style="padding-right:3%;">15,500 원</td>
-                            <td>1</td>
-                            <td class="text-right" style="padding-right:3%;">15,500 원</td>
-                            <td>사이트 명</td>
-                        </tr> --%>
+                        <% for (int i = 1; i <= cartList.size(); i++) {  
+                        		bookTotal += cartList.get(i-1).getPrice() * cartList.get(i-1).getBookQuantity(); %>
+	                    	<tr>
+	                            <td class="text-left tdBook">
+	                            	<img id="bookImg<%= i %>" class="bookImg" src="<%=request.getContextPath()%>/resources/images/cart/BOOK/<%= cartList.get(i-1).getImage() %>" alt="<%= cartList.get(i-1).getTitle() %>" style="margin-right:5%; margin-left:5%;"><%= cartList.get(i-1).getTitle() %>
+	                            </td>
+	                            <td class="tdPrice" id="sale<%= i %>">
+	                            	<span class="onePrice"><%= df.format(cartList.get(i-1).getPrice())%></span> 원
+	                            </td>
+	                            <td class="tdQuan">
+	                            	<span><%= cartList.get(i-1).getBookQuantity() %></span>
+	                            </td>
+	                            <td class="tdPrice tdTotal" id="quan<%= i %>">
+	                            	<span class="bookPrice"><%= df.format(cartList.get(i-1).getPrice() * cartList.get(i-1).getBookQuantity()) %></span> 원
+	                            </td>
+	                        </tr>
+                    	<% 	} %>
                     </tbody>
                 </table>
             </div>
+            
             <div class="row">
-                <p>상품 변경을 원하시면</p> &nbsp;&nbsp; <input type="button" class="btn6" value="장바구니가기" onClick="location.href='shoppingBasket.jsp'">
+                <p>상품 변경을 원하시면</p> &nbsp;&nbsp; <input type="button" class="btn6" id="returnBtn" value="장바구니가기">
             </div>
-            <div class="row">
+            
+            <div class="row" style="padding-top:5%;">
                 <table class="table table-bordered">
                     <thead>
                         <tr>
@@ -80,10 +90,28 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>36,500 원</td>
-                            <td>0 원</td>
-                            <td>36,500 원</td>
-                            <td>2,000 원</td>
+                            <td id="total"><%= df.format(bookTotal) %> 원</td>
+                            <td id="delivery">
+                            	<% if (bookTotal > 30000 || cartList == null) { %>
+                            		0 원
+                            	<% } else {%>
+                            		2,500 원
+                            	<% } %>
+                            </td>
+                            <td id="orderPrice">         
+                            	<% if (bookTotal > 30000 || cartList == null) { %>
+                            		<%= df.format(bookTotal) %> 원
+                            	<% } else { %>
+                            		<%= df.format((bookTotal + 2500)) %> 원
+                            	<% } %>                
+                            </td>
+                            <td id="point">
+                            	<% if (bookTotal > 30000 || cartList == null) { %>
+                            		<%= df.format(bookTotal * point) %> P
+                            	<% } else { %>
+                            		<%= df.format((bookTotal + 2500) * point) %> P
+                            	<% } %> 
+                           	</td>
                         </tr>
                     </tbody>
                 </table>
@@ -98,17 +126,17 @@
                     <thead>
                         <tr>
                             <th>주문자 정보</th>
-                            <td class="text-left" style="padding-left:3%;" colspan="4">홍길동&nbsp;&nbsp;|&nbsp;&nbsp;test1234@test.com&nbsp;&nbsp;|&nbsp;&nbsp;010-1234-5678</td>
+                            <td class="text-left" style="padding-left:3%;" colspan="4"><%= orderUser.getmName() %>&nbsp;&nbsp;|&nbsp;&nbsp;<%= orderUser.getmEmail() %>&nbsp;&nbsp;|&nbsp;&nbsp;<%= orderUser.getmPhone() %></td>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <th>배송 방법</th>
-                            <td class="text-left" style="padding-left:3%;" colspan="4"><input type="radio" name="delivery" id="delivery1"><label for="delivery1">&nbsp;&nbsp;[국내]일반택배</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="delivery" id="delivery2"><label for="delivery2">&nbsp;&nbsp;편의점배송</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="delivery" id="delivery3"><label for="delivery3">&nbsp;&nbsp;해외배송</label></td>
+                            <td class="text-left" style="padding-left:3%;" colspan="4"><input type="radio" name="delivery" id="delivery1" checked="checked"><label for="delivery1">&nbsp;&nbsp;[국내]일반택배</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="delivery" id="delivery2"><label for="delivery2">&nbsp;&nbsp;편의점배송</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="delivery" id="delivery3"><label for="delivery3">&nbsp;&nbsp;해외배송</label></td>
                         </tr>   
                         <tr>
                             <th rowspan="6">배송지 정보</th>
-                            <td class="text-left" style="padding-left:3%;" colspan="4"><input type="radio" name="addr" id="memD"><label for="memD">&nbsp;&nbsp;회원정보동일</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="addr" id="newD"><label for=""newD"">&nbsp;&nbsp;새로입력</label></td>
+                            <td class="text-left" style="padding-left:3%;" colspan="4"><input type="radio" name="addr" id="memD" checked="checked"><label for="memD">&nbsp;&nbsp;회원정보동일</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="addr" id="newD"><label for="newD">&nbsp;&nbsp;새로입력</label></td>
                         </tr>  
                         <tr>
                             <td><b>받으실 분</b></td>

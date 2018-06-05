@@ -1,11 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="java.util.*, com.semi.bandi.model.vo.SearchBook"%>
+	pageEncoding="UTF-8" import="java.util.*, com.semi.bandi.model.vo.searchVo.*"%>
 <%
 	String option = (String) request.getAttribute("option");
 	String getText = (String) request.getAttribute("getText");
 	String genreCode = (String) request.getAttribute("genreCode");
 	ArrayList<SearchBook> list = (ArrayList<SearchBook>)request.getAttribute("list");
 	HashMap<String, Integer> genreCount = (HashMap<String, Integer>)request.getAttribute("genreCount");
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	int listCount = pi.getListCount();
+	int currentPage = pi.getCurrentPage();
+	int maxPage = pi.getMaxPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
 	
 	String optionName = "";
 	if(option.equals("totalSearch")) optionName="통합검색";			
@@ -19,7 +25,7 @@
 <title>검색화면</title>
 
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/resources/css/searchBook/hkLocal.css?ver=1">
+	href="<%=request.getContextPath()%>/resources/css/searchBook/hkLocal.css?ver=2">
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/css/category/bootstrap.min.css">
 <link rel="stylesheet"
@@ -37,11 +43,11 @@
 	<br>
 	<div class="container jg">
 		<div class="row">
-			<div class="col-sm-10">
+			<div class="col-sm-12">
 				<div class="bg-pripink" style="padding: 2%; padding-left: 5%;">
 					"<%=getText%>"(으)로
 					<%=optionName%>
-					<%=genreCount.size()%>건 검색
+					<%=listCount%>건 검색
 				</div>
 				<br>
 				<div class="row">
@@ -125,14 +131,18 @@
 
 						<!-- bookList부분 -->
 						</div>
-						<div>
-							<ul class="pagination">
+						
+						<!-- pagination -->
+						<div style="margin-bottom:5%;">
+							<ul class="pagination mt-2 mb-2" style="margin-left:auto; margin-right:auto;">
 								<li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
+								<li class="page-item"><a class="page-link" href="#">&lt;</a></li>
 								<li class="page-item"><a class="page-link" href="#">1</a></li>
 								<li class="page-item"><a class="page-link" href="#">2</a></li>
-								<li class="page-item active"><a class="page-link" href="#">3</a></li>
+								<li class="page-item"><a class="page-link" href="#">3</a></li>
 								<li class="page-item"><a class="page-link" href="#">4</a></li>
 								<li class="page-item"><a class="page-link" href="#">5</a></li>
+								<li class="page-item"><a class="page-link" href="#">&gt;</a></li>
 								<li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
 							</ul>
 						</div>
@@ -145,8 +155,6 @@
 				
 			<!-- topdiv + leftdiv + bookList -->
 			</div>
-
-			<div class="col-md-2 test">banner</div>
 
 		</div>
 
@@ -197,7 +205,7 @@
 			};
 		});
 		
-		$('.gSearch').on('click', function(){
+		$('.Search').on('click', function(){
 			var genreCode = $(this).attr('id');
 			console.log(genreCode);
 			location.href="<%=request.getContextPath()%>/searchGenre.sb?option=<%=option%>&getText=<%=getText%>&genreCode="+genreCode;

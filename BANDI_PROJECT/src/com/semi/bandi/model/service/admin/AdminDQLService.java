@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.semi.bandi.model.dao.admin.AdminDao;
+import com.semi.bandi.model.vo.Book;
 import com.semi.bandi.model.vo.Writer;
 import static com.semi.bandi.template.JDBCTemplate.*;
 
@@ -44,5 +45,12 @@ public class AdminDQLService
 		AdminDao adDao = new AdminDao();
 		Connection con =  getInstance();
 		return adDao.existISBN(con, ISBN);
+	}
+	
+	public ArrayList<Book> getRecommendByBandi()
+	{
+		ArrayList<Book> books = null;
+		
+		return books;
 	}
 }

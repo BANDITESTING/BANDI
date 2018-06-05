@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.semi.bandi.model.dao.search.SearchBookDao;
-import com.semi.bandi.model.vo.SearchBook;
+import com.semi.bandi.model.vo.searchVo.SearchBook;
 
 public class SearchBookService {
 
@@ -18,10 +18,10 @@ public class SearchBookService {
 		 dao = new SearchBookDao();
 	}
 	
-	public ArrayList<SearchBook> searchBook(String option, String getText){
+	public ArrayList<SearchBook> searchBook(String option, String getText, int currentPage, int b_size){
 		Connection con = getInstance();
 		
-		ArrayList<SearchBook> list = dao.searchBook(con, option, getText);
+		ArrayList<SearchBook> list = dao.searchBook(con, option, getText, currentPage, b_size);
 
 		close(con);
 				
@@ -46,6 +46,16 @@ public class SearchBookService {
 		close(con);		
 		
 		return list;
+	}
+
+	public int getlistCount(String option, String getText) {
+		Connection con = getInstance();
+		
+		int result = dao.getListCount(con, option, getText);
+
+		close(con);		
+		
+		return result;
 	}
 	
 }

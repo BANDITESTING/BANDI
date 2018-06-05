@@ -1,7 +1,8 @@
-package com.semi.bandi.model.vo;
+package com.semi.bandi.model.vo.searchVo;
 
 import java.io.Serializable;
-import java.sql.Date;
+
+import com.semi.bandi.model.vo.Book;
 
 public class SearchBook extends Book implements Serializable{
 

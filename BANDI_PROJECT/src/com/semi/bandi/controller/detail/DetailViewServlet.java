@@ -28,6 +28,12 @@ public class DetailViewServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String isbn = request.getParameter("ISBN");
 		
+		//리뷰 평점, 제목, 내용 		
+		int rate = Integer.parseInt(request.getParameter("rate"));
+		String reviewTitle = request.getParameter("reviewTitle");
+		String reviewContent = request.getParameter("reviewContent");
+		
+		
 		if(isbn == null) {} // Handling Error Page;
 		
 		System.out.println(isbn);

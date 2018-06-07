@@ -25,7 +25,7 @@ public class jloginServlet extends HttpServlet {
 		String pwd = request.getParameter("mPassword");
 		
 		User user = new User(email, pwd);
-		System.out.println(pwd);
+		
 		LoginService ls = new LoginService();
 		
 		user = ls.loginMember(user);

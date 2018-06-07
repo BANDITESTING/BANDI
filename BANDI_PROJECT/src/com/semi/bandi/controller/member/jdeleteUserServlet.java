@@ -11,58 +11,37 @@ import javax.servlet.http.HttpSession;
 import com.semi.bandi.model.service.member.LoginService;
 import com.semi.bandi.model.vo.User;
 
-@WebServlet("/change.me")
-public class jchangePwdServlet extends HttpServlet {
+@WebServlet("/deleteUser.me")
+public class jdeleteUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    public jchangePwdServlet() {}
+    public jdeleteUserServlet() {}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		String nPwd = request.getParameter("mPassword");
-		
+		String email = request.getParameter("email");
+		String pwd = request.getParameter("password");
+		int result = 0;
 		LoginService ls = new LoginService();
 		
 		HttpSession session = request.getSession(false);
 		
-		if(session == null){ }//error page , shield for Error
-		
 		User user = (User) session.getAttribute("user");
-		user.setmPassword(nPwd);
 		
-		if(ls.changePassword(user) > 0)
-		{
-			session.invalidate();
+		user.setmEmail(email);
+		user.setmPassword(pwd);
+		
+		if(ls.deleteUser(user) == 0){
 			
-			response.sendRedirect("index.jsp");
+			session.invalidate();
+		} else {
+			result = -1;
 		}
+		response.getWriter().print(result);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

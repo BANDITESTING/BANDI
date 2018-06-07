@@ -41,12 +41,12 @@
 			<ul class="nav nav-sidebar">
 				<li class="active"><a href="jmypage.jsp">My Page</a></li>
 				<li class="active"><a href="jchange_Pwd.jsp">비밀번호 변경</a></li>
-            	<!-- <li class="active">회원 탈퇴</li> -->
+            	<li class="active"><a href="jdeleteUser.jsp">회원 탈퇴</a></li>
             </ul>
         </div>
         <div role="main" class="col-xs-10 col-xs-offset-2 col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2 col-lg-10 col-lg-offset-2">
         	<div>
-            	<h1 class="h2">회원 정보 수정</h1>       
+            	<h1 class="h2">비밀번호 변경</h1>       
             </div>
             <hr style="width:100%; height:3px;">
             <form class="changeForm" id="current-pwd" method="post">

@@ -83,7 +83,7 @@
 			<ul class="nav nav-sidebar">
 				<li class="active"><a href="jmypage.jsp">My Page</a></li>
 				<li class="active"><a href="jchange_Pwd.jsp">비밀번호 변경</a></li>
-            	<!-- <li class="active">회원 탈퇴</li> -->
+            	<li class="active"><a href="jdeleteUser.jsp">회원 탈퇴</a></li>
             </ul>
         </div>
         <div role="main" class="col-xs-10 col-xs-offset-2 col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2 col-lg-10 col-lg-offset-2">
@@ -92,32 +92,32 @@
             </div>
             <hr style="width:100%; height:3px;">
             <div class="table-responsive">
-            	<h5><strong>필수정보</strong></h5>
+            	<h5><strong>필수정보</strong></h5><br>
                 <table class="table table-bordered">
                 	<tr>
-                    	<td class="col-sm-2">회원번호</td>
+                    	<th class="col-sm-2">회원번호</th>
                         <td class="col-sm-8"><%=user.getmUser_UID() %></td>
                     </tr>
                     <tr>
-                    	<td class="col-sm-2">회원등급</td>
+                    	<th class="col-sm-2">회원등급</th>
                         <td class="col-sm-8"><%=user.getmGrade() %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         	<button id="myBtn" class="btn btn-xs btn-primary">혜택 보기</button>
                         </td>
                     </tr>
                     <tr>
-                    	<td class="col-sm-2">회원포인트</td>
-                        <td class="col-sm-8"><%=user.getmBandi_Point() %></td>
+                    	<th class="col-sm-2">회원포인트</th>
+                        <td class="col-sm-8"><%=user.getmBandi_Point()%></td>
                     </tr>
                     <tr>
-                        <td class="col-sm-2">이메일</td>
+                        <th class="col-sm-2">이메일</th>
                         <td class="col-sm-8"><%=user.getmEmail() %></td>
                     </tr>
                     <tr>
-                    	<td class="col-sm-2">이름</td>
+                    	<th class="col-sm-2">이름</th>
                     	<td class="col-sm-8"><%=user.getmName() %></td>
                     </tr>
                     <tr>
-                    	<td class="col-sm-2">성별</td>
+                    	<th class="col-sm-2">성별</th>
                         <td class="col-sm-8 radio">
                         	<label>
                             	<input type="radio" name="gender" id="gender" value="M">여자&nbsp;&nbsp;&nbsp;
@@ -128,7 +128,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="col-sm-2">생년월일</td>
+                        <th class="col-sm-2">생년월일</th>
                         <td class="col-sm-8 form-group radio">
                         	<%=user.getmIdentified().substring(0,2) %>년
                             <%=user.getmIdentified().substring(2,4) %>월
@@ -143,7 +143,7 @@
                 <h5>기본 배송 정보</h5>
                 <table class="table table-bordered">
                 	<tr>
-                    	<td class="col-sm-2">휴대폰</td>
+                    	<th class="col-sm-2">휴대폰</th>
                         <td class="col-sm-8">
                         	<input type="text" maxlength="3" name="tel1" size="2" id="tel1">-
                             <input type="text" maxlength="4" name="tel2" size="2" id="tel2">-
@@ -152,10 +152,22 @@
                         </td>
                     </tr>
                     <tr>
-                    	<td class="col-sm-2">주소</td>
+                    	<th class="col-sm-2">우편번호</th>
                     	<td class="col-sm-8">
-                    		<input type="text" id="address1" name="address1" style="width:500px"/>&nbsp;&nbsp;&nbsp;
-                    		<button class="btn btn-xs btn-primary" type="button" id="searchAdd">검색</button>
+                    		<input type="text" id="address1" name="address1" style="width:300px"/>&nbsp;&nbsp;&nbsp;
+                    		<button class="btn btn-sm btn-primary" type="button" id="searchAdd">검색</button><br />
+                    	</td>
+                    </tr>
+                    <tr>
+                    	<th class="col-sm-2">주소</th>
+                    	<td class="col-sm-8">
+                    		<input type="text" id="address2" name="address2" style="width:500px"/>
+                    	</td>
+                    </tr>
+                    <tr>
+                    	<th class="col-sm-2">상세주소</th>
+                    	<td class="col-sm-8">
+                    		<input type="text" id="address3" name="address3" style="width:500px"/>
                     	</td>
                     </tr>
                 </table>
@@ -207,35 +219,46 @@
 	
 	$('#searchAdd').on('click', function(event){
 		new daum.Postcode({
-			oncomplete: function(data){
-				var fullAddr = '';
-				var extraAddr = '';
-				
-				if(data.userSelectedType == 'R'){
-					fullAddr = data.roadAddress;
-				} else {
-					fullAddr = data.jibunAddress;
-				}
-				
-				if(data.userSelectedType == 'R'){
-					if(data.bname != ''){
-						extraAddr += data.bname;
-					}
-					
-					if(data.buildingName != ''){
-						extraAddr += (extraAddr != '' ? ', ' + data.buildingName : data.buildingName);
-					}
-					
-					fullAddr += (extraAddr != '' ? ' (' + extraAddr + ')' : '');
-				}
-				
-				$('#address0').val(data.zonecode);
-				
-				$('#address1').val(fullAddr);
-				
-				$('#address2').focus();
-			}
-		}).open();
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var fullAddr = ''; // 최종 주소 변수
+                var extraAddr = ''; // 조합형 주소 변수
+
+                // 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    fullAddr = data.roadAddress;
+
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    fullAddr = data.jibunAddress;
+                }
+
+                // 사용자가 선택한 주소가 도로명 타입일때 조합한다.
+                if(data.userSelectedType === 'R'){
+                    //법정동명이 있을 경우 추가한다.
+                    if(data.bname !== ''){
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있을 경우 추가한다.
+                    if(data.buildingName !== ''){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
+                    fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                /* document.getElementById('sample6_postcode').value = data.zonecode; */ //5자리 새우편번호 사용
+                $('#address1').val(data.zonecode);
+                $('#address2').val(fullAddr);
+
+                // 커서를 상세주소 필드로 이동한다.
+                /* document.getElementById('sample6_address2').focus(); */
+                $('#address3').focus();
+            }
+        }).open();
 	});
 	
 	var addArr = '<%=user.getmAddress()%>'.split(', ');

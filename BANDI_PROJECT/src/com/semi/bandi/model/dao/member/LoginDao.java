@@ -42,6 +42,7 @@ public class LoginDao {
 				resultUser.setmGender(rset.getString("GENDER"));
 				resultUser.setmGrade(rset.getString("GRADE_CODE"));
 				resultUser.setmJob(rset.getString("JOB_CODE"));
+				resultUser.setmBandi_Point(rset.getInt("BANDI_POINT"));
 			}
 		}catch(SQLException e)
 		{
@@ -62,8 +63,6 @@ public class LoginDao {
 		int result = 0;
 		
 		String query = "SELECT COUNT(*) FROM BANDI_USER WHERE E_MAIL = ? AND PASSWORD = ?";
-		
-		System.out.println(user);
 		
 		try {
 			pstmt = con.prepareStatement(query);
@@ -126,6 +125,29 @@ public class LoginDao {
 			result = pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int deleteUser(User user, Connection con) 
+	{
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "DELETE FROM BANDI_USER WHERE E_MAIL = ?";
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, user.getmEmail());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			
 			e.printStackTrace();
 		} finally {
 			close(pstmt);

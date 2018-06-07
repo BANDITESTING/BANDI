@@ -31,8 +31,6 @@ public class LoginService {
 		
 		int result = lDao.checkLogin(con, user);
 		
-		System.out.println(user);
-		
 		close(con);
 		
 		return result;
@@ -62,6 +60,21 @@ public class LoginService {
 		
 		if(result > 0) commit(con);
 		else rollback(con);
+		
+		return result;
+	}
+
+	public int deleteUser(User user) 
+	{
+		LoginDao lDao = new LoginDao();
+		Connection con = getInstance();
+		
+		int result = lDao.deleteUser(user, con);
+		
+		if(result > 0) commit(con);
+		else rollback(con);
+		
+		close(con);
 		
 		return result;
 	}

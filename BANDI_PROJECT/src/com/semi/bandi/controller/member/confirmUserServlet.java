@@ -23,13 +23,9 @@ public class confirmUserServlet extends HttpServlet {
 		
 		User user = new User(email, pwd);
 		
-		System.out.println(user);
-		
 		LoginService ls = new LoginService();
 		
 		int checkLogin = ls.checkLogin(user);
-		
-		System.out.println(checkLogin);
 		
 		response.getWriter().print(checkLogin);
 		

@@ -29,7 +29,6 @@
               <div class="input-group">
               <input type="email" class="form-control" id="email" name="userEmail" placeholder="이메일이 아이디 입니다">
               <span class="input-group-btn">
-              	<button class="btn btn-primary" type="button" id="emailcheck">이메일 중복 확인</button>
                 <button class="btn btn-success" type="button" id="emailOk">인증번호 전송<i class="fa fa-mail-forward spaceLeft"></i></button>
               </span>
             </div>
@@ -110,7 +109,7 @@
       <script>
      	 $(function() {
     	  $("#userBirth").datepicker({
-    	    dateFormat: 'yy-mm-dd'
+    		  changeMonth: true, changeYear: true, dateFormat: "yy-mm-dd", showButtonPanel: true, yearRange: "c-99:c+99", maxDate: "+0d"
     	  });
     	});
      	 
@@ -122,22 +121,33 @@
       	var result;
       	//이메일 인증번호 넘기기
       	$('#emailOk').on('click', function(){
-      		$.ajax({
-      			url : "<%=request.getContextPath()%>/email.do",
-          		data : {email :  $('#email').val()},
-          		type : "POST",
-      			success : function (responseText) {
-      				alert("인증번호 전송");
-      				result = responseText;
-      				$('#email').attr("readonly", true);
-      			},
-      			error : function(){
-      			alert("에러발생");
-      			}
-      			
-      		});
-      		
-      		
+      		if($('#email').val() == ""){
+      			alert("이메일을 입력해주세요.");
+      		} else {
+      	        	$.ajax({
+      	        		url : '/BANDI/emailcheck.me',
+      	        		type : 'post',
+      	        		data : {email : $('#email').val()},
+      	        		success : function(data){
+      	        			if(data == 0){
+      	        				$.ajax({
+      	        	      			url : "<%=request.getContextPath()%>/email.do",
+      	        	          		data : {email :  $('#email').val()},
+      	        	          		type : "POST",
+      	        	      			success : function (responseText) {
+      	        	      				alert("인증번호 전송");
+      	        	      				result = responseText;
+      	        	      				$('#email').attr("readonly", true);
+      	        	      			},
+      	        	      			error : function(){
+      	        	      				alert("에러발생");
+      	        	      			}
+      	        	      		});
+      	        			}
+      	        			else alert("이미 가입된 회원입니다.");
+      	        		}
+      	        	});
+      		}
       	});   
       	
       	//이메일 인증 확인하기
@@ -250,17 +260,7 @@
              event.preventDefault();
         });
 		
-        $('#emailcheck').on('click', function(){
-        	$.ajax({
-        		url : '/BANDI/emailcheck.me',
-        		type : 'post',
-        		data : {email : $('#email').val()},
-        		success : function(data){
-        			if(data == 0) alert("사용하셔도 좋은 이메일 입니다.");
-        			else alert("이미 가입된 회원입니다.");
-        		}
-        	});
-        });
+        
             
       </script>
   </body>

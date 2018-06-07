@@ -13,7 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.semi.bandi.model.service.search.SearchBookService;
-import com.semi.bandi.model.vo.SearchBook;
+import com.semi.bandi.model.vo.searchVo.SearchBook;
+/*import com.semi.bandi.model.vo.SearchBook;*/
 
 @WebServlet("/searchGenre.sb")
 public class SearchGenreServlet extends HttpServlet {

@@ -18,14 +18,13 @@
 	
 	// Rating Area
 	RankedBookInfo rateBook = (RankedBookInfo)session.getAttribute("ratedBook");
-	if(rateBook == null)
-	{
-		System.out.print("rateBook is null");
-	}
 	
 	@SuppressWarnings("unchecked")
 	ArrayList<CommentUserInfo> comArray = (ArrayList<CommentUserInfo>)session.getAttribute("commentArray");
- 
+    
+	// If Wrong Access This Page. Move to Index.jsp
+	 if(array == null || bookArray == null || rateBook == null || comArray ==null) pageContext.forward("index.jsp");
+	 
 %>
 
 <meta charset="UTF-8">

@@ -8,6 +8,9 @@ import java.util.ArrayList;
 
 import com.semi.bandi.model.vo.Book;
 import com.semi.bandi.model.vo.Writer;
+import com.semi.bandi.model.vo.adminVo.AnnualIncome;
+import com.semi.bandi.template.AdminQueryProperties;
+
 import static com.semi.bandi.template.JDBCTemplate.*;
 
 public class AdminDao 
@@ -205,5 +208,41 @@ public class AdminDao
 		}
 		
 		return result;
+	}
+
+	public ArrayList<AnnualIncome> getAnnualList(Connection con, int year) {
+		if(con == null) return null;
+		ArrayList<AnnualIncome> arrayIncome = null;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rSet = null;
+		
+		String query = new AdminQueryProperties().dmlQueryForOrder();
+		
+		try{
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, year+"");
+			
+			rSet = pstmt.executeQuery();
+			arrayIncome = new ArrayList<AnnualIncome>();
+			AnnualIncome annual;
+			while(rSet.next())
+			{
+				annual = new AnnualIncome();
+				annual.setmOrderDate(rSet.getDate(1));
+				annual.setmSumPrice(rSet.getInt(2));
+				annual.setmOrderCount(rSet.getInt(3));
+				annual.setmPacketPrice(rSet.getInt(4));
+				annual.setmOrderBooksCount(rSet.getInt(5));
+				
+				arrayIncome.add(annual);
+			}
+			
+		}catch(SQLException e)
+		{
+			arrayIncome = null;
+		}
+		
+		return arrayIncome;
 	}
 }

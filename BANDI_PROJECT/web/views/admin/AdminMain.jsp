@@ -9,20 +9,16 @@
     <link rel="stylesheet" href= "<%=request.getContextPath()%>/resources/css/admin/bootstrap.min.css?ver=1">
     <link rel="stylesheet" href= "<%=request.getContextPath()%>/resources/css/admin/sb-admin-2.min.css?ver=1">
     <link rel="stylesheet" href= "<%=request.getContextPath()%>/resources/css/admin/morris.css?ver=1">
-    <link rel="stylesheet" href= "<%=request.getContextPath()%>/resources/css/admin/dataTables.responsive.css?ver=1">
     <link rel="stylesheet" href= "<%=request.getContextPath()%>/resources/css/admin/dataTables.bootstrap.css?ver=1">
     <link rel="stylesheet" href= "<%=request.getContextPath()%>/resources/css/admin/font-awesome.min.css?ver=1" type="text/css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     
-    <script src ="<%=request.getContextPath()%>/resources/js/admin/jquery.min.js?ver=1"></script>
-	<script src ="<%=request.getContextPath()%>/resources/js/admin/bootstrap.min.js?ver=1"></script>
-	<script src ="<%=request.getContextPath()%>/resources/js/admin/morris.min.js"></script>
-	<script src ="<%=request.getContextPath()%>/resources/js/admin/metisMenu.min.js?ver=1"></script>
-	<script src ="<%=request.getContextPath()%>/resources/js/admin/sb-admin-2.min.js?ver=1"></script>
-	<script src ="<%=request.getContextPath()%>/resources/js/admin/raphael.min.js?ver=1"></script>
-	<script src ="<%=request.getContentLength()%>/resources/js/admin/dataTables.bootstrap.min.js?ver=2"></script>
-	<script src ="<%=request.getContentLength()%>/resources/js/admin/jquery.dataTables.min.js?ver=2"></script>
-	<script src ="<%=request.getContentLength()%>/resources/js/admin/dataTables.responsive.js?ver=1"></script>
+     <script src ="<%=request.getContextPath()%>/resources/js/admin/jquery.min.js"></script>
+	<script src ="<%=request.getContextPath()%>/resources/js/admin/bootstrap.min.js"></script>
+	<script src ="<%=request.getContextPath()%>/resources/js/admin/metisMenu.min.js"></script>
+    <script src ="<%=request.getContextPath()%>/resources/js/admin/jquery.dataTables.min.js"></script>
+   <script src ="<%=request.getContextPath()%>/resources/js/admin/dataTables.bootstrap.js"></script>
+	<script src ="<%=request.getContextPath()%>/resources/js/admin/sb-admin-2.min.js"></script>
+	
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Gugi">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Gaegu">
 	<title>BANDI ADMIN</title>
@@ -151,14 +147,14 @@
                         </div>
 						
 						<div class="panel-body">
-							<table class="table table-striped table-bordered table-hover" id="dataTables-example">
+							<table class="table table-striped table-bordered table-hover" id="dataTables-example" style="width: 100%;">
 								<thead>
 	                                  <tr>
 	                                      <th>주문일</th>
 	                                      <th>주문수</th>
+	                                      <th>책판매량</th>
+	                                      <th>포장비용</th>
 	                                      <th>주문합계</th>
-	                                      <th>포장여부</th>
-	                                      <th>기타</th>
 	                                  </tr>
 	                            </thead>
 	                            
@@ -166,10 +162,10 @@
 	                            	<tr>
 	                                     <td>2018/06/01</td>
 	                                     <td>12</td>
-	                                     <td>120,000</td>
-	                                     <td>8,000</td>
+	                                     <td>120000원</td>
+	                                     <td>8000원</td>
 	                                     <td>비고 없음</td>
-	                                </tr>
+	                                </tr>	                           
 	                            </tbody>
 							</table>
 						</div>
@@ -189,7 +185,7 @@
 				url: '/BANDI/admin.main',
 				type: 'POST',
 				success: function(data){
-					
+					console.log(data);
 				},
 				error : function(data){
 					alert('error');

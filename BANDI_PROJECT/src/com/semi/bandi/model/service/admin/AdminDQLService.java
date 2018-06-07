@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 import com.semi.bandi.model.dao.admin.AdminDao;
 import com.semi.bandi.model.vo.Writer;
+import com.semi.bandi.model.vo.adminVo.AnnualIncome;
+
 import static com.semi.bandi.template.JDBCTemplate.*;
 
 public class AdminDQLService 
@@ -44,5 +46,12 @@ public class AdminDQLService
 		AdminDao adDao = new AdminDao();
 		Connection con =  getInstance();
 		return adDao.existISBN(con, ISBN);
+	}
+	
+	public ArrayList<AnnualIncome> getAnnualArrayList(int year){
+		AdminDao adDao = new AdminDao();
+		Connection con =  getInstance();
+		
+		return adDao.getAnnualList(con, year);
 	}
 }

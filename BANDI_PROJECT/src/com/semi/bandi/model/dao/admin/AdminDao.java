@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import com.semi.bandi.model.vo.Book;
 import com.semi.bandi.model.vo.Writer;
 import com.semi.bandi.model.vo.adminVo.AnnualIncome;
+import com.semi.bandi.model.vo.adminVo.BookStocks;
+import com.semi.bandi.model.vo.adminVo.CommentAdmin;
+import com.semi.bandi.model.vo.adminVo.OrderAdmin;
 import com.semi.bandi.template.AdminQueryProperties;
 
 import static com.semi.bandi.template.JDBCTemplate.*;
@@ -384,6 +387,129 @@ public class AdminDao
 		}
 		
 		return totalorderCount;
+	}
+
+	public ArrayList<BookStocks> getBookStocksArray(Connection con, int min) {
+		if(con == null) return null;
+		
+		ArrayList<BookStocks> array = new ArrayList<BookStocks>();
+		PreparedStatement pstmt = null;
+		ResultSet rSet = null;
+		
+		String query = new AdminQueryProperties().getStockOfBooksTable();
+		
+		try{
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, min);
+			
+			rSet = pstmt.executeQuery();
+			BookStocks bookStock;
+			while(rSet.next())
+			{
+				bookStock = new BookStocks();
+				
+				bookStock.setmBook_UID(rSet.getInt(1));
+				bookStock.setmISBN(rSet.getString(2));
+				bookStock.setmTitle(rSet.getString(3));
+				bookStock.setmWriterName(rSet.getString(4));
+				bookStock.setmQuantity(rSet.getInt(5));
+				array.add(bookStock);
+			}
+			
+		}catch(SQLException e)
+		{
+			e.printStackTrace();
+			array = null;
+		}finally
+		{
+			close(rSet);
+			close(pstmt);
+		}
+		
+		return array;
+	}
+
+	public ArrayList<CommentAdmin> getCommentArray(Connection con, int year) 
+	{
+		if(con == null) return null;
+		
+		ArrayList<CommentAdmin> array = new ArrayList<CommentAdmin>();
+		PreparedStatement pstmt = null;
+		ResultSet rSet = null;
+		
+		String query = new AdminQueryProperties().getCommentTable();
+		
+		try{
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, year);
+			
+			rSet = pstmt.executeQuery();
+			CommentAdmin comment;
+			
+			while(rSet.next())
+			{
+				comment = new CommentAdmin();
+				comment.setmComment_UID(rSet.getInt(1));
+				comment.setmCommentBook_Title(rSet.getString(2));
+				comment.setmEmail(rSet.getString(3));
+				comment.setMbook_Comment(rSet.getString(4));
+				comment.setmWritedDate(rSet.getString(5));
+				array.add(comment);
+			}
+			
+		}catch(SQLException e)
+		{
+			e.printStackTrace();
+			array = null;
+		}finally
+		{
+			close(rSet);
+			close(pstmt);
+		}
+		
+		return array;
+	}
+
+	public ArrayList<OrderAdmin> getOrderArray(Connection con, int year) {
+		if(con == null) return null;
+		
+		ArrayList<OrderAdmin> array = new ArrayList<OrderAdmin>();
+		PreparedStatement pstmt = null;
+		ResultSet rSet = null;
+		
+		String query = new AdminQueryProperties().getOrderTable();
+		
+		try{
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, year);
+			
+			rSet = pstmt.executeQuery();
+			OrderAdmin order;
+			
+			while(rSet.next())
+			{
+				order = new OrderAdmin();
+				order.setmOrder_UID(rSet.getString(1));
+				order.setmEmail(rSet.getString(2));
+				order.setmName(rSet.getString(3));
+				order.setmTel(rSet.getString(4));
+				order.setmOrder_Date(rSet.getString(5));
+				array.add(order);
+			}
+			
+		}catch(SQLException e)
+		{
+			e.printStackTrace();
+			System.out.println("ORDER TABLE ERROR");
+			array = null;
+		}finally
+		{
+			close(rSet);
+			close(pstmt);
+		}
+		
+		return array;
+		
 	}
 	
 	

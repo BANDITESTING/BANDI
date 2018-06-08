@@ -58,11 +58,13 @@
 				 		<div class="button__horizontal"></div>
 	                    <div class="button__vertical"></div>
 				 	</button> --%>
-				 	<button class='myButt five w3-right' id ="adminBtn" value="<%=emailID[0]%>" style ="margin-left:30px; font-family: 'Gamja Flower'; font-size:1.75em;"
-				 	 onclick="location='<%=request.getContextPath()%>/views/admin/AdminMain.jsp'">
-						<div class='layer'><%=user.getmName()%></div>
-							관리자
-					</button>
+				 	<form action="<%=request.getContextPath()%>/admin.start" method="post">
+					 	<button class='myButt five w3-right' id ="adminBtn" value="<%=emailID[0]%>" style ="margin-left:30px; font-family: 'Gamja Flower'; font-size:1.75em;"
+					 	 onclick="moveAdmin()">
+							<div class='layer'><%=user.getmName()%></div>
+								관리자
+						</button>
+					</form>
 			 <%}%>
 			 
 			 <form action ="<%=request.getContextPath()%>/cart.ct" method ="POST" onsubmit="return loginCheck(this);" name ="cartSubmit">
@@ -201,6 +203,11 @@
 			return false;
 		}else
 		{return true;}
+	}
+
+	function moveAdmin()
+	{
+		
 	}
 	
 	function loginCheck()

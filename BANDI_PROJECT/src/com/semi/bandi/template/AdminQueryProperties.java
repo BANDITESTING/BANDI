@@ -89,4 +89,49 @@ public class AdminQueryProperties
 		
 		return query;
 	}
+	
+	public String getStockOfBooksTable()
+	{
+		String query = null;
+		
+		try {
+			prop.load(new FileReader(adminQuery));
+			query = prop.getProperty("bookstockTable");
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return query;
+	}
+	
+	public String getCommentTable()
+	{
+		String query = null;
+		
+		try {
+			prop.load(new FileReader(adminQuery));
+			query = prop.getProperty("commentAll");
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return query;
+	}
+	
+	public String getOrderTable()
+	{
+		String query = null;
+		
+		try {
+			prop.load(new FileReader(adminQuery));
+			query = prop.getProperty("orderTable");
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return query;
+	}
 }

@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import com.semi.bandi.model.dao.admin.AdminDao;
 import com.semi.bandi.model.vo.Writer;
 import com.semi.bandi.model.vo.adminVo.AnnualIncome;
+import com.semi.bandi.model.vo.adminVo.BookStocks;
+import com.semi.bandi.model.vo.adminVo.CommentAdmin;
+import com.semi.bandi.model.vo.adminVo.OrderAdmin;
 
 import static com.semi.bandi.template.JDBCTemplate.*;
 
@@ -82,5 +85,23 @@ public class AdminDQLService
 		Connection con = getInstance();
 		
 		return adDao.getOrderCount(con, year);
+	}
+	
+	public ArrayList<BookStocks> getBookStocksArray(int min) 
+	{
+		AdminDao adDao = new AdminDao();
+		Connection con = getInstance();
+		
+		return adDao.getBookStocksArray(con ,min);
+	}
+	public ArrayList<CommentAdmin> getCommentArrayList(int year) {
+		AdminDao adDao = new AdminDao();
+		Connection con = getInstance();
+		return adDao.getCommentArray(con, year);
+	}
+	public ArrayList<OrderAdmin> getOrderArrayList(int year) {
+		AdminDao adDao = new AdminDao();
+		Connection con = getInstance();
+		return adDao.getOrderArray(con, year);
 	}
 }

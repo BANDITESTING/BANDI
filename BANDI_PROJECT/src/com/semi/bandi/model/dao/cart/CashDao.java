@@ -5,10 +5,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 
 import com.semi.bandi.model.vo.Cart;
+import com.semi.bandi.model.vo.OrderDetail;
 import com.semi.bandi.model.vo.User;
 
 import static com.semi.bandi.template.JDBCTemplate.*;
@@ -80,84 +82,7 @@ public class CashDao {
 		return result;
 		
 	}
-	
-	public User selectUser(Connection con, int user_UID, String query) {
 		
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		User user = null;
-		
-		try {
-			
-			pstmt = con.prepareStatement(query + prop.getProperty("selectUser"));
-			
-			pstmt.setInt(1, user_UID);
-			
-			rset = pstmt.executeQuery();
-			
-			if (rset.next()) {
-				
-				user = new User();
-				
-				user.setmGrade(rset.getString("GRADE_CODE"));
-				
-			}
-			
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-			
-		} finally {
-			
-			close(rset);
-			
-		}
-		
-		return user;
-		
-	}
-	
-	public User orderUser(Connection con, int user_UID, String query) {
-		
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		User user = null;
-		
-		try {
-			
-			pstmt = con.prepareStatement(query + prop.getProperty("selectUser"));
-			
-			pstmt.setInt(1, user_UID);
-			
-			rset = pstmt.executeQuery();
-			
-			if (rset.next()) {
-				
-				user = new User();
-				
-				user.setmGrade(rset.getString("GRADE_CODE"));
-				user.setmEmail(rset.getString("E_MAIL"));
-				user.setmName(rset.getString("NAME"));
-				user.setmPhone(rset.getString("PHONE"));
-				
-			}
-			
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-			
-		} finally {
-			
-			close(rset);
-			
-		}
-		
-		System.out.println("dao user : " + user);
-		
-		return user;
-		
-	}
-	
 	public int deleteBasket(Connection con, Cart[] cart) {
 		
 		PreparedStatement pstmt = null;
@@ -254,27 +179,198 @@ public class CashDao {
 			close(pstmt);
 			
 		}
-		System.out.println("주문 도서 정보 : " + result);
+		
 		return result;
 		
 	}
 	
-	public int insertOrder(Connection con, ArrayList<Cart> cart) {
+	// 시퀀스 조회
+	public int selectSequence(Connection con) {
 		
-		return 0;
+		int result = 0;
+		Statement stmt = null;
+		ResultSet rset = null;
+		
+		try {
+			
+			stmt = con.createStatement();
+			
+			rset = stmt.executeQuery(prop.getProperty("selectSequence"));
+			
+			if (rset.next()) {
+				
+				result = rset.getInt(1);
+				
+			}
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			
+		} finally {
+			
+			close(rset);
+			close(stmt);
+			
+		}
+		
+		return result;
 		
 	}
 	
-	public ArrayList<Cart> selectOrder(Connection con, int user_UID) {
+	// ORDER_TABLE INSERT 기능
+	public int insertOrderTable(Connection con, User user, int sequence) {
 		
-		return null;
+		int result = 0;
+		PreparedStatement pstmt = null;
+				
+		try {
+			
+			pstmt = con.prepareStatement(prop.getProperty("insertOderTable"));
+			
+			pstmt.setString(1, String.valueOf(sequence));
+			pstmt.setInt(2, user.getmUser_UID());
+			pstmt.setString(3, user.getmAddress());
+			pstmt.setString(4, user.getmName());
+			pstmt.setString(5, user.getmPhone());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch(SQLException e) {
+			
+			e.printStackTrace();
+			
+		} finally {
+			
+			close(pstmt);
+			
+		}
+		
+		return result;
+		
+	}
+		
+	// 주문 번호 조회 기능
+	public String selectOrderUID(Connection con, User user) {
+		
+		String result = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		try {
+			
+			pstmt = con.prepareStatement(prop.getProperty("selectUSERUID"));
+			
+			pstmt.setInt(1, user.getmUser_UID());
+			
+			rset = pstmt.executeQuery();
+			
+			if (rset.next()) {
+				
+				result = rset.getString("ORDER_UID");
+				
+			}
+			
+		} catch(SQLException e) {
+			
+			e.printStackTrace();
+			
+		} finally {
+			
+			close(rset);
+			close(pstmt);
+			
+		}
+		
+		return result;
 		
 	}
 	
-	public int deleteOrder(Connection con, String order_UID, String book_UID) {
+	// ORDER_DETAIL INSERT 기능
+	public int insertOrderDetail(Connection con, String[] bookArr, String[] quanArr, String orderUID) {
 		
-		return 0;
+		int result = 0;
+		PreparedStatement pstmt = null;
 		
+		try {
+			
+			pstmt = con.prepareStatement(prop.getProperty("insertOrderDetail"));
+
+			pstmt.setString(1, orderUID);
+			
+			for (int i = 0 ; i < bookArr.length ; i++) {
+				
+				pstmt.setInt(2, Integer.parseInt(bookArr[i]));
+				pstmt.setInt(3, Integer.parseInt(quanArr[i]));
+				
+				result += pstmt.executeUpdate();
+				
+			}
+			
+		} catch(SQLException e) {
+			
+			e.printStackTrace();
+			
+		} finally {
+			
+			close(pstmt);
+			
+		}
+
+		return result;
+		
+	}
+	
+	// 로그인 계정 포인트 업데이트
+	public int updateUserPoint(Connection con, User user, int usePoint, double addPoint) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		try {
+			
+			pstmt = con.prepareStatement(prop.getProperty("updatePoint"));
+			
+			pstmt.setInt(1, usePoint);
+			pstmt.setInt(2, (int)addPoint);
+			pstmt.setInt(3, user.getmUser_UID());
+			pstmt.setString(4, user.getmEmail());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			
+		} finally {
+			
+			close(pstmt);
+			
+		}
+		
+		return result;
+	}
+
+	public ArrayList<OrderDetail> selectOrderTable(Connection con, int useruid) {
+		ArrayList<OrderDetail> result = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		try {
+			
+			pstmt = con.prepareStatement(prop.getProperty("selectOrderTable"));
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			
+		} finally {
+			
+			close(rset);
+			close(pstmt);
+			
+		}
+		
+		return result;
 	}
 
 }

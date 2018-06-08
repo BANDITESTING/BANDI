@@ -5,7 +5,7 @@
 	ArrayList<Cart> cartList = (ArrayList<Cart>)request.getAttribute("cartList");
 	DecimalFormat df = new DecimalFormat("###,###");
 	int bookTotal = 0;
-	double point = (Double)request.getAttribute("point");
+	double pointRate = (Double)request.getAttribute("pointRate");
 %>
 <!DOCTYPE html>
 <html>
@@ -59,7 +59,7 @@
 	                            	<input type="checkbox" class="chk" id="chk<%= i %>"><input type="hidden" id="bookUID" value="<%= cartList.get(i-1).getBookUID() %>">
 	                            </td> <!-- bootstrap.min.css 에서 .table td,.table th 안에 vertical-align:middle로 변경 -->
 	                            <td class="text-left tdBook">
-	                            	<img id="bookImg<%= i %>" class="bookImg" src="<%=request.getContextPath()%>/resources/images/cart/BOOK/<%= cartList.get(i-1).getImage() %>" alt="<%= cartList.get(i-1).getTitle() %>" style="margin-right:5%; margin-left:5%;"><%= cartList.get(i-1).getTitle() %>
+	                            	<img id="bookImg<%= i %>" class="bookImg" src="<%=request.getContextPath()%>/resources/bookimage/<%= cartList.get(i-1).getImage() %>" alt="<%= cartList.get(i-1).getTitle() %>" style="margin-right:5%; margin-left:5%;"><%= cartList.get(i-1).getTitle() %>
 	                            </td>
 	                            <td class="tdPrice" id="sale<%= i %>">
 	                            	<span class="onePrice"><%= df.format(cartList.get(i-1).getPrice())%></span> 원
@@ -120,9 +120,9 @@
                             </td>
                             <td id="point">
                             	<% if (bookTotal > 30000 || cartList == null) { %>
-                            		<%= df.format(bookTotal * point) %> P
+                            		<%= df.format(bookTotal * pointRate) %> P
                             	<% } else { %>
-                            		<%= df.format((bookTotal + 2500) * point) %> P
+                            		<%= df.format((bookTotal + 2500) * pointRate) %> P
                             	<% } %> 
                            	</td>
                         </tr>
@@ -142,8 +142,12 @@
         <script>
         	var bookTotal ="<%=bookTotal%>";
         	var user_uid = "<%= user.getmUser_UID() %>";
-        	var point = "<%=point%>";
+        	var point = "<%=pointRate%>";
         </script>
+        
+        <footer>
+        	<%@include file ="../common/Footer.jsp" %>
+        </footer>
     </body>
 
 </html>

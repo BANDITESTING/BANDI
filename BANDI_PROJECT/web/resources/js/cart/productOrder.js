@@ -1,5 +1,8 @@
 $(function() {
-
+	
+	var chkTotal = 0;
+	var keyTotal = parseInt($('#priceTotal').text().replace(",", ""));
+	
 	// 장바구니로 돌아가는 기능
 	$('#returnBtn').on('click', function() {
 		
@@ -8,11 +11,9 @@ $(function() {
 	});
 	
 	// 주소 찾기 기능
-	$('#addrSearch').bind('click', function() {
+	$('#addrSearch').on('click', function() {
 		var width = 500;
 	    var height = 500;
-	
-	    console.log("test");
 	
 	    new daum.Postcode({
 	        oncomplete: function(data) {
@@ -21,8 +22,6 @@ $(function() {
 	            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
 	            var fullAddr = ''; // 최종 주소 변수
 	            var extraAddr = ''; // 조합형 주소 변수
-	
-	            console.log("test2");
 	
 	            // 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
 	            if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
@@ -46,8 +45,6 @@ $(function() {
 	                fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
 	            }
 	
-	            console.log(fullAddr);
-	
 	            // 우편번호와 주소 정보를 해당 필드에 넣는다.
 	            $('#stamp').val(data.zonecode); //5자리 새우편번호 사용
 	                
@@ -62,5 +59,203 @@ $(function() {
 	        top: (window.screen.height / 2) - (height / 2)
 	    });
 	});
+	
+	// 배송 방법 체크 시 배송비 계산 기능
+	$('.delivery').on('change', function() {
+
+		chkTotal = parseInt($('#priceTotal').text().replace(",", ""));
+		
+		if (bookTotal > 30000) {
+			
+			if ($(this).val() == 'foreign') {
+				
+				$('#deliveryTotal').text("3,000");
+				$('#priceTotal').text((chkTotal + 3000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+				$('#payTotal').text((chkTotal + 3000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+				keyTotal = chkTotal + 3000;
+				
+			} else {
+				
+				$('#deliveryTotal').text("0");
+				if (chkTotal == (bookTotal + 3000)) {
+					
+					$('#priceTotal').text((chkTotal - 3000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+					$('#payTotal').text((chkTotal - 3000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+					keyTotal = chkTotal - 3000;
+					
+				} else if (chkTotal == (bookTotal - allPoint + 3000)) {
+					
+					$('#priceTotal').text((chkTotal - 3000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+					$('#payTotal').text((chkTotal - 3000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+					keyTotal = chkTotal - 3000;
+					
+				} else {
+					
+					$('#priceTotal').text(chkTotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+					$('#payTotal').text(chkTotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+					keyTotal = chkTotal;
+				
+				}
+				
+			}
+			
+		} else {
+			
+			if ($(this).val() == 'foreign') {
+				
+				$('#deliveryTotal').text("5,500");
+				$('#priceTotal').text((chkTotal + 3000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+				$('#payTotal').text((chkTotal + 3000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+				keyTotal = chkTotal + 3000;
+				
+			} else {
+				
+				$('#deliveryTotal').text("2,500");
+				if (chkTotal == (bookTotal + 5500)) {
+					
+					$('#priceTotal').text((chkTotal - 3000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+					$('#payTotal').text((chkTotal - 3000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+					keyTotal = chkTotal - 3000;
+					
+				} else if (chkTotal == (bookTotal - allPoint + 5500)) {
+					
+					$('#priceTotal').text((chkTotal - 3000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+					$('#payTotal').text((chkTotal - 3000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+					keyTotal = chkTotal - 3000;
+					
+				} else {
+					
+					$('#priceTotal').text(chkTotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+					$('#payTotal').text(chkTotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+					keyTotal = chkTotal;
+				
+				}
+				
+			}
+			
+		}
+		
+	});
+	
+	// 배송지 선택 시 테이블 변화 기능
+	$('.addr').on("change", function() {
+
+		if ($(this).val() == "basicUser") {
+			
+			$('.basicUserTB').css("display", "table-row-group");
+			$('.newUserTB').css("display", "none");
+			$('#memD').prop("checked", true);
+			
+		} else {
+			
+			$('.newUserTB').css("display", "table-row-group");
+			$('.basicUserTB').css("display", "none");
+			$('#newD_new').prop("checked", true);
+			
+		}
+		
+	});
+	
+	// 포인트 사용 -> 모두 사용 체크 시 기능
+	$('#pointAll').on('click', function() {
+		
+		chkTotal = parseInt($('#priceTotal').text().replace(",", ""));
+		
+		if ($(this).prop("checked") == true) {
+			
+			if ($('#pointT').val() == "") {
+
+				$('#pointT').val(allPoint);
+				$('#discount').text(allPoint.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+				$('#priceTotal').text((chkTotal - allPoint).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+				$('#payTotal').text((chkTotal - allPoint).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+				
+			} else {
+
+				$('#pointT').val(allPoint);
+				$('#discount').text(allPoint.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+				$('#priceTotal').text((keyTotal - allPoint).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+				$('#payTotal').text((keyTotal - allPoint).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+				
+			}
+		} else {
+			
+			$('#pointT').val("");
+			$('#discount').text("0");
+			$('#priceTotal').text((chkTotal + allPoint).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+			$('#payTotal').text((chkTotal + allPoint).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+			
+		}
+		
+	});
+	
+	// 사용 포인트 직접 입력 기능
+	$('#pointT').on('keyup', function() {
+		
+		var point = parseInt($('#pointT').val());
+		
+		if (point < allPoint) {		// 보유 포인트보다 큰 포인트를 사용하지 못하게 막는 부분
+
+			if ($('#pointT').val() != "") {
+
+				$('#priceTotal').text((keyTotal - point).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+				$('#discount').text(point.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+				
+			} else {
+
+				$('#discount').text("0");
+				$('#priceTotal').text(keyTotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+				
+			}
+			
+		} else {
+			
+			alert("보유 포인트보다 많이 사용할 수 없습니다.");
+			$('#pointT').val(allPoint);
+			$('#pointAll').prop("checked", true);
+			
+		}
+		
+		console.log($('#priceTotal').text().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+		$('#payTotal').text($('#priceTotal').text().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+		
+	});
+	
+	// 결제 완료 기능 (order table에 담을 데이터 전달 기능)
+	$('#payBtn').on('click', function() {
+		
+		var bookList = "";
+		var quanList = "";
+		var userData = "";
+		var usePoint = $('#discount').text().replace(",", "");
+		var deliveryPay = $('#deliveryTotal').text().replace(",", "");
+		var orderTotal = $("#orderTotal").text().replace(",", "");
+		var priceTotal = $("#priceTotal").text().replace(",", "");
+		
+		console.log(deliveryPay);
+
+		$('.bookImg').each(function(index, item) {
+		
+			bookList += $(this).siblings('input').val() + ",";
+			quanList += $(this).parent().siblings().find('.bookQuan').text() + ",";
+			
+		});
+		
+		if ($('#newD').prop("checked") == true || $('#newD_new').prop("checked") == true) {
+			
+			userData += ($('#nameText').val()
+					+ "," + $('#userPh1').val() + "-" + $('#userPh2').val() + "-" + $('#userPh3').val()
+					+ "," + $('#stamp').val() + " " + $('#addr1').val() + " " + $('#addr2').val());
+			
+		} else {
+			
+			userData = "0";
+			
+		}
+		
+		location.href = "/BANDI/complete.ct?bookList=" + bookList + "&quanList=" + quanList + "&userData=" + userData + "&usePoint=" + usePoint
+						+ "&deliveryPay=" + deliveryPay + "&orderTotal=" + orderTotal + "&priceTotal=" + priceTotal;
+		
+	}); 
 		
 });

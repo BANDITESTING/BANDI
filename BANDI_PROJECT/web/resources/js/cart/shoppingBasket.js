@@ -123,8 +123,13 @@ $(function() {
 			$('.chk').each(function(index, item) {
 				
 				if ($(this).prop('checked') == true) {
-		
+				
 		        	$(this).parent().parent().remove();
+					
+				} else {
+					
+					$(this).prop("checked", true);
+					$('#chkAll').prop("checked", true);
 					
 				}
 				

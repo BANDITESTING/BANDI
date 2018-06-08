@@ -1,7 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="com.semi.bandi.model.vo.*" %>
+<%@ page import="com.semi.bandi.model.vo.adminVo.*"%>
+<%@ page import="java.util.*" %>
+<% 
+	@SuppressWarnings("unchecked")
+	ArrayList<BookStocks> stocks = (ArrayList<BookStocks>)session.getAttribute("stocks");
+
+	@SuppressWarnings("unchecked")
+	ArrayList<AnnualIncome> incomes = (ArrayList<AnnualIncome>)session.getAttribute("annual");
+	
+	@SuppressWarnings("unchecked")
+	ArrayList<CommentAdmin> comments  = (ArrayList<CommentAdmin>)session.getAttribute("comments");
+	
+	@SuppressWarnings("unchecked")
+	ArrayList<OrderAdmin> orders = (ArrayList<OrderAdmin>)session.getAttribute("orders");
+	
+	if(stocks == null || incomes == null || comments == null || orders == null)
+	{
+		// go to Error Page;
+	}
+%>
 <!DOCTYPE html>
 <html>
+<%
+	
+%>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta charset="utf-8">
@@ -80,7 +104,7 @@
                                 </div>
                                 <div class="col-xs-9 text-right">
                                     <div class="huge" id ="stockCount">12</div>
-                                    <div>책 재고 현황</div>
+                                    <div>책 재고 부족 현황</div>
                                 </div>
                             </div>
                         </div>
@@ -143,7 +167,7 @@
             </div>
            
 			<!-- Table List -->
-			<div class = "row">
+			<div class = "row" id ="incomeTable">
 				<div class = "col-lg-9">
 					<div class="panel panel-default">
 						<div class="panel-heading">
@@ -151,7 +175,8 @@
                         </div>
 						
 						<div class="panel-body">
-							<table class="table table-striped table-bordered table-hover" id="dataTables-example" style="width: 100%; text-align: right;">
+							<table class="table table-striped table-bordered table-hover" 
+							style="width: 100%; text-align: right;">
 								<thead>
 	                                  <tr>
 	                                      <th>주문일</th>
@@ -163,81 +188,41 @@
 	                            </thead>
 	                            
 	                            <tbody>
+	                            <%for(int i = 0; i < incomes.size(); i++) { %>
 	                            	<tr>
-	                                     <td>2018/06/01</td>
-	                                     <td>12</td>
-	                                     <td>120000원</td>
-	                                     <td>8000원</td>
-	                                     <td>비고 없음</td>
-	                                </tr>	                           
+	                                     <td><%=incomes.get(i).getmOrderDate()%></td>
+	                                     <td><%=incomes.get(i).getmOrderCount()%></td>
+	                                     <td><%=incomes.get(i).getmOrderBooksCount()%></td>
+	                                     <td><%=incomes.get(i).getmPacketPrice()%></td>
+	                                     <td><%=incomes.get(i).getmSumPrice()%></td>
+	                                </tr>
+	                             <%} %>	                           
 	                            </tbody>
 							</table>
-						</div>
+							
+						</div>			
 					</div>		
 				</div>
 				
 				<div class ="col-lg-3">
 						
 				</div>	
-			</div>           
+			</div>
+			          
          </div>
 	</div>
 	
 	<script>
 		$(function(){
-			$.ajax({
-				url: '/BANDI/admin.main',
-				type: 'POST',
-				success: function(data){
-					// Remove Remanent Data about Income Table
-					$('tbody tr').remove();
-					$('tbody td').remove();
-					
-					for(var i = 0; i < data.length; i++)
-					{
-						var std = "<tr><td>" + data[i].mOrderDate + "</td>" + 
-						"<td>" + data[i].mOrderCount + "</td>" +
-						"<td>" + data[i].mOrderBooksCount + "</td>" +
-						"<td>" + data[i].mPacketPrice + "</td>" +
-						"<td>" + data[i].mSumPrice + "</td></tr>";
-						
-						$('table').append(std);
-					}
-				},
-				error: function(request,status,error)
-				{
-					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-				}
-			});
-			
-			// Set All Income This Year!
-			$.ajax({
-				url: '/BANDI/income.admin',
-				type : 'POST',
-				success : function(data)
-				{
-					$('#incomeCount').text(data.total);
-					$('#stockCount').text(data.stock);
-					$('#commentCount').text(data.comment);
-					$('#orderCount').text(data.order);
-				},
-				error: function(request,status,error)
-				{
-					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-				}
-			});
+
 		});
 		
 		$(document).ready(function() {
-		        $('#dataTables-example').DataTable({
+		        $('table').DataTable({
 		            responsive: true
 		        });
 		});
 		
-		function changeList(name)
-		{
-			console.log(name);
-		}
 	</script>
 	
 </body>

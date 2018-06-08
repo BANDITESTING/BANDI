@@ -29,4 +29,64 @@ public class AdminQueryProperties
 		
 		return query;
 	}
+	
+	public String getTotalIncomeQuery()
+	{
+		String query = null;
+		
+		try {
+			prop.load(new FileReader(adminQuery));
+			query = prop.getProperty("totalIncome");
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return query;
+	}
+	
+	public String getCommentCount()
+	{
+		String query = null;
+		
+		try {
+			prop.load(new FileReader(adminQuery));
+			query = prop.getProperty("commentCount");
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return query;
+	}
+	
+	public String getOrderCount()
+	{
+		String query = null;
+		
+		try {
+			prop.load(new FileReader(adminQuery));
+			query = prop.getProperty("orderCount");
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return query;
+	}
+	
+	public String getStockOfBooksCount()
+	{
+		String query = null;
+		
+		try {
+			prop.load(new FileReader(adminQuery));
+			query = prop.getProperty("bookstockCount");
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return query;
+	}
 }

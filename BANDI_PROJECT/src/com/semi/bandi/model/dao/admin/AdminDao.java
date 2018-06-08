@@ -139,6 +139,10 @@ public class AdminDao
 		}catch(SQLException e)
 		{
 			e.printStackTrace();
+		}finally
+		{
+			close(rSet);
+			close(pstmt);
 		}
 		
 		return result;
@@ -205,6 +209,8 @@ public class AdminDao
 		}catch(SQLException e)
 		{
 			e.printStackTrace();
+		}finally{
+			close(pstmt);
 		}
 		
 		return result;
@@ -229,11 +235,13 @@ public class AdminDao
 			while(rSet.next())
 			{
 				annual = new AnnualIncome();
-				annual.setmOrderDate(rSet.getDate(1));
-				annual.setmSumPrice(rSet.getInt(2));
+				annual.setmOrderDate(rSet.getString(1));
 				annual.setmOrderCount(rSet.getInt(3));
 				annual.setmPacketPrice(rSet.getInt(4));
 				annual.setmOrderBooksCount(rSet.getInt(5));
+				
+				// Total Income.
+				annual.setmSumPrice(rSet.getInt(2) + annual.getmPacketPrice());
 				
 				arrayIncome.add(annual);
 			}
@@ -241,8 +249,142 @@ public class AdminDao
 		}catch(SQLException e)
 		{
 			arrayIncome = null;
+		}finally
+		{
+			close(rSet);
+			close(pstmt);
 		}
 		
 		return arrayIncome;
 	}
+
+	// Get Total Income + Packet Income too.
+	public int getTotalIncome(Connection con, int year) {
+		if(con == null) return -1;
+		
+		int totalIncome = -1;
+		PreparedStatement pstmt = null;
+		ResultSet rSet = null;
+		
+		String query = new AdminQueryProperties().getTotalIncomeQuery();
+		
+		try{
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, year+"");
+			
+			rSet  = pstmt.executeQuery();
+			
+			// But this While loop, only one Execute, Because Just return one resultSet;
+			while(rSet.next()) 
+			{
+				totalIncome =  rSet.getInt(1) + rSet.getInt(2);
+			}
+		}catch(SQLException e)
+		{
+			e.printStackTrace();
+		}finally
+		{
+			close(rSet);
+			close(pstmt);
+		}
+		
+		return totalIncome;
+	}
+
+	public int getStockOfBooks(Connection con, int min) {
+		if(con == null) return -1;
+		
+		int booksCount = -1;
+		PreparedStatement pstmt = null;
+		ResultSet rSet = null;
+		
+		String query = new AdminQueryProperties().getStockOfBooksCount();
+		
+		try{
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, min+"");
+			
+			rSet  = pstmt.executeQuery();
+			
+			// But this While loop, only one Execute, Because Just return one resultSet;
+			while(rSet.next()) 
+			{
+				booksCount =  rSet.getInt(1);
+			}
+		}catch(SQLException e)
+		{
+			e.printStackTrace();
+		}finally
+		{
+			close(rSet);
+			close(pstmt);
+		}
+		
+		return booksCount;
+	}
+
+	public int getCommentOfCount(Connection con, int year) {
+		if(con == null) return -1;
+		
+		int totalCommentCount = -1;
+		PreparedStatement pstmt = null;
+		ResultSet rSet = null;
+		
+		String query = new AdminQueryProperties().getCommentCount();
+		
+		try{
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, year+"");
+			
+			rSet  = pstmt.executeQuery();
+			
+			// But this While loop, only one Execute, Because Just return one resultSet;
+			while(rSet.next()) 
+			{
+				totalCommentCount =  rSet.getInt(1);
+			}
+		}catch(SQLException e)
+		{
+			e.printStackTrace();
+		}finally
+		{
+			close(rSet);
+			close(pstmt);
+		}
+		
+		return totalCommentCount;
+	}
+
+	public int getOrderCount(Connection con, int year) {
+		if(con == null) return -1;
+		
+		int totalorderCount = -1;
+		PreparedStatement pstmt = null;
+		ResultSet rSet = null;
+		
+		String query = new AdminQueryProperties().getOrderCount();
+		
+		try{
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, year+"");
+			
+			rSet  = pstmt.executeQuery();
+			
+			// But this While loop, only one Execute, Because Just return one resultSet;
+			while(rSet.next()) 
+				totalorderCount =  rSet.getInt(1);
+			
+		}catch(SQLException e)
+		{
+			e.printStackTrace();
+		}finally
+		{
+			close(rSet);
+			close(pstmt);
+		}
+		
+		return totalorderCount;
+	}
+	
+	
 }

@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import com.google.gson.Gson;
 import com.semi.bandi.model.service.category.*;
 import com.semi.bandi.model.vo.Book;
 import com.semi.bandi.model.vo.Category;
@@ -42,30 +40,38 @@ public class CategoryServlet extends HttpServlet {
 		
 		ArrayList<Category> list = bs.bookTableListDate(category);
 		
-		Book[] bookArray = new Book[6];
+		/*Book[] bookArray = new Book[6];*/
+		ArrayList<Book> bookArray= new ArrayList<Book>();
 		
-		// [Warning] Need to List  Size is only 6. Should Protect Here. 
-		for(int i = 0;  i < 6; i++)
+		// [Warning] Need to List  Size is only 6. Should Protect Here.
+		int size = list.size();
+		if(size > 6) size = 6;
+		for(int i = 0;  i < size; i++)
 		{
 			Book book = new Book();
 			book.setmISBN(list.get(i).getcISBN());
 			book.setmImagePath(list.get(i).getcImage());
 			book.setmTitle(list.get(i).getcTitle());
 			book.setmPrice(list.get(i).getcPrice());
-			bookArray[i] = book;
+			/*bookArray[i] = book;*/
+			bookArray.add(book);
+			
 		}
 		
-		//ArrayList<Category> list2 = bs.bookTableListSell(category);
+		ArrayList<Category> BannerArray = bs.CategoryBanner(category);
 		ArrayList<Category> list3 = bs.bookTableListBanner(category);
 			
-		/*for(int i= 0; i <list2.size(); i++)
-			System.out.println(list2.get(i).toString());*/
 				
 		HttpSession session = request.getSession();
 		session.setAttribute("CategoryList1", list);
 		session.setAttribute("categoryRec", bookArray);
-		//session.setAttribute("CategoryList2", list2);
+		session.setAttribute("CategoryBanner", BannerArray);
 		session.setAttribute("CategoryList3", list3);
+		session.setAttribute("CategoryCode", category);
+		
+		// ADD PAGE
+		int PageCount = bs.PagingCount(category);
+		session.setAttribute("PageCount",PageCount );
 		
 		RequestDispatcher views = request.getRequestDispatcher("/views/category/categoryForm.jsp");
 		views.forward(request, response);

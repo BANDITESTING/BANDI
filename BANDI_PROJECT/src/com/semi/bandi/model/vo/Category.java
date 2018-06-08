@@ -15,7 +15,34 @@ public class Category implements Serializable
 	private int cPrice;
 	private String cImage;
 	private String cIntroduce;
+	private String cGenre;
+	private String cSubGenre;
 	
+	public String getcSubGenre() {
+		return cSubGenre;
+	}
+
+	public void setcSubGenre(String cSubGenre) {
+		this.cSubGenre = cSubGenre;
+	}
+
+
+	
+	
+	public String getcGenre() {
+		return cGenre;
+	}
+
+	public void setcGenre(String cGenre) {
+		this.cGenre = cGenre;
+	}
+
+	public Category(String cSubGenre, String cGenre) {
+		super();
+		this.cGenre = cGenre;
+		this.cSubGenre = cSubGenre;
+	}
+
 	public Category(String cTitle, String cWriter, int cPrice, String cImage) {
 		super();
 		this.cTitle = cTitle;
@@ -142,8 +169,9 @@ public class Category implements Serializable
 
 	@Override
 	public String toString() {
-		return "Category [cTitle=" + cTitle + ", cWriter=" + cWriter + ", cPrice=" + cPrice + ", cImage=" + cImage
-				+ "cIntroduce"+ cIntroduce+"]";
+		return "Category [cISBN=" + cISBN + ", cTitle=" + cTitle + ", cWriter=" + cWriter + ", cPrice=" + cPrice
+				+ ", cImage=" + cImage + ", cIntroduce=" + cIntroduce + ", cGenre=" + cGenre + ", cSubGenre="
+				+ cSubGenre + "]";
 	}
 
 }

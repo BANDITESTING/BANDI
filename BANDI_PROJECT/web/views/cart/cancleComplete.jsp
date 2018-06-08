@@ -43,6 +43,11 @@
             </div>
 
         </div>
+        
+        <footer>
+        	<%@include file ="../common/Footer.jsp" %>
+        </footer>
+        
     </body>
 
 </html>

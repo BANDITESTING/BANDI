@@ -10,9 +10,18 @@ public class OrderDetail
 	String shipping;
 	String receiver;
 	String shippingSate;
+	String phone;
 	
 	public OrderDetail(){}
 
+	public OrderDetail(String orderUID, String shipping, String receiver, String phone) {
+		super();
+		this.orderUID = orderUID;
+		this.shipping = shipping;
+		this.receiver = receiver;
+		this.phone = phone;
+	}
+	
 	public OrderDetail(String orderUID, int userUID, Date orderDate, String shipping, String receiver,
 			String shippingSate) {
 		super();
@@ -80,10 +89,18 @@ public class OrderDetail
 		this.shippingSate = shippingSate;
 	}
 
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
 	@Override
 	public String toString() {
-		return "OrderTable [orderUID=" + orderUID + ", userUID=" + userUID + ", orderDate=" + orderDate + ", shipping="
-				+ shipping + ", receiver=" + receiver + ", shippingSate=" + shippingSate + "]";
+		return "OrderDetail [orderUID=" + orderUID + ", userUID=" + userUID + ", orderDate=" + orderDate + ", shipping="
+				+ shipping + ", receiver=" + receiver + ", shippingSate=" + shippingSate + ", phone=" + phone + "]";
 	}
 
 	@Override

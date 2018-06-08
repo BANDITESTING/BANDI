@@ -54,4 +54,33 @@ public class AdminDQLService
 		
 		return adDao.getAnnualList(con, year);
 	}
+	
+	// Get All Income 
+	public int getTotalIncome(int year)
+	{
+		AdminDao adDao = new AdminDao();
+		Connection con = getInstance();
+		
+		return adDao.getTotalIncome(con, year);
+	}
+	
+	public int getStockOfBooks(int minStock) {
+		AdminDao adDao = new AdminDao();
+		Connection con = getInstance();
+		
+		return adDao.getStockOfBooks(con, minStock);
+	}
+	public int getCommentOfCount(int year) {
+		AdminDao adDao = new AdminDao();
+		Connection con = getInstance();
+		
+		return adDao.getCommentOfCount(con, year);
+	}
+	
+	public int getOrderCount(int year) {
+		AdminDao adDao = new AdminDao();
+		Connection con = getInstance();
+		
+		return adDao.getOrderCount(con, year);
+	}
 }

@@ -1,13 +1,13 @@
 package com.semi.bandi.model.vo.adminVo;
 
 import java.io.Serializable;
-import java.sql.Date;
+//import java.sql.Date;
 
 public class AnnualIncome implements Serializable
 {
 	private static final long serialVersionUID = 80891L;
 	
-	private Date mOrderDate;
+	private String mOrderDate;
 	private int  mSumPrice;
 	private int  mOrderCount;
 	private int  mPacketPrice;
@@ -15,7 +15,7 @@ public class AnnualIncome implements Serializable
 	
 	public AnnualIncome(){}
 
-	public AnnualIncome(Date mOrderDate, int mSumPrice, int mOrderCount, int mPacketPrice, int mOrderBooksCount) {
+	public AnnualIncome(String mOrderDate, int mSumPrice, int mOrderCount, int mPacketPrice, int mOrderBooksCount) {
 		super();
 		this.mOrderDate = mOrderDate;
 		this.mSumPrice = mSumPrice;
@@ -24,11 +24,11 @@ public class AnnualIncome implements Serializable
 		this.mOrderBooksCount = mOrderBooksCount;
 	}
 
-	public Date getmOrderDate() {
+	public String getmOrderDate() {
 		return mOrderDate;
 	}
 
-	public void setmOrderDate(Date mOrderDate) {
+	public void setmOrderDate(String mOrderDate) {
 		this.mOrderDate = mOrderDate;
 	}
 

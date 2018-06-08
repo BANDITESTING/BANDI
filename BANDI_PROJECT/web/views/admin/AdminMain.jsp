@@ -27,6 +27,10 @@
 		.font-header{
 			font-family: 'Gugi', sans-serif;
 			font-style: italic;
+		}
+		
+		.panel-footer{
+			cursor: pointer;
 		}	
 	</style>
 	
@@ -52,13 +56,13 @@
                                     <i class="fa fa-signal fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">13</div>
+                                    <div class="huge" id="incomeCount">13</div>
                                     <div>매출 현황</div>
                                 </div>
                             </div>
                         </div>
                         
-                            <div class="panel-footer" style= "color:black;">
+                            <div class="panel-footer" style= "color:black;" onclick="changeList('income');">
                                 <span class="pull-left">자세히 보기</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                 <div class="clearfix"></div>
@@ -75,13 +79,13 @@
                                     <i class="fa fa-tasks fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">12</div>
+                                    <div class="huge" id ="stockCount">12</div>
                                     <div>책 재고 현황</div>
                                 </div>
                             </div>
                         </div>
                         
-                            <div class="panel-footer" style ="color: black;">
+                            <div class="panel-footer" style ="color: black;" onclick="changeList('stock');">
                                 <span class="pull-left">자세히 보기</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                 <div class="clearfix"></div>
@@ -98,13 +102,13 @@
                                     <i class="fa fa-comments fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">26</div>
+                                    <div class="huge" id ="commentCount">26</div>
                                     <div>댓글 현황</div>
                                 </div>
                             </div>
                         </div>
                        
-                            <div class="panel-footer">
+                            <div class="panel-footer" onclick="changeList('comment');">
                                 <span class="pull-left">자세히 보기</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                 <div class="clearfix"></div>
@@ -121,13 +125,13 @@
                                     <i class="fa fa-shopping-cart fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">124</div>
+                                    <div class="huge" id ="orderCount">124</div>
                                     <div>주문현황</div>
                                 </div>
                             </div>
                         </div>
                         
-                            <div class="panel-footer">
+                            <div class="panel-footer" onclick="changeList('order');">
                                 <span class="pull-left">자세히 보기</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                 <div class="clearfix"></div>
@@ -143,11 +147,11 @@
 				<div class = "col-lg-9">
 					<div class="panel panel-default">
 						<div class="panel-heading">
-                            	월 매출 현황
+                            	매출 현황
                         </div>
 						
 						<div class="panel-body">
-							<table class="table table-striped table-bordered table-hover" id="dataTables-example" style="width: 100%;">
+							<table class="table table-striped table-bordered table-hover" id="dataTables-example" style="width: 100%; text-align: right;">
 								<thead>
 	                                  <tr>
 	                                      <th>주문일</th>
@@ -185,10 +189,41 @@
 				url: '/BANDI/admin.main',
 				type: 'POST',
 				success: function(data){
-					console.log(data);
+					// Remove Remanent Data about Income Table
+					$('tbody tr').remove();
+					$('tbody td').remove();
+					
+					for(var i = 0; i < data.length; i++)
+					{
+						var std = "<tr><td>" + data[i].mOrderDate + "</td>" + 
+						"<td>" + data[i].mOrderCount + "</td>" +
+						"<td>" + data[i].mOrderBooksCount + "</td>" +
+						"<td>" + data[i].mPacketPrice + "</td>" +
+						"<td>" + data[i].mSumPrice + "</td></tr>";
+						
+						$('table').append(std);
+					}
 				},
-				error : function(data){
-					alert('error');
+				error: function(request,status,error)
+				{
+					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
+			});
+			
+			// Set All Income This Year!
+			$.ajax({
+				url: '/BANDI/income.admin',
+				type : 'POST',
+				success : function(data)
+				{
+					$('#incomeCount').text(data.total);
+					$('#stockCount').text(data.stock);
+					$('#commentCount').text(data.comment);
+					$('#orderCount').text(data.order);
+				},
+				error: function(request,status,error)
+				{
+					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				}
 			});
 		});
@@ -198,6 +233,11 @@
 		            responsive: true
 		        });
 		});
+		
+		function changeList(name)
+		{
+			console.log(name);
+		}
 	</script>
 	
 </body>

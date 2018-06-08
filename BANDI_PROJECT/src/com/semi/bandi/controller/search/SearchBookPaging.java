@@ -12,25 +12,26 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import com.semi.bandi.model.service.search.SearchBookService;
 import com.semi.bandi.model.vo.searchVo.PageInfo;
 import com.semi.bandi.model.vo.searchVo.SearchBook;
 
-@WebServlet("/searchBook.sb")
-public class SearchBookServlet extends HttpServlet {
+@WebServlet("/paging.sb")
+public class SearchBookPaging extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public SearchBookServlet() { }
+    public SearchBookPaging() { }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String option = request.getParameter("searchBy");
-		String getText = request.getParameter("searchText");
+		String option = request.getParameter("option");
+		String getText = request.getParameter("getText");
+		String genreCode = request.getParameter("genreCode");
 		String text = getText.replaceAll(" ", "");
 		SearchBookService sbs = new SearchBookService();
-
 		ArrayList<SearchBook> list = null;
 		
-		// -- 페이징 부분 -- //
+		// 페이징 부분 //
 		
 		int startPage;		// 한번에 표시될 게시글들의 시작 페이지
 		int endPage;		// 한번에 표시될 게시글들의 마지막 페이지
@@ -47,8 +48,13 @@ public class SearchBookServlet extends HttpServlet {
 		if(request.getParameter("currentPage") != null){
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
-		
-		int listCount = sbs.getlistCount(option, text);
+
+		int listCount = 0;
+		if(genreCode.equals("null")){
+			listCount = sbs.getlistCount(option, text);
+		} else {
+			listCount = sbs.getGenreCount(option, text, genreCode);
+		}
 
 		maxPage = (int)((listCount -1) / b_size + 1);
 		startPage = (int)((currentPage -1) / p_size) * p_size + 1;
@@ -60,20 +66,21 @@ public class SearchBookServlet extends HttpServlet {
 		
 		PageInfo pi = new PageInfo(startPage, endPage, maxPage, currentPage, listCount, b_size, p_size);
 		
-		// -- 페이징 부분 -- //
+		// 페이징 부분 //
 		
-		list = sbs.searchBook(option, text, currentPage, b_size);
-		HashMap<String, Integer> genreCount = new SearchBookService().searchBookGenre(option, text);
+		if(genreCode.equals("null")){
+			list = sbs.searchBook(option, text, currentPage, b_size);
+		} else {
+			list = sbs.searchGenre(option, text, genreCode, currentPage, b_size);
+		}
 		
-		request.setAttribute("option", option);
-		request.setAttribute("getText", getText);
-		request.setAttribute("list", list);
-		request.setAttribute("genreCount", genreCount);
-		request.setAttribute("pi", pi);
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		
-		ServletContext context = getServletContext();
-		RequestDispatcher rq = context.getRequestDispatcher("/views/search/searchBook.jsp");
-		rq.forward(request, response);
+		map.put("list", list);
+		map.put("pi", pi);
+		
+		response.setContentType("application/json; charset=UTF-8");
+		new Gson().toJson(map, response.getWriter());
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

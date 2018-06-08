@@ -30,6 +30,7 @@ public class SearchBookDao {
 		}
 	}
 	
+	// 책 검색
 	public ArrayList<SearchBook> searchBook(Connection con, String option, String getText, int currentPage, int b_size) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -91,6 +92,7 @@ public class SearchBookDao {
 		return list;
 	}
 
+	// leftbar에 표시할 장르별 검색어 숫자
 	public HashMap<String, Integer> searchBookGenre(Connection con, String option, String getText) {
 		Statement stmt = null;
 		ResultSet rset = null;
@@ -132,8 +134,9 @@ public class SearchBookDao {
 		return genreCount;
 	}
 
-	public ArrayList<SearchBook> searchGenre(Connection con, String option, String getText, String genreCode) {
-		Statement stmt = null;
+	// 장르별 책 검색
+	public ArrayList<SearchBook> searchGenre(Connection con, String option, String getText, String genreCode, int currentPage, int b_size) {
+		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<SearchBook> list = null;
 		String dynamicSQL = "";
@@ -154,15 +157,22 @@ public class SearchBookDao {
 					+ "AND(REPLACE(PUBLISHER, ' ') LIKE '%'|| '"+getText+"' ||'%')";
 		}
 
-		String sql = prop.getProperty("searchBook")+dynamicSQL;		
-		
+		String sql = prop.getProperty("searchBook1")+dynamicSQL+prop.getProperty("searchBook2");		
+
 		try {
-		
-			stmt = con.createStatement();
+
+			pstmt = con.prepareStatement(sql);
 			
-			rset = stmt.executeQuery(sql);
+			// 조회할 숫자 startRow 와 endRow 계산
+			int startRow = (currentPage - 1) * b_size +1;
+			int endRow = startRow + (b_size - 1);
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
 			
 			list = new ArrayList<SearchBook>();
+			
+			rset = pstmt.executeQuery();
 			
 			while(rset.next()){
 				SearchBook book = new SearchBook();
@@ -185,12 +195,13 @@ public class SearchBookDao {
 			e.printStackTrace();
 		} finally {
 			close(rset);
-			close(stmt);
+			close(pstmt);
 		}		
 
 		return list;
 	}
 
+	// 페이징용 검색어 숫자 반환
 	public int getListCount(Connection con, String option, String getText) {
 		Statement stmt = null;
 		ResultSet rset = null;
@@ -208,6 +219,52 @@ public class SearchBookDao {
 			dynamicSQL = " WHERE REPLACE(WRITER_NAME, ' ') LIKE '%'|| '"+getText+"' ||'%')";
 		} else if(option.equals("publisherSearch")){
 			dynamicSQL = " WHERE REPLACE(PUBLISHER, ' ') LIKE '%'|| '"+getText+"' ||'%')";
+		}
+		
+		String sql = prop.getProperty("listCount")+dynamicSQL;	
+		
+		try {
+			
+			stmt = con.createStatement();
+			
+			rset = stmt.executeQuery(sql);
+			
+			if(rset.next()){
+				result = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(stmt);
+		}
+		
+		return result;
+	}
+
+	// 페이징용 장르 검색어 숫자 반환
+	public int getGenreCount(Connection con, String option, String getText, String genreCode) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String dynamicSQL = "";
+		
+		if(option.equals("totalSearch")){
+			dynamicSQL = " WHERE GENRE_CODE LIKE '"+genreCode+"'"
+					+ " AND (REPLACE(TITLE, ' ') LIKE '%'|| '"+getText+"' ||'%'"
+					+ " OR REPLACE(WRITER_NAME, ' ') LIKE '%'|| '"+getText+"' ||'%'"
+					+ " OR REPLACE(PUBLISHER, ' ') LIKE '%'|| '"+getText+"' ||'%'))";
+		} else if(option.equals("bookSearch")){
+			dynamicSQL = " WHERE GENRE_CODE LIKE '"+genreCode+"'"
+					+ "AND (REPLACE(TITLE, ' ') LIKE '%'|| '"+getText+"' ||'%'))";
+		} else if(option.equals("authorSearch")){
+			dynamicSQL = " WHERE GENRE_CODE LIKE '"+genreCode+"'"
+					+ "AND (REPLACE(WRITER_NAME, ' ') LIKE '%'|| '"+getText+"' ||'%'))";
+		} else if(option.equals("publisherSearch")){
+			dynamicSQL = " WHERE GENRE_CODE LIKE '"+genreCode+"'"
+					+ "AND (REPLACE(PUBLISHER, ' ') LIKE '%'|| '"+getText+"' ||'%'))";
 		}
 		
 		String sql = prop.getProperty("listCount")+dynamicSQL;	

@@ -38,10 +38,10 @@ public class SearchBookService {
 		return genreCount;
 	}
 
-	public ArrayList<SearchBook> searchGenre(String option, String getText, String genreCode) {
+	public ArrayList<SearchBook> searchGenre(String option, String getText, String genreCode, int currentPage, int b_size) {
 		Connection con = getInstance();
 		
-		ArrayList<SearchBook> list = dao.searchGenre(con, option, getText, genreCode);
+		ArrayList<SearchBook> list = dao.searchGenre(con, option, getText, genreCode, currentPage, b_size);
 
 		close(con);		
 		
@@ -57,5 +57,16 @@ public class SearchBookService {
 		
 		return result;
 	}
+	
+	public int getGenreCount(String option, String getText, String GenreCode) {
+		Connection con = getInstance();
+		
+		int result = dao.getGenreCount(con, option, getText, GenreCode);
+
+		close(con);		
+		
+		return result;
+	}
+
 	
 }

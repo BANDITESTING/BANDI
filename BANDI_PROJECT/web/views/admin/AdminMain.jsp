@@ -23,9 +23,6 @@
 %>
 <!DOCTYPE html>
 <html>
-<%
-	
-%>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta charset="utf-8">
@@ -208,14 +205,176 @@
 						
 				</div>	
 			</div>
+			
+			
+			<div class = "row" id ="stockTable">
+				<div class = "col-lg-9">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+                            	책재고현황
+                        </div>
+						
+						<div class="panel-body">
+							<table class="table table-striped table-bordered table-hover" 
+							style="width: 100%; text-align: right;">
+								<thead>
+	                                  <tr>
+	                                      <th>책번호</th>
+	                                      <th>ISBN</th>
+	                                      <th>제목</th>
+	                                      <th>작가</th>
+	                                      <th>수량</th>
+	                                  </tr>
+	                            </thead>
+	                            
+	                            <tbody>
+	                            <%for(int i = 0; i < stocks.size(); i++) { %>
+	                            	<tr>
+	                                     <td><%=stocks.get(i).getmBook_UID()%></td>
+	                                     <td><%=stocks.get(i).getmISBN()%></td>
+	                                     <td><%=stocks.get(i).getmTitle()%></td>
+	                                     <td><%=stocks.get(i).getmWriterName()%></td>
+	                                     <td><%=stocks.get(i).getmQuantity()%></td>
+	                                </tr>
+	                             <%} %>	                           
+	                            </tbody>
+							</table>
+							
+						</div>			
+					</div>		
+				</div>
+				
+				<div class ="col-lg-3">
+						
+				</div>	
+			</div>
+			
+			
+			<div class = "row" id ="orderTable">
+				<div class = "col-lg-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+                            	주문현황
+                        </div>
+						
+						<div class="panel-body">
+							<table class="table table-striped table-bordered table-hover" 
+							style="width: 100%; text-align: right;">
+								<thead>
+	                                  <tr>
+	                                      <th>주문번호</th>
+	                                      <th>이메일</th>
+	                                      <th>이름</th>
+	                                      <th>전화번호</th>
+	                                      <th>주문날짜</th>
+	                                  </tr>
+	                            </thead>
+	                            
+	                            <tbody>
+	                            <%for(int i = 0; i < orders.size(); i++) { %>
+	                            	<tr>
+	                                     <td><%=orders.get(i).getmOrder_UID()%></td>
+	                                     <td><%=orders.get(i).getmEmail()%></td>
+	                                     <td><%=orders.get(i).getmName()%></td>
+	                                     <td><%=orders.get(i).getmTel()%></td>
+	                                     <td><%=orders.get(i).getmOrder_Date()%></td>
+	                                </tr>
+	                             <%} %>	                           
+	                            </tbody>
+							</table>
+							
+						</div>			
+					</div>		
+				</div>
+				
+			</div>
+			
+			<div class = "row" id ="commentTable">
+				<div class = "col-lg-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+                            	댓글현황
+                        </div>
+						
+						<div class="panel-body">
+							<table class="table table-striped table-bordered table-hover" 
+							style="width: 100%; text-align: right;">
+								<thead>
+	                                  <tr>
+	                                      <th>댓글번호</th>
+	                                      <th>제목</th>
+	                                      <th>이메일</th>
+	                                      <th>댓글</th>
+	                                      <th>작성날짜</th>
+	                                  </tr>
+	                            </thead>
+	                            
+	                            <tbody>
+	                            <%for(int i = 0; i < comments.size(); i++) { %>
+	                            	<tr>
+	                                     <td><%=comments.get(i).getmComment_UID()%></td>
+	                                     <td><%=comments.get(i).getmCommentBook_Title()%></td>
+	                                     <td><%=comments.get(i).getmEmail()%></td>
+	                                     <td><%=comments.get(i).getMbook_Comment()%></td>
+	                                     <td><%=comments.get(i).getmWritedDate()%></td>
+	                                </tr>
+	                             <%} %>	                           
+	                            </tbody>
+							</table>
+							
+						</div>			
+					</div>		
+				</div>
+				
+				
+			</div>
 			          
          </div>
 	</div>
 	
 	<script>
 		$(function(){
-
+			$.ajax({
+				url: "/BANDI/income.admin",
+				type: "POST",
+				success: function(data)
+				{
+					$('#incomeCount').text(data.total);
+					$('#stockCount').text(data.stock);
+					$('#commentCount').text(data.comment);
+					$('#orderCount').text(data.order);
+				},
+				error : function(data)
+				{
+					
+				}
+			});
+			
+			$('#stockTable').css('display','none');
+			$('#orderTable').css('display','none');
+			$('#commentTable').css('display','none');
 		});
+		
+		function changeList(id)
+		{
+			allClose();
+			
+			switch(id)
+			{
+				case "income": $('#incomeTable').css('display','block'); break;
+				case "stock": $('#stockTable').css('display','block');break;
+				case "comment": $('#commentTable').css('display','block');break;
+				case "order": $('#orderTable').css('display','block');break;
+			}
+		}
+		
+		function allClose()
+		{
+			$('#incomeTable').css('display','none');
+			$('#stockTable').css('display','none');
+			$('#orderTable').css('display','none');
+			$('#commentTable').css('display','none');
+		}
 		
 		$(document).ready(function() {
 		        $('table').DataTable({

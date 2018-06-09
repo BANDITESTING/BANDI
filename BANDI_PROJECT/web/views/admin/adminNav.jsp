@@ -36,7 +36,7 @@
                         <li><img src ="<%=request.getContextPath()%>/resources/images/common/bandi.png" style ="width:100%; height:auto;"></li>
                         
                         <li>
-                            <a href="AdminMain.jsp"><i class="fa fa-dashboard fa-fw"></i>Home</a>
+                            <a href="<%=request.getContextPath()%>/views/admin/AdminMain.jsp"><i class="fa fa-dashboard fa-fw"></i>Home</a>
                         </li>
                         
                         <!-- <li>
@@ -44,17 +44,21 @@
                         </li> -->
                         
                         <li>
-                        	<a href="RecommendBooks.jsp"><i class="fa fa-book fa-fw"></i>Recommend Book</a>
+                        	<a href="<%=request.getContextPath()%>/views/admin/RecommendBooks.jsp"><i class="fa fa-book fa-fw"></i>Recommend Book</a>
                         </li>
 
                         <li>
                                 <a href="#"><i class="fa fa-edit fa-fw"></i>BANDI INFO<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="insertBook.jsp">책정보</a>
+                                        <a href="<%=request.getContextPath()%>/views/admin/insertBook.jsp">책정보</a>
                                     </li>
                                     <li>
-                                        <a href="insertWriter.jsp">작가 정보</a>
+                                        <a href="<%=request.getContextPath()%>/views/admin/insertWriter.jsp">작가 정보</a>
+                                    </li>
+                                    
+                                    <li>
+                                        <a href="<%=request.getContextPath()%>/views/admin/AdminInfo.jsp">관리자 정보</a>
                                     </li>
                                 </ul>
                                 

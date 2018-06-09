@@ -36,6 +36,69 @@
                     <h1 class="page-header font-header">추천 BOOK 10!</h1>
                 </div>
             </div>
+            
+            <div class= "row">
+            	<div class ="col-lg-1">
+            	
+            	</div>
+            
+            	<div class ="col-lg-2">
+            		<img src ="<%=request.getContextPath()%>/resources/bookimage/YSBOOK01.jpg" style="width: 100%;">
+            	</div>
+            	
+            	<div class ="col-lg-2">
+            		<img src ="<%=request.getContextPath()%>/resources/bookimage/YSBOOK01.jpg" style="width: 100%;">
+            	</div>
+            	
+            	<div class ="col-lg-2">
+            		<img src ="<%=request.getContextPath()%>/resources/bookimage/YSBOOK01.jpg" style="width: 100%;">
+            	</div>
+            	
+            	<div class ="col-lg-2">
+            		<img src ="<%=request.getContextPath()%>/resources/bookimage/YSBOOK01.jpg" style="width: 100%;">
+            	</div>
+            	
+            	<div class ="col-lg-2">
+            		<img src ="<%=request.getContextPath()%>/resources/bookimage/YSBOOK01.jpg" style="width: 100%;">
+            	</div>
+            	
+            	<div class ="col-lg-1">
+            	
+            	</div>
+            </div>
+            
+            <br>
+            
+            <div class= "row">
+            	<div class ="col-lg-1">
+            	
+            	</div>
+            
+            	<div class ="col-lg-2">
+            		<img src ="<%=request.getContextPath()%>/resources/bookimage/YSBOOK01.jpg" style="width: 100%;">
+            	</div>
+            	
+            	<div class ="col-lg-2">
+            		<img src ="<%=request.getContextPath()%>/resources/bookimage/YSBOOK01.jpg" style="width: 100%;">
+            	</div>
+            	
+            	<div class ="col-lg-2">
+            		<img src ="<%=request.getContextPath()%>/resources/bookimage/YSBOOK01.jpg" style="width: 100%;">
+            	</div>
+            	
+            	<div class ="col-lg-2">
+            		<img src ="<%=request.getContextPath()%>/resources/bookimage/YSBOOK01.jpg" style="width: 100%;">
+            	</div>
+            	
+            	<div class ="col-lg-2">
+            		<img src ="<%=request.getContextPath()%>/resources/bookimage/YSBOOK01.jpg" style="width: 100%;">
+            	</div>
+            	
+            	<div class ="col-lg-1">
+            	
+            	</div>
+            </div>
+            
 		</div>
 	</div>
 </body>

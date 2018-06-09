@@ -1,0 +1,540 @@
+@import "https://fonts.googleapis.com/css?family=Varela+Round";
+
+.fan {
+  height: 400px;
+  text-align: center;
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+  /* cardsss */
+}
+.fan li {
+  width: 200px;
+  height: 400px;
+  position: absolute;
+  top: 0;
+  left: calc(50% - 100px);
+  cursor: pointer;
+  border-radius: 8px;
+  display: block;
+  margin: 5px;
+  opacity: 0;
+  -webkit-perspective: 1800;
+  -moz-perspective: 1800;
+  perspective: 1800;
+  -webkit-transition: all 750ms;
+  -moz-transition: all 750ms;
+  transition: all 750ms;
+  -webkit-transform-origin: 50% 100%;
+  -moz-transform-origin: 50% 100%;
+  -ms-transform-origin: 50% 100%;
+  -o-transform-origin: 50% 100%;
+  transform-origin: 50% 100%;
+  /* normal states */
+  /* hover states */
+  /* content for the "cards" */
+}
+.fan li:hover {
+  z-index: 10;
+  -webkit-transform: scale(1.25) rotate(3deg) rotatex(-3deg) translate(-10px, -5px) !important;
+  -moz-transform: scale(1.25) rotate(3deg) rotatex(-3deg) translate(-10px, -5px) !important;
+  -ms-transform: scale(1.25) rotate(3deg) rotatex(-3deg) translate(-10px, -5px) !important;
+  -o-transform: scale(1.25) rotate(3deg) rotatex(-3deg) translate(-10px, -5px) !important;
+  transform: scale(1.25) rotate(3deg) rotatex(-3deg) translate(-10px, -5px) !important;
+}
+.fan li:nth-child(1) {
+  -webkit-transform: rotate(-32deg);
+  -moz-transform: rotate(-32deg);
+  -ms-transform: rotate(-32deg);
+  -o-transform: rotate(-32deg);
+  transform: rotate(-32deg);
+  -webkit-animation: fadeIn 750ms 150ms ease-in-out forwards;
+  -moz-animation: fadeIn 750ms 150ms ease-in-out forwards;
+  animation: fadeIn 750ms 150ms ease-in-out forwards;
+}
+.fan li:nth-child(2) {
+  -webkit-transform: rotate(-24deg);
+  -moz-transform: rotate(-24deg);
+  -ms-transform: rotate(-24deg);
+  -o-transform: rotate(-24deg);
+  transform: rotate(-24deg);
+  -webkit-animation: fadeIn 750ms 300ms ease-in-out forwards;
+  -moz-animation: fadeIn 750ms 300ms ease-in-out forwards;
+  animation: fadeIn 750ms 300ms ease-in-out forwards;
+}
+.fan li:nth-child(3) {
+  -webkit-transform: rotate(-16deg);
+  -moz-transform: rotate(-16deg);
+  -ms-transform: rotate(-16deg);
+  -o-transform: rotate(-16deg);
+  transform: rotate(-16deg);
+  -webkit-animation: fadeIn 750ms 450ms ease-in-out forwards;
+  -moz-animation: fadeIn 750ms 450ms ease-in-out forwards;
+  animation: fadeIn 750ms 450ms ease-in-out forwards;
+}
+.fan li:nth-child(4) {
+  -webkit-transform: rotate(-8deg);
+  -moz-transform: rotate(-8deg);
+  -ms-transform: rotate(-8deg);
+  -o-transform: rotate(-8deg);
+  transform: rotate(-8deg);
+  -webkit-animation: fadeIn 750ms 600ms ease-in-out forwards;
+  -moz-animation: fadeIn 750ms 600ms ease-in-out forwards;
+  animation: fadeIn 750ms 600ms ease-in-out forwards;
+}
+.fan li:nth-child(5) {
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-animation: fadeIn 750ms 750ms ease-in-out forwards;
+  -moz-animation: fadeIn 750ms 750ms ease-in-out forwards;
+  animation: fadeIn 750ms 750ms ease-in-out forwards;
+}
+.fan li:nth-child(6) {
+  -webkit-transform: rotate(8deg);
+  -moz-transform: rotate(8deg);
+  -ms-transform: rotate(8deg);
+  -o-transform: rotate(8deg);
+  transform: rotate(8deg);
+  -webkit-animation: fadeIn 750ms 900ms ease-in-out forwards;
+  -moz-animation: fadeIn 750ms 900ms ease-in-out forwards;
+  animation: fadeIn 750ms 900ms ease-in-out forwards;
+}
+.fan li:nth-child(5) {
+  -webkit-transform: translate(0) rotate(0deg);
+  -moz-transform: translate(0) rotate(0deg);
+  -ms-transform: translate(0) rotate(0deg);
+  -o-transform: translate(0) rotate(0deg);
+  transform: translate(0) rotate(0deg);
+  -webkit-animation: fadeIn 750ms 900ms ease-in-out forwards;
+  -moz-animation: fadeIn 750ms 900ms ease-in-out forwards;
+  animation: fadeIn 750ms 900ms ease-in-out forwards;
+}
+.fan li:nth-child(1) {
+  -webkit-transform: rotate(-32deg);
+  -moz-transform: rotate(-32deg);
+  -ms-transform: rotate(-32deg);
+  -o-transform: rotate(-32deg);
+  transform: rotate(-32deg);
+  -webkit-animation: fadeIn 750ms 150ms ease-in-out forwards;
+  -moz-animation: fadeIn 750ms 150ms ease-in-out forwards;
+  animation: fadeIn 750ms 150ms ease-in-out forwards;
+}
+.fan li:nth-child(2) {
+  -webkit-transform: rotate(-24deg);
+  -moz-transform: rotate(-24deg);
+  -ms-transform: rotate(-24deg);
+  -o-transform: rotate(-24deg);
+  transform: rotate(-24deg);
+  -webkit-animation: fadeIn 750ms 300ms ease-in-out forwards;
+  -moz-animation: fadeIn 750ms 300ms ease-in-out forwards;
+  animation: fadeIn 750ms 300ms ease-in-out forwards;
+}
+.fan li:nth-child(3) {
+  -webkit-transform: rotate(-16deg);
+  -moz-transform: rotate(-16deg);
+  -ms-transform: rotate(-16deg);
+  -o-transform: rotate(-16deg);
+  transform: rotate(-16deg);
+  -webkit-animation: fadeIn 750ms 450ms ease-in-out forwards;
+  -moz-animation: fadeIn 750ms 450ms ease-in-out forwards;
+  animation: fadeIn 750ms 450ms ease-in-out forwards;
+}
+.fan li:nth-child(4) {
+  -webkit-transform: rotate(-8deg);
+  -moz-transform: rotate(-8deg);
+  -ms-transform: rotate(-8deg);
+  -o-transform: rotate(-8deg);
+  transform: rotate(-8deg);
+  -webkit-animation: fadeIn 750ms 600ms ease-in-out forwards;
+  -moz-animation: fadeIn 750ms 600ms ease-in-out forwards;
+  animation: fadeIn 750ms 600ms ease-in-out forwards;
+}
+.fan li:nth-child(5) {
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-animation: fadeIn 750ms 750ms ease-in-out forwards;
+  -moz-animation: fadeIn 750ms 750ms ease-in-out forwards;
+  animation: fadeIn 750ms 750ms ease-in-out forwards;
+}
+.fan li:nth-child(6) {
+  -webkit-transform: rotate(8deg);
+  -moz-transform: rotate(8deg);
+  -ms-transform: rotate(8deg);
+  -o-transform: rotate(8deg);
+  transform: rotate(8deg);
+  -webkit-animation: fadeIn 750ms 900ms ease-in-out forwards;
+  -moz-animation: fadeIn 750ms 900ms ease-in-out forwards;
+  animation: fadeIn 750ms 900ms ease-in-out forwards;
+}
+.fan li:nth-child(7) {
+  -webkit-transform: rotate(16deg);
+  -moz-transform: rotate(16deg);
+  -ms-transform: rotate(16deg);
+  -o-transform: rotate(16deg);
+  transform: rotate(16deg);
+  -webkit-animation: fadeIn 750ms 1050ms ease-in-out forwards;
+  -moz-animation: fadeIn 750ms 1050ms ease-in-out forwards;
+  animation: fadeIn 750ms 1050ms ease-in-out forwards;
+}
+.fan li:nth-child(8) {
+  -webkit-transform: rotate(24deg);
+  -moz-transform: rotate(24deg);
+  -ms-transform: rotate(24deg);
+  -o-transform: rotate(24deg);
+  transform: rotate(24deg);
+  -webkit-animation: fadeIn 750ms 1200ms ease-in-out forwards;
+  -moz-animation: fadeIn 750ms 1200ms ease-in-out forwards;
+  animation: fadeIn 750ms 1200ms ease-in-out forwards;
+}
+.fan li:nth-child(9) {
+  -webkit-transform: rotate(32deg);
+  -moz-transform: rotate(32deg);
+  -ms-transform: rotate(32deg);
+  -o-transform: rotate(32deg);
+  transform: rotate(32deg);
+  -webkit-animation: fadeIn 750ms 1350ms ease-in-out forwards;
+  -moz-animation: fadeIn 750ms 1350ms ease-in-out forwards;
+  animation: fadeIn 750ms 1350ms ease-in-out forwards;
+}
+
+.fan li.before.prefix_1 {
+  -webkit-transform: rotate(-3.4722222222deg) translate(-114px, 19px);
+  -moz-transform: rotate(-3.4722222222deg) translate(-114px, 19px);
+  -ms-transform: rotate(-3.4722222222deg) translate(-114px, 19px);
+  -o-transform: rotate(-3.4722222222deg) translate(-114px, 19px);
+  transform: rotate(-3.4722222222deg) translate(-114px, 19px);
+  box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.25);
+  z-index: 1;
+}
+.fan li.before.prefix_2 {
+  -webkit-transform: rotate(-6.9444444444deg) translate(-174px, 29px);
+  -moz-transform: rotate(-6.9444444444deg) translate(-174px, 29px);
+  -ms-transform: rotate(-6.9444444444deg) translate(-174px, 29px);
+  -o-transform: rotate(-6.9444444444deg) translate(-174px, 29px);
+  transform: rotate(-6.9444444444deg) translate(-174px, 29px);
+  box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.25);
+  z-index: 2;
+}
+.fan li.before.prefix_3 {
+  -webkit-transform: rotate(-10.4166666667deg) translate(-234px, 39px);
+  -moz-transform: rotate(-10.4166666667deg) translate(-234px, 39px);
+  -ms-transform: rotate(-10.4166666667deg) translate(-234px, 39px);
+  -o-transform: rotate(-10.4166666667deg) translate(-234px, 39px);
+  transform: rotate(-10.4166666667deg) translate(-234px, 39px);
+  box-shadow: -3px 3px 5px rgba(0, 0, 0, 0.25);
+  z-index: 3;
+}
+.fan li.before.prefix_4 {
+  -webkit-transform: rotate(-13.8888888889deg) translate(-294px, 49px);
+  -moz-transform: rotate(-13.8888888889deg) translate(-294px, 49px);
+  -ms-transform: rotate(-13.8888888889deg) translate(-294px, 49px);
+  -o-transform: rotate(-13.8888888889deg) translate(-294px, 49px);
+  transform: rotate(-13.8888888889deg) translate(-294px, 49px);
+  box-shadow: -4px 4px 5px rgba(0, 0, 0, 0.25);
+  z-index: 4;
+}
+.fan li.before.prefix_5 {
+  -webkit-transform: rotate(-17.3611111111deg) translate(-354px, 59px);
+  -moz-transform: rotate(-17.3611111111deg) translate(-354px, 59px);
+  -ms-transform: rotate(-17.3611111111deg) translate(-354px, 59px);
+  -o-transform: rotate(-17.3611111111deg) translate(-354px, 59px);
+  transform: rotate(-17.3611111111deg) translate(-354px, 59px);
+  box-shadow: -5px 5px 5px rgba(0, 0, 0, 0.25);
+  z-index: 5;
+}
+.fan li.before.prefix_6 {
+  -webkit-transform: rotate(-20.8333333333deg) translate(-414px, 69px);
+  -moz-transform: rotate(-20.8333333333deg) translate(-414px, 69px);
+  -ms-transform: rotate(-20.8333333333deg) translate(-414px, 69px);
+  -o-transform: rotate(-20.8333333333deg) translate(-414px, 69px);
+  transform: rotate(-20.8333333333deg) translate(-414px, 69px);
+  box-shadow: -6px 6px 5px rgba(0, 0, 0, 0.25);
+  z-index: 6;
+}
+.fan li.before.prefix_7 {
+  -webkit-transform: rotate(-24.3055555556deg) translate(-474px, 79px);
+  -moz-transform: rotate(-24.3055555556deg) translate(-474px, 79px);
+  -ms-transform: rotate(-24.3055555556deg) translate(-474px, 79px);
+  -o-transform: rotate(-24.3055555556deg) translate(-474px, 79px);
+  transform: rotate(-24.3055555556deg) translate(-474px, 79px);
+  box-shadow: -7px 7px 5px rgba(0, 0, 0, 0.25);
+  z-index: 7;
+}
+.fan li.before.prefix_8 {
+  -webkit-transform: rotate(-27.7777777778deg) translate(-534px, 89px);
+  -moz-transform: rotate(-27.7777777778deg) translate(-534px, 89px);
+  -ms-transform: rotate(-27.7777777778deg) translate(-534px, 89px);
+  -o-transform: rotate(-27.7777777778deg) translate(-534px, 89px);
+  transform: rotate(-27.7777777778deg) translate(-534px, 89px);
+  box-shadow: -8px 8px 5px rgba(0, 0, 0, 0.25);
+  z-index: 8;
+}
+
+.fan li.after.prefix_1 {
+  -webkit-transform: rotate(3.4722222222deg) translate(114px, 19px);
+  -moz-transform: rotate(3.4722222222deg) translate(114px, 19px);
+  -ms-transform: rotate(3.4722222222deg) translate(114px, 19px);
+  -o-transform: rotate(3.4722222222deg) translate(114px, 19px);
+  transform: rotate(3.4722222222deg) translate(114px, 19px);
+  box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.25);
+  z-index: -1;
+}
+.fan li.after.prefix_2 {
+  -webkit-transform: rotate(6.9444444444deg) translate(174px, 29px);
+  -moz-transform: rotate(6.9444444444deg) translate(174px, 29px);
+  -ms-transform: rotate(6.9444444444deg) translate(174px, 29px);
+  -o-transform: rotate(6.9444444444deg) translate(174px, 29px);
+  transform: rotate(6.9444444444deg) translate(174px, 29px);
+  box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.25);
+  z-index: 0;
+}
+.fan li.after.prefix_3 {
+  -webkit-transform: rotate(10.4166666667deg) translate(234px, 39px);
+  -moz-transform: rotate(10.4166666667deg) translate(234px, 39px);
+  -ms-transform: rotate(10.4166666667deg) translate(234px, 39px);
+  -o-transform: rotate(10.4166666667deg) translate(234px, 39px);
+  transform: rotate(10.4166666667deg) translate(234px, 39px);
+  box-shadow: -3px 3px 5px rgba(0, 0, 0, 0.25);
+  z-index: 1;
+}
+.fan li.after.prefix_4 {
+  -webkit-transform: rotate(13.8888888889deg) translate(294px, 49px);
+  -moz-transform: rotate(13.8888888889deg) translate(294px, 49px);
+  -ms-transform: rotate(13.8888888889deg) translate(294px, 49px);
+  -o-transform: rotate(13.8888888889deg) translate(294px, 49px);
+  transform: rotate(13.8888888889deg) translate(294px, 49px);
+  box-shadow: -4px 4px 5px rgba(0, 0, 0, 0.25);
+  z-index: 2;
+}
+.fan li.after.prefix_5 {
+  -webkit-transform: rotate(17.3611111111deg) translate(354px, 59px);
+  -moz-transform: rotate(17.3611111111deg) translate(354px, 59px);
+  -ms-transform: rotate(17.3611111111deg) translate(354px, 59px);
+  -o-transform: rotate(17.3611111111deg) translate(354px, 59px);
+  transform: rotate(17.3611111111deg) translate(354px, 59px);
+  box-shadow: -5px 5px 5px rgba(0, 0, 0, 0.25);
+  z-index: 3;
+}
+.fan li.after.prefix_6 {
+  -webkit-transform: rotate(20.8333333333deg) translate(414px, 69px);
+  -moz-transform: rotate(20.8333333333deg) translate(414px, 69px);
+  -ms-transform: rotate(20.8333333333deg) translate(414px, 69px);
+  -o-transform: rotate(20.8333333333deg) translate(414px, 69px);
+  transform: rotate(20.8333333333deg) translate(414px, 69px);
+  box-shadow: -6px 6px 5px rgba(0, 0, 0, 0.25);
+  z-index: 4;
+}
+.fan li.after.prefix_7 {
+  -webkit-transform: rotate(24.3055555556deg) translate(474px, 79px);
+  -moz-transform: rotate(24.3055555556deg) translate(474px, 79px);
+  -ms-transform: rotate(24.3055555556deg) translate(474px, 79px);
+  -o-transform: rotate(24.3055555556deg) translate(474px, 79px);
+  transform: rotate(24.3055555556deg) translate(474px, 79px);
+  box-shadow: -7px 7px 5px rgba(0, 0, 0, 0.25);
+  z-index: 5;
+}
+.fan li.after.prefix_8 {
+  -webkit-transform: rotate(27.7777777778deg) translate(534px, 89px);
+  -moz-transform: rotate(27.7777777778deg) translate(534px, 89px);
+  -ms-transform: rotate(27.7777777778deg) translate(534px, 89px);
+  -o-transform: rotate(27.7777777778deg) translate(534px, 89px);
+  transform: rotate(27.7777777778deg) translate(534px, 89px);
+  box-shadow: -8px 8px 5px rgba(0, 0, 0, 0.25);
+  z-index: 6;
+}
+.fan li .content {
+  height: 134px;
+  line-height: 134px;
+  color: #F1EDDC;
+  font-size: 40px;
+}
+.fan li .flip {
+  width: 200px;
+  height: 400px;
+  position: relative;
+  -webkit-perspective: 1800;
+  -moz-perspective: 1800;
+  perspective: 1800;
+}
+.fan li .flip .card {
+  width: 200px;
+  height: 400px;
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
+  -o-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-transition: all 375ms;
+  -moz-transition: all 375ms;
+  transition: all 375ms;
+}
+.fan li .flip .card.flipped {
+  -webkit-transform: rotateX(-190deg);
+  -moz-transform: rotateX(-190deg);
+  -ms-transform: rotateX(-190deg);
+  -o-transform: rotateX(-190deg);
+  transform: rotateX(-190deg);
+}
+.fan li .flip .card .face {
+  width: 200px;
+  height: 400px;
+  position: absolute;
+  z-index: 99;
+  text-align: center;
+  line-height: 400px;
+  font-size: 30px;
+  text-shadow: rgba(0, 0, 0, 0.25) 0px 2px 1px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.55);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.fan li .flip .card .face.front {
+  position: absolute;
+  z-index: 1;
+  color: #F1EDDC;
+  cursor: pointer;
+}
+.fan li .flip .card .face.back {
+  background: #F1EDDC;
+  color: #000;
+  cursor: pointer;
+  -webkit-transform: rotateX(-180deg);
+  -moz-transform: rotateX(-180deg);
+  -ms-transform: rotateX(-180deg);
+  -o-transform: rotateX(-180deg);
+  transform: rotateX(-180deg);
+}
+
+footer {
+  position: fixed;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 9px;
+  color: #F1EDDC;
+  opacity: 0;
+  -webkit-animation: fadeIn 750ms 1350ms ease-in-out forwards;
+  -moz-animation: fadeIn 750ms 1350ms ease-in-out forwards;
+  animation: fadeIn 750ms 1350ms ease-in-out forwards;
+}
+
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-moz-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* moved text */
+  @import url(https://fonts.googleapis.com/css?family=Open+Sans:600);
+
+.text {
+  position: absolute;
+  width: 450px;
+  left: 50%;
+  margin-left: -225px;
+  height: 40px;
+  top: 50%;
+  margin-top: -20px;
+
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
+  font-size: 40px;
+}
+
+p {
+  display: inline-block;
+  vertical-align: top;
+  margin: 0;
+}
+
+.word {
+  position: absolute;
+  width: 220px;
+  opacity: 0;
+}
+
+.letter {
+  display: inline-block;
+  position: relative;
+  transform: translateZ(25px);
+  transform-origin: 50% 50% 25px;
+}
+
+.letter.out {
+  transform: rotateX(90deg);
+  transition: transform 0.32s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+
+.letter.behind {
+  transform: rotateX(-90deg);
+}
+
+.letter.in {
+  transform: rotateX(0deg);
+  transition: transform 0.38s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.wisteria {
+  color: #8e44ad;
+}
+
+.belize {
+  color: #2980b9;
+}
+
+.pomegranate {
+  color: #c0392b;
+}
+
+.green {
+  color: #16a085;
+}
+
+.midnight {
+  color: #2c3e50;
+}
+
+.ultraviolet{
+  color: #5F4B8B;
+}
+
+.redvio{
+ color: #A35776;
+}
+
+.orange{
+  color:orange;
+}
+

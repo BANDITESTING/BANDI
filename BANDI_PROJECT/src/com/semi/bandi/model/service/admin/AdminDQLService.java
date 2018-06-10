@@ -104,4 +104,9 @@ public class AdminDQLService
 		Connection con = getInstance();
 		return adDao.getOrderArray(con, year);
 	}
+	public BookStocks getBooksRecInfo(String mISBN) {
+		AdminDao adDao = new AdminDao();
+		Connection con = getInstance();
+		return adDao.getBookByISBN(con, mISBN);
+	}
 }

@@ -511,6 +511,43 @@ public class AdminDao
 		return array;
 		
 	}
+
+	public BookStocks getBookByISBN(Connection con, String mISBN) {
+		if(con == null) return null;
+		
+		BookStocks book = null;
+		PreparedStatement pstmt = null;
+		ResultSet rSet = null;
+		
+		String query ="SELECT TITLE, ISBN, GENRE||'/'||SUB_GENRE, WRITER_NAME, PRICE, PAGE FROM BANDI_BOOK JOIN WRITER USING(WRITER_CODE) JOIN GENRE USING(GENRE_CODE) WHERE ISBN= ?";
+		
+		try{
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, mISBN);
+			
+			rSet = pstmt.executeQuery();
+			
+			while(rSet.next())
+			{
+				book = new BookStocks();
+				book.setmTitle(rSet.getString(1));
+				book.setmISBN(rSet.getString(2));
+				book.setmGenreCode(rSet.getString(3));
+				book.setmWriterName(rSet.getString(4));
+				book.setmPrice(rSet.getInt(5));
+				book.setmPage(rSet.getInt(6));
+			}
+		}catch(SQLException e)
+		{
+			e.printStackTrace();
+		}finally
+		{
+			close(rSet);
+			close(pstmt);
+		}
+		
+		return book;
+	}
 	
 	
 }

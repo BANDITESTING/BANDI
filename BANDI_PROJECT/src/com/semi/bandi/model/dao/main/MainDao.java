@@ -34,15 +34,16 @@ public class MainDao
 		PropertiesTemplate prop = new PropertiesTemplate();
 		Book[] bookArray = new Book[mBandiCount];
 		
-		String query = "SELECT * FROM BANDI_BOOK WHERE ISBN IN (? , ? , ? , ? , ? , ? ,? , ?, ?, ?)";
+//		String query = "SELECT * FROM BANDI_BOOK WHERE ISBN IN (? , ? , ? , ? , ? , ? ,? , ?, ?, ?)";
+		String query ="SELECT * FROM TOP10_BOOKS_BANDI JOIN BANDI_BOOK USING(ISBN)";
 		
 		try {
 			pstmt = con.prepareStatement(query);
 			
-			String[] arrayofISBN = prop.getRecommendBook();
+			/*String[] arrayofISBN = prop.getRecommendBook();
 			
 			for(int i = 1; i <= mBandiCount ; i++)
-				pstmt.setString(i, arrayofISBN[i-1]);
+				pstmt.setString(i, arrayofISBN[i-1]);*/
 			
 			rSet = pstmt.executeQuery();
 			
@@ -50,21 +51,20 @@ public class MainDao
 			while(rSet.next())
 			{
 				Book book = new Book();
-				book.setmBook_UID(rSet.getInt(1));
-				book.setmISBN(rSet.getString(2));
-				book.setmTitle(rSet.getString(3));
-				book.setmPrice(rSet.getInt(4));
-				book.setmWriterCode(rSet.getString(5));
-				book.setmPublisher(rSet.getString(6));
-				book.setmQuantity(rSet.getInt(7));
-				book.setmGenreCode(rSet.getString(8));
-				book.setmOrigin(rSet.getString(9));
-				book.setmIntroduceBook(rSet.getString(10));
-				book.setmPage(rSet.getInt(11));
-				book.setmImagePath(rSet.getString(12)); // Book Image Path;
-				book.setmIssueDate(rSet.getDate(13));
-				bookArray[j] = book;
-				j++;
+				book.setmBook_UID(rSet.getInt("BOOK_UID"));
+				book.setmISBN(rSet.getString("ISBN"));
+				book.setmTitle(rSet.getString("TITLE"));
+				book.setmPrice(rSet.getInt("PRICE"));
+				book.setmWriterCode(rSet.getString("WRITER_CODE"));
+				book.setmPublisher(rSet.getString("PUBLISHER"));
+				book.setmQuantity(rSet.getInt("BOOK_QUANTITY"));
+				book.setmGenreCode(rSet.getString("GENRE_CODE"));
+				book.setmOrigin(rSet.getString("ORIGIN"));
+				book.setmIntroduceBook(rSet.getString("BOOK_INTRODUCE"));
+				book.setmPage(rSet.getInt("PAGE"));
+				book.setmImagePath(rSet.getString("IMAGE")); // Book Image Path;
+				book.setmIssueDate(rSet.getDate("ISSUE_DATE"));
+				bookArray[j++] = book;
 			}
 			
 		} catch (SQLException e) {

@@ -109,4 +109,14 @@ public class AdminDQLService
 		Connection con = getInstance();
 		return adDao.getBookByISBN(con, mISBN);
 	}
+	public ArrayList<BookStocks> getBookStocksArray(String title) {
+		AdminDao adDao = new AdminDao();
+		Connection con = getInstance();
+		return adDao.getBooksByTitle(con, title);
+	}
+	public BookStocks getBookByISBN(String mISBN) {
+		AdminDao adDao = new AdminDao();
+		Connection con = getInstance();
+		return adDao.getBookByISBN_DAO(con, mISBN);
+	}
 }

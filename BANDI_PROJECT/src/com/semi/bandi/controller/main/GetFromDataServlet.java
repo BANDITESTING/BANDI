@@ -37,7 +37,7 @@ public class GetFromDataServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		// Call for Data [Main Page]
-		String member = request.getParameter("member");
+//		String member = request.getParameter("member");
 		
 		GetMainService gms = new GetMainService();
 		
@@ -58,18 +58,10 @@ public class GetFromDataServlet extends HttpServlet {
 			comtArray = gms.getCommentArray(getRatedBook.getmBook_UID());
 		}
 		
-		// 5. Confirm about Login Service
-		if(member == null || member.isEmpty())
-		{
-			
-		}else
-		{
-			
-		}
-		
 		if(eventBanner == null || getRecommendBook == null || getBestSellerBook == null)
 		{
 			// GO TO ERROR PAGE;
+			response.sendRedirect("/views/common/errorPage.jsp");
 		}
 		
 		HttpSession session = request.getSession();

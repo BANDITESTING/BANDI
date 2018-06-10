@@ -22,6 +22,7 @@ public class GetMainService
 		return new PropertiesTemplate().getEventString();
 	}
 	
+	// Change for DataBase , Because Have Problem for Properties during Development
 	public Book[] getRecommendBandi()
 	{
 		MainDao  mDao = new MainDao();
@@ -79,5 +80,5 @@ public class GetMainService
 		close(con);
 		return cont;
 	}
-		
+
 }

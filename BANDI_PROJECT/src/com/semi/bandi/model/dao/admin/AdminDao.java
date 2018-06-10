@@ -146,6 +146,7 @@ public class AdminDao
 		{
 			close(rSet);
 			close(pstmt);
+			close(con);
 		}
 		
 		return result;
@@ -256,6 +257,7 @@ public class AdminDao
 		{
 			close(rSet);
 			close(pstmt);
+			close(con);
 		}
 		
 		return arrayIncome;
@@ -289,6 +291,7 @@ public class AdminDao
 		{
 			close(rSet);
 			close(pstmt);
+			close(con);
 		}
 		
 		return totalIncome;
@@ -321,6 +324,7 @@ public class AdminDao
 		{
 			close(rSet);
 			close(pstmt);
+			close(con);
 		}
 		
 		return booksCount;
@@ -353,6 +357,7 @@ public class AdminDao
 		{
 			close(rSet);
 			close(pstmt);
+			close(con);
 		}
 		
 		return totalCommentCount;
@@ -384,6 +389,7 @@ public class AdminDao
 		{
 			close(rSet);
 			close(pstmt);
+			close(con);
 		}
 		
 		return totalorderCount;
@@ -424,6 +430,7 @@ public class AdminDao
 		{
 			close(rSet);
 			close(pstmt);
+			close(con);
 		}
 		
 		return array;
@@ -465,6 +472,7 @@ public class AdminDao
 		{
 			close(rSet);
 			close(pstmt);
+			close(con);
 		}
 		
 		return array;
@@ -506,6 +514,7 @@ public class AdminDao
 		{
 			close(rSet);
 			close(pstmt);
+			close(con);
 		}
 		
 		return array;
@@ -544,9 +553,114 @@ public class AdminDao
 		{
 			close(rSet);
 			close(pstmt);
+			close(con);
 		}
 		
 		return book;
+	}
+
+	public ArrayList<BookStocks> getBooksByTitle(Connection con, String title) {
+		if(con == null) return null;
+		
+		ArrayList<BookStocks> books = new ArrayList<BookStocks>();
+		BookStocks book;
+		PreparedStatement pstmt = null;
+		ResultSet rSet = null;
+		
+		String query = "SELECT TITLE, ISBN, GENRE||'/'||SUB_GENRE, WRITER_NAME,PAGE, PRICE , IMAGE FROM BANDI_BOOK JOIN WRITER USING(WRITER_CODE) JOIN GENRE USING(GENRE_CODE) WHERE TITLE LIKE ?";
+		
+		try{
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1,"%"+title+"%");
+			rSet = pstmt.executeQuery();
+			
+			while(rSet.next())
+			{
+				book = new BookStocks();
+				book.setmTitle(rSet.getString(1));
+				book.setmISBN(rSet.getString(2));
+				book.setmGenreCode(rSet.getString(3));
+				book.setmWriterName(rSet.getString(4));
+				book.setmPage(rSet.getInt(5));
+				book.setmPrice(rSet.getInt(6));
+				book.setmImagePath(rSet.getString(7));
+				books.add(book);
+			}
+			
+		}catch(SQLException e)
+		{
+			e.printStackTrace();
+			books = null;
+		}finally
+		{
+			close(rSet);
+			close(pstmt);
+			close(con);
+		}
+		
+		return books;
+	}
+
+	public BookStocks getBookByISBN_DAO(Connection con, String mISBN) {
+		if(con == null) return null;
+		BookStocks book = null;
+		PreparedStatement pstmt = null;
+		ResultSet rSet = null;
+		
+		String query = "SELECT TITLE, ISBN, GENRE||'/'||SUB_GENRE, WRITER_NAME,PAGE, PRICE , IMAGE FROM BANDI_BOOK JOIN WRITER USING(WRITER_CODE) JOIN GENRE USING(GENRE_CODE) WHERE ISBN = ?";
+		
+		try{
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, mISBN);
+			
+			rSet = pstmt.executeQuery();
+			
+			while(rSet.next())
+			{
+				book = new BookStocks();
+				book.setmTitle(rSet.getString(1));
+				book.setmISBN(rSet.getString(2));
+				book.setmGenreCode(rSet.getString(3));
+				book.setmWriterName(rSet.getString(4));
+				book.setmPage(rSet.getInt(5));
+				book.setmPrice(rSet.getInt(6));
+				book.setmImagePath(rSet.getString(7));
+			}
+		}catch(SQLException e)
+		{
+			e.printStackTrace();
+			book = null;
+		}finally{
+			close(rSet);
+			close(pstmt);
+			close(con);
+		}
+		return book;
+	}
+
+	public boolean updateRecBandiBooks(Connection con, String before, String after) {
+		if(con == null) return false;
+		
+		boolean key = false;
+		
+		PreparedStatement pstmt = null;
+		System.out.println("before :" + before);
+		System.out.println("after:" + after);
+		String query  = "UPDATE TOP10_BOOKS_BANDI SET ISBN = ? WHERE ISBN = ?";
+		try{
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, after);
+			pstmt.setString(2, before);
+			
+			int count = pstmt.executeUpdate();
+			if(count > 0) key = true;
+		}catch(SQLException e)
+		{
+			key = false;
+		}finally{
+			close(pstmt);
+		}
+		return key;
 	}
 	
 	

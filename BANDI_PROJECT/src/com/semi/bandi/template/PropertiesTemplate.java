@@ -1,5 +1,7 @@
 package com.semi.bandi.template;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.util.Properties;
 
@@ -10,13 +12,41 @@ public class PropertiesTemplate
 	String bandiRecommendFileName;
 	
 	private static int EVENT_COUNT = 4;
-	private static int RECOMMEND_BOOK_COUNT = 12;
+	private static int RECOMMEND_BOOK_COUNT = 10;
 	
 	public PropertiesTemplate()
 	{
 		prop = new Properties();
 		eventFileName = PropertiesTemplate.class.getResource("/config/main/event/mainEvent.properties").getPath();
 		bandiRecommendFileName = PropertiesTemplate.class.getResource("/config/main/event/bandiRecommend.properties").getPath();
+	}
+	
+	// Write for ISBN RECOMMEND from BANDI
+	public boolean writeRecommendBooks(String[] bookISBN)
+	{
+		boolean key = false;
+		FileOutputStream output = null;
+		String tempArray[] = {"one", "two","three","four","five","six" ,"seven","eight","nine","ten"};
+		
+		if(tempArray.length != bookISBN.length) return false;
+		
+		try{
+			output = new FileOutputStream(new File(bandiRecommendFileName));
+			for(int i = 0; i < bookISBN.length; i++)
+			{
+				System.out.println(tempArray[i]+" : "+bookISBN[i]);
+				prop.setProperty(tempArray[i], bookISBN[i]);
+			}
+			prop.store(output, null);
+			output.close();
+			key = true;
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+			System.out.println("error");
+		}
+		
+		return key;
 	}
 	
 	/* Get ISBN Number */
@@ -37,8 +67,7 @@ public class PropertiesTemplate
 			getISBN[7] = prop.getProperty("eight");
 			getISBN[8] = prop.getProperty("nine");
 			getISBN[9] = prop.getProperty("ten");
-			getISBN[10] = prop.getProperty("eleven");
-			getISBN[11] = prop.getProperty("twelven");
+			
 		}catch(Exception e)
 		{
 			e.printStackTrace();

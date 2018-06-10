@@ -43,4 +43,19 @@ public class AdminDMLService
 		
 		return key;
 	}
+
+	public boolean updateRecBook(String before, String after) {
+		boolean key = false;
+		AdminDao dao = new AdminDao();
+		Connection con = getInstance();
+		
+		key = dao.updateRecBandiBooks(con, before, after);
+		
+		if(key) commit(con);
+		else rollback(con);
+		
+		close(con);
+		
+		return key;
+	}
 }

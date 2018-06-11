@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8" import="java.util.*, com.semi.bandi.model.vo.searchVo.*"%>
+	pageEncoding="UTF-8"
+	import="java.util.*, com.semi.bandi.model.vo.searchVo.*"%>
 <%
    String option = (String) request.getAttribute("option");
    String getText = (String) request.getAttribute("getText");
@@ -27,158 +28,189 @@
 <title>검색화면</title>
 
 <link rel="stylesheet"
-   href="<%=request.getContextPath()%>/resources/css/searchBook/hkLocal.css?ver=1">
+	href="<%=request.getContextPath()%>/resources/css/searchBook/hkLocal.css?ver=1">
 <link rel="stylesheet"
-   href="<%=request.getContextPath()%>/resources/css/category/bootstrap.min.css">
+	href="<%=request.getContextPath()%>/resources/css/category/bootstrap.min.css">
 <link rel="stylesheet"
-   href="<%=request.getContextPath()%>/resources/css/join/font-awesome.min.css">
+	href="<%=request.getContextPath()%>/resources/css/join/font-awesome.min.css">
 <link rel="stylesheet"
-   href="http://fonts.googleapis.com/earlyaccess/jejugothic.css">
+	href="http://fonts.googleapis.com/earlyaccess/jejugothic.css">
 <script
-   src="<%=request.getContextPath()%>/resources/js/main/jquery-3.3.1.min.js"></script>
+	src="<%=request.getContextPath()%>/resources/js/main/jquery-3.3.1.min.js"></script>
 <script type="text/javascript"
-   src="<%=request.getContextPath()%>/resources/js/main/bootstrap.min.js"></script>
+	src="<%=request.getContextPath()%>/resources/js/main/bootstrap.min.js"></script>
 
 </head>
 <body>
-   <header><%@ include file="../common/Header.jsp"%></header>
-   <br>
-   <div class="container jg">
-      <div class="row">
-         <div class="col-sm-12">
-            <div class="bg-pripink" style="padding: 2%; padding-left: 5%;">
-               "<%=getText%>"(으)로
-               <%=optionName%>
-               <%=listCount%>건 검색
-            </div>
-            <br>
-            <div class="row">
-               <div class="col-lg-3 col-md-4 leftdiv">
-                  <ul class="leftbar" style="min-width: inherit;">
-                     <li><span id="A_" class="gSearch">문학</span>
-                        <ul>
-                           <li><span id="A1" class="gSearch">&nbsp;&nbsp;&nbsp; 소설</span></li>
-                           <li><span id="A2" class="gSearch">&nbsp;&nbsp;&nbsp; 시</span></li>
-                           <li><span id="A3" class="gSearch">&nbsp;&nbsp;&nbsp; 에세이(자서전)</span></li>
-                        </ul></li>
-                     <li><span id="B_" class="gSearch">인문</span>
-                        <ul>
-                           <li><span id="B1" class="gSearch">&nbsp;&nbsp;&nbsp; 역사/문화</span></li>
-                           <li><span id="B2" class="gSearch">&nbsp;&nbsp;&nbsp; 종교</span></li>
-                           <li><span id="B3" class="gSearch">&nbsp;&nbsp;&nbsp; 심리</span></li>
-                        </ul></li>
-                     <li><span id="C_" class="gSearch">과학</span>
-                        <ul>
-                           <li><span id="C1" class="gSearch">&nbsp;&nbsp;&nbsp; 기술/공학</span></li>
-                           <li><span id="C2" class="gSearch">&nbsp;&nbsp;&nbsp; 컴퓨터/IT</span></li>
-                        </ul></li>
-                     <li><span id="D_" class="gSearch">취미</span>
-                        <ul>
-                           <li><span id="D1" class="gSearch">&nbsp;&nbsp;&nbsp; 가정(요리)</span></li>
-                           <li><span id="D2" class="gSearch">&nbsp;&nbsp;&nbsp; 운동(건강)</span></li>
-                           <li><span id="D3" class="gSearch">&nbsp;&nbsp;&nbsp; 여행</span></li>
-                           <li><span id="D4" class="gSearch">&nbsp;&nbsp;&nbsp; 음악(대중문화)</span></li>
-                           <li><span id="D5" class="gSearch">&nbsp;&nbsp;&nbsp; 스포츠</span></li>
-                        </ul></li>
-                     <li><span id="E_" class="gSearch">교육</span>
-                        <ul>
-                           <li><span id="E1" class="gSearch">&nbsp;&nbsp;&nbsp; 어린이/청소년</span></li>
-                           <li><span id="E2" class="gSearch">&nbsp;&nbsp;&nbsp; 참고서(초/중/고)</span></li>
-                        </ul></li>
-                     <li><span id="F_" class="gSearch">사회</span>
-                        <ul>
-                           <li><span id="F1" class="gSearch">&nbsp;&nbsp;&nbsp; 정치/사회</span></li>
-                           <li><span id="F2" class="gSearch">&nbsp;&nbsp;&nbsp; 경제/경영</span></li>
-                        </ul></li>
-                  </ul>
-               </div>
-               <div class="col-lg-9 col-md-8" id="content">
-                  <div class="subContent">
-                     <%
+	<header><%@ include file="../common/Header.jsp"%></header>
+	<br>
+	<div class="container jg">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="bg-pripink" style="padding: 2%; padding-left: 5%;">
+					"<%=getText%>"(으)로
+					<%=optionName%>
+					<%=listCount%>건 검색
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-lg-3 col-md-4 leftdiv">
+						<ul class="leftbar" style="min-width: inherit;">
+							<li><span id="A_" class="gSearch">문학</span>
+								<ul>
+									<li><span id="A1" class="gSearch">&nbsp;&nbsp;&nbsp;
+											소설</span></li>
+									<li><span id="A2" class="gSearch">&nbsp;&nbsp;&nbsp;
+											시</span></li>
+									<li><span id="A3" class="gSearch">&nbsp;&nbsp;&nbsp;
+											에세이(자서전)</span></li>
+								</ul></li>
+							<li><span id="B_" class="gSearch">인문</span>
+								<ul>
+									<li><span id="B1" class="gSearch">&nbsp;&nbsp;&nbsp;
+											역사/문화</span></li>
+									<li><span id="B2" class="gSearch">&nbsp;&nbsp;&nbsp;
+											종교</span></li>
+									<li><span id="B3" class="gSearch">&nbsp;&nbsp;&nbsp;
+											심리</span></li>
+								</ul></li>
+							<li><span id="C_" class="gSearch">과학</span>
+								<ul>
+									<li><span id="C1" class="gSearch">&nbsp;&nbsp;&nbsp;
+											기술/공학</span></li>
+									<li><span id="C2" class="gSearch">&nbsp;&nbsp;&nbsp;
+											컴퓨터/IT</span></li>
+								</ul></li>
+							<li><span id="D_" class="gSearch">취미</span>
+								<ul>
+									<li><span id="D1" class="gSearch">&nbsp;&nbsp;&nbsp;
+											가정(요리)</span></li>
+									<li><span id="D2" class="gSearch">&nbsp;&nbsp;&nbsp;
+											운동(건강)</span></li>
+									<li><span id="D3" class="gSearch">&nbsp;&nbsp;&nbsp;
+											여행</span></li>
+									<li><span id="D4" class="gSearch">&nbsp;&nbsp;&nbsp;
+											음악(대중문화)</span></li>
+									<li><span id="D5" class="gSearch">&nbsp;&nbsp;&nbsp;
+											스포츠</span></li>
+								</ul></li>
+							<li><span id="E_" class="gSearch">교육</span>
+								<ul>
+									<li><span id="E1" class="gSearch">&nbsp;&nbsp;&nbsp;
+											어린이/청소년</span></li>
+									<li><span id="E2" class="gSearch">&nbsp;&nbsp;&nbsp;
+											참고서(초/중/고)</span></li>
+								</ul></li>
+							<li><span id="F_" class="gSearch">사회</span>
+								<ul>
+									<li><span id="F1" class="gSearch">&nbsp;&nbsp;&nbsp;
+											정치/사회</span></li>
+									<li><span id="F2" class="gSearch">&nbsp;&nbsp;&nbsp;
+											경제/경영</span></li>
+								</ul></li>
+						</ul>
+					</div>
+					<div class="col-lg-9 col-md-8" id="content">
+						<div class="subContent">
+							<%
                         for (int i = 0; i < list.size(); i++) {
                            SearchBook book = list.get(i);
                      %>
-                     <div class="row booklist">
-                        <div class="col-lg-3 text-center mt-2 mb-2" style="padding: 0px">
-                           <a href="<%=request.getContextPath()%>/detail.show?ISBN=<%=book.getmISBN()%>">
-                           <img src="<%=request.getContextPath()%>/resources/bookimage/<%=book.getmImagePath()%>"
-                              alt="책" class="bookImg"></a>
-                        </div>
-                        <div class="col-lg-5 bookInfo">
-                           <div class="bookTitle mb-1"><a href="<%=request.getContextPath()%>/detail.show?ISBN=<%=book.getmISBN()%>"><%=book.getmTitle()%></a></div>
-                           <div><%=book.getmWriter()%> / <%=book.getmPublisher()%></div>
-                           <div class="price"><%=book.getmPrice()%></div>
-                        </div>
-                        <div class="col-lg-4" style="margin: auto;">
-                           <div class="input-group mb-1 mt-1">
-                              <div class="input-group-prepend">
-                                 <label class="input-group-text" for="bookCount">수량</label>
-                                 <input class="input-group" type="number" min="1" value="1"
-                                    id="bookCount" name="<%=book.getmBook_UID()%>"/>
-                              </div>
-                           </div>
-                           <div class="mt-2">
-                              <button class="btn btn-block bg-ultravio" onclick="insertCart(<%=book.getmBook_UID()%>);">장바구니</button>
-                           </div>
-                           <div class="mt-2 mb-2">
-                              <div class="btn btn-block btn-light">바로구매</div>
-                           </div>
-                        </div>
-                     </div>
-                     <br>
-                     <%
+							<div class="row booklist">
+								<div class="col-lg-3 text-center mt-2 mb-2" style="padding: 0px">
+									<a href="<%=request.getContextPath()%>/detail.show?ISBN=<%=book.getmISBN()%>">
+										<img
+										src="<%=request.getContextPath()%>/resources/bookimage/<%=book.getmImagePath()%>"
+										alt="책" class="bookImg">
+									</a>
+								</div>
+								<div class="col-lg-5 bookInfo">
+									<div class="bookTitle mb-1">
+										<a href="<%=request.getContextPath()%>/detail.show?ISBN=<%=book.getmISBN()%>"><%=book.getmTitle()%></a>
+									</div>
+									<div>
+										<%=book.getmWriter()%> / <%=book.getmPublisher()%>
+									</div>
+									<div class="price"><%=book.getmPrice()%></div>
+								</div>
+								<div class="col-lg-4" style="margin: auto;">
+									<div class="input-group mb-1 mt-1">
+										<div class="input-group-prepend">
+											<label class="input-group-text" for="bookCount">수량</label> <input
+												class="input-group" type="number" min="1" value="1"
+												id="bookCount" name="<%=book.getmBook_UID()%>" />
+										</div>
+									</div>
+									<div class="mt-2">
+										<button class="btn btn-block bg-ultravio"
+											onclick="insertCart(<%=book.getmBook_UID()%>);">장바구니</button>
+									</div>
+									<div class="mt-2 mb-2">
+										<div class="btn btn-block btn-light">바로구매</div>
+									</div>
+								</div>
+							</div>
+							<br>
+							<%
                         }
                      %>
 
-                  <!-- bookList부분 -->
-                  </div>
-                  
-                  <!-- pagination -->
-                  <div style="margin-bottom:5%;" class="pageDiv">
-                     <ul class="pagination mt-2 mb-2" style="margin-left:auto; margin-right:auto;">
-                        <!-- 맨 앞으로 이동 버튼 -->
-                        <li class="page-item"><a href="#"><button class="page-link" onclick="paging(1);">&laquo;</button></a></li>
-                        <!-- 하나 전으로 이동 버튼 -->
-                        <% if(currentPage <= 1){ %>
-                           <li class="page-item disabled"><button class="page-link">&lt;</button></li>
-                        <% } else { %>
-                           <li class="page-item"><a href="#"><button class="page-link" onclick="paging(<%=currentPage%>-1);">&lt;</button></a></li>
-                        <% } %>
-                        <!-- 각 페이지 이동 버튼 -->
-                        <%for(int i = startPage; i <= endPage; i++){ %>
-                           <% if(currentPage == i){ %>
-                              <li class="page-item active"><a href="#"><button class="page-link" disabled><%=i%></button></a></li>
-                           <% } else { %>
-                              <li class="page-item"><a href="#"><button class="page-link" onclick="paging(<%=i%>);"><%=i%></button></a></li>
-                           <% } %>                           
-                        <% } %>
-                        <!-- 하나 앞으로 이동 버튼 -->
-                        <% if(currentPage >= maxPage){ %>
-                        <li class="page-item disabled"><button class="page-link">&gt;</button></li>
-                        <% } else { %>
-                        <li class="page-item"><a href="#"><button class="page-link" onclick="paging(<%=currentPage%>+1);">&gt;</button></a></li>
-                        <% } %>
-                        <!-- 맨 뒤로 이동 버튼 -->
-                        <li class="page-item"><a href="#"><button class="page-link" onclick="paging(<%=maxPage%>);">&raquo;</button></a></li>
-                     </ul>
-                  </div>
+						<!-- bookList부분 -->
+						</div>
 
-               <!-- middiv -->
-               </div>
-               
-            <!-- leftdiv + middiv -->
-            </div>
-            
-         <!-- topdiv + leftdiv + bookList -->
-         </div>
+						<!-- pagination -->
+						<div style="margin-bottom: 5%;" class="pageDiv">
+							<ul class="pagination mt-2 mb-2"
+								style="margin-left: auto; margin-right: auto;">
+								<!-- 맨 앞으로 이동 버튼 -->
+								<li class="page-item"><a href="#">
+								<button class="page-link" onclick="paging(1);">&laquo;</button></a></li>
+								<!-- 하나 전으로 이동 버튼 -->
+								<% if(currentPage <= 1){ %>
+									<li class="page-item disabled"><button class="page-link">&lt;</button></li>
+								<% } else { %>
+									<li class="page-item"><a href="#">
+									<button class="page-link" onclick="paging(<%=currentPage%>-1);">&lt;</button></a></li>
+								<% } %>
+								<!-- 각 페이지 이동 버튼 -->
+								<%for(int i = startPage; i <= endPage; i++){ %>
+									<% if(currentPage == i){ %>
+										<li class="page-item active"><a href="#">
+										<button class="page-link" disabled><%=i%></button></a></li>
+									<% } else { %>
+										<li class="page-item"><a href="#">
+										<button class="page-link" onclick="paging(<%=i%>);"><%=i%></button></a></li>
+									<% } %>
+								<% } %>
+								<!-- 하나 앞으로 이동 버튼 -->
+								<% if(currentPage >= maxPage){ %>
+									<li class="page-item disabled"><button class="page-link">&gt;</button></li>
+								<% } else { %>
+									<li class="page-item"><a href="#">
+									<button class="page-link" onclick="paging(<%=currentPage%>+1);">&gt;</button></a></li>
+								<% } %>
+								<!-- 맨 뒤로 이동 버튼 -->
+								<li class="page-item"><a href="#">
+								<button class="page-link" onclick="paging(<%=maxPage%>);">&raquo;</button></a></li>
+							</ul>
+						</div>
 
-      </div>
-	
-   </div>
+					<!-- middiv -->
+					</div>
+
+				<!-- leftdiv + middiv -->
+				</div>
+
+			<!-- topdiv + leftdiv + bookList -->
+			</div>
+
+		</div>
+
+	</div>
 	<footer><%@ include file="../common/Footer.jsp"%></footer>
-	
-   <script>
-   		// 페이징 기능
+
+	<script>
+ 	  // 페이징 기능
       function paging(currentPage){
          $.ajax({
         	url : "paging.sb",
@@ -287,6 +319,11 @@
          $('#searchBar').val('<%=getText%>');
       });
       
+      // 검색 구분자 남기기
+      $(function(){      
+		$('#searchBy').val('<%=option%>').prop('selected', true);
+      });
+      
       // 장르 선택시 색깔표시
       $(function(){
          $('#<%=genreCode%>').css({
@@ -297,11 +334,11 @@
       // 장르별 검색된 숫자 표시 
       $('.leftbar').children('li').each(function(idx, item){
          var gCount = 0;
-         <% Iterator iter = genreCount.entrySet().iterator();
+         <%Iterator iter = genreCount.entrySet().iterator();
 			while (iter.hasNext()) {
 				Map.Entry<String, Integer> entry = (Map.Entry<String, Integer>) iter.next();
 				String iterKey = (String) entry.getKey();
-				int iterValue = (int) entry.getValue(); %>
+				int iterValue = (int) entry.getValue();%>
             $(this).children().children().each(function(idx, item){
                if($(this).children('span').attr('id') == '<%=iterKey%>'){
                   var value = <%=iterValue%>;
@@ -321,12 +358,16 @@
          });
       });
       
-      // 수량 100권 제한
+      // 수량 위로 100권, 아래로 1권 제한
       $('#bookCount').on('input', function(){
          if($('#bookCount').val()>100){
-            alert("책은 100권까지만 주문 가능합니다.");
+            alert("책은 100권 이하로 주문 가능합니다.");
             $('#bookCount').val(100);
          };
+         if($('#bookCount').val()<1){
+             alert("책은 1권 이상만 주문 가능합니다.");
+             $('#bookCount').val(1);
+          };
       });
       
       // 카테고리 선택 이동
@@ -356,8 +397,9 @@
     	        			if(confirm('상품이 장바구니에 담겼습니다. 장바구니로 이동하시겠습니까?'))
     	        				location.href="<%=request.getContextPath()%>/cart.ct";
     	        		} else {
-    	        			if(confirm('상품이 이미 장바구니에 있습니다. 장바구니로 이동하시겠습니까?'))
-    	        				location.href="<%=request.getContextPath()%>/cart.ct";		
+    	        			if(confirm('상품이 이미 장바구니에 있습니다. 장바구니로 이동하시겠습니까?')){
+    	        				location.href="<%=request.getContextPath()%>/cart.ct";
+    	        			}
     	        		}
     	        	}, error : function(data){
     	        		console.log(data);
@@ -372,6 +414,6 @@
       };
 
    </script>
-   
+
 </body>
 </html>

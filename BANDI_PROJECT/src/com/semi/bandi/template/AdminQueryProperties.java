@@ -134,4 +134,18 @@ public class AdminQueryProperties
 		
 		return query;
 	}
+
+	public String getGenreCountQuery() {
+			String query = null;
+				
+				try {
+					prop.load(new FileReader(adminQuery));
+					query = prop.getProperty("genreCount");
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				return query;
+	}
 }

@@ -12,6 +12,7 @@ import com.semi.bandi.model.vo.adminVo.AnnualIncome;
 import com.semi.bandi.model.vo.adminVo.BookStocks;
 import com.semi.bandi.model.vo.adminVo.CommentAdmin;
 import com.semi.bandi.model.vo.adminVo.OrderAdmin;
+import com.semi.bandi.model.vo.adminVo.PieChartData;
 import com.semi.bandi.template.AdminQueryProperties;
 
 import static com.semi.bandi.template.JDBCTemplate.*;
@@ -661,6 +662,45 @@ public class AdminDao
 			close(pstmt);
 		}
 		return key;
+	}
+
+	public ArrayList<PieChartData> getGenreCountsVo(Connection con, int year) {
+		if(con == null) return null;
+		
+		ArrayList<PieChartData> dataArray = new ArrayList<PieChartData>();
+		PieChartData data = null;
+		PreparedStatement pstmt = null;
+		ResultSet rSet = null;
+		
+		String query = new AdminQueryProperties().getGenreCountQuery();
+		
+		if(query == null) return null;
+		
+		try{
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, year+"");
+			
+			rSet = pstmt.executeQuery();
+			
+			while(rSet.next())
+			{
+				data = new PieChartData();
+				data.setLabel(rSet.getString(1));
+				data.setData(rSet.getInt(2));
+				dataArray.add(data);
+			}
+		}catch(SQLException e)
+		{
+			e.printStackTrace();
+			dataArray = null;
+		}finally
+		{
+			close(rSet);
+			close(pstmt);
+			close(con);
+		}
+		
+		return dataArray;
 	}
 	
 	

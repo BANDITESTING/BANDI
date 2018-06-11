@@ -9,6 +9,7 @@ import com.semi.bandi.model.vo.adminVo.AnnualIncome;
 import com.semi.bandi.model.vo.adminVo.BookStocks;
 import com.semi.bandi.model.vo.adminVo.CommentAdmin;
 import com.semi.bandi.model.vo.adminVo.OrderAdmin;
+import com.semi.bandi.model.vo.adminVo.PieChartData;
 
 import static com.semi.bandi.template.JDBCTemplate.*;
 
@@ -94,29 +95,41 @@ public class AdminDQLService
 		
 		return adDao.getBookStocksArray(con ,min);
 	}
+	
 	public ArrayList<CommentAdmin> getCommentArrayList(int year) {
 		AdminDao adDao = new AdminDao();
 		Connection con = getInstance();
 		return adDao.getCommentArray(con, year);
 	}
+	
 	public ArrayList<OrderAdmin> getOrderArrayList(int year) {
 		AdminDao adDao = new AdminDao();
 		Connection con = getInstance();
 		return adDao.getOrderArray(con, year);
 	}
+	
 	public BookStocks getBooksRecInfo(String mISBN) {
 		AdminDao adDao = new AdminDao();
 		Connection con = getInstance();
 		return adDao.getBookByISBN(con, mISBN);
 	}
+	
 	public ArrayList<BookStocks> getBookStocksArray(String title) {
 		AdminDao adDao = new AdminDao();
 		Connection con = getInstance();
 		return adDao.getBooksByTitle(con, title);
 	}
+	
 	public BookStocks getBookByISBN(String mISBN) {
 		AdminDao adDao = new AdminDao();
 		Connection con = getInstance();
 		return adDao.getBookByISBN_DAO(con, mISBN);
 	}
+	/* Genre Count Data , Now Get Data Array*/
+	public ArrayList<PieChartData> getGenreCountData(int year) {
+		AdminDao adDao = new AdminDao();
+		Connection con = getInstance();
+		return adDao.getGenreCountsVo(con, year);
+	}
+	
 }

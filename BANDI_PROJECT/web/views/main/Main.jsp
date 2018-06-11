@@ -23,7 +23,7 @@
 	ArrayList<CommentUserInfo> comArray = (ArrayList<CommentUserInfo>)session.getAttribute("commentArray");
     
 	// If Wrong Access This Page. Move to Index.jsp
-	 if(array == null || bookArray == null || rateBook == null || comArray ==null) pageContext.forward("index.jsp");
+	 if(array == null || bookArray == null || rateBook == null || comArray ==null) response.sendRedirect("views/common/errorPage.jsp");
 	 
 %>
 

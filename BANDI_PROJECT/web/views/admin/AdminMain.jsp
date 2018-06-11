@@ -19,6 +19,7 @@
 	if(stocks == null || incomes == null || comments == null || orders == null)
 	{
 		// go to Error Page;
+		response.sendRedirect(request.getContextPath() + "/views/common/errorPage.jsp");
 	}
 %>
 
@@ -107,7 +108,7 @@
 					        </div>
 					        <div class='bottom'>
 					          <h3>
-					            Name:
+					            Name: <% if(user != null) { %>
 					            <span><%=user.getmName()%></span>
 					          </h3>
 					          <h3>
@@ -116,7 +117,7 @@
 					          </h3>
 					          <h3>
 					            Phone:
-					            <span><%=user.getmPhone()%></span>
+					            <span><%=user.getmPhone()%></span> <%}%>
 					          </h3>
 					        </div>
 					      </div>
@@ -259,12 +260,13 @@
 	                                      <th>주문일</th>
 	                                      <th>주문수</th>
 	                                      <th>책판매량</th>
-	                                      <th>포장비용</th>
+	                                      <th>포인트사용</th>
 	                                      <th>주문합계</th>
 	                                  </tr>
 	                            </thead>
 	                            
 	                            <tbody>
+	                            <% if(incomes != null) {%>
 	                            <%for(int i = 0; i < incomes.size(); i++) { %>
 	                            	<tr>
 	                                     <td><%=incomes.get(i).getmOrderDate()%></td>
@@ -273,7 +275,7 @@
 	                                     <td><%=incomes.get(i).getmPacketPrice()%></td>
 	                                     <td><%=incomes.get(i).getmSumPrice()%></td>
 	                                </tr>
-	                             <%} %>	                           
+	                             <%} } %>	                           
 	                            </tbody>
 							</table>
 							
@@ -319,6 +321,7 @@
 	                            </thead>
 	                            
 	                            <tbody>
+	                            <% if(stocks != null) { %>
 	                            <%for(int i = 0; i < stocks.size(); i++) { %>
 	                            	<tr>
 	                                     <td><%=stocks.get(i).getmBook_UID()%></td>
@@ -327,7 +330,7 @@
 	                                     <td><%=stocks.get(i).getmWriterName()%></td>
 	                                     <td><%=stocks.get(i).getmQuantity()%></td>
 	                                </tr>
-	                             <%} %>	                           
+	                             <%} } %>	                           
 	                            </tbody>
 							</table>
 							
@@ -362,6 +365,7 @@
 	                            </thead>
 	                            
 	                            <tbody>
+	                            <% if(orders != null) {%>
 	                            <%for(int i = 0; i < orders.size(); i++) { %>
 	                            	<tr>
 	                                     <td><%=orders.get(i).getmOrder_UID()%></td>
@@ -370,7 +374,7 @@
 	                                     <td><%=orders.get(i).getmTel()%></td>
 	                                     <td><%=orders.get(i).getmOrder_Date()%></td>
 	                                </tr>
-	                             <%} %>	                           
+	                             <%}} %>	                           
 	                            </tbody>
 							</table>
 							
@@ -401,6 +405,7 @@
 	                            </thead>
 	                            
 	                            <tbody>
+	                            <% if(comments != null) { %>
 	                            <%for(int i = 0; i < comments.size(); i++) { %>
 	                            	<tr>
 	                                     <td><%=comments.get(i).getmComment_UID()%></td>
@@ -409,7 +414,7 @@
 	                                     <td><%=comments.get(i).getMbook_Comment()%></td>
 	                                     <td><%=comments.get(i).getmWritedDate()%></td>
 	                                </tr>
-	                             <%} %>	                           
+	                             <%} }%>	                           
 	                            </tbody>
 							</table>
 							

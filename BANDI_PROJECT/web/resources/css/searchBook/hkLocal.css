@@ -76,7 +76,6 @@ ul {
 
 .leftbar>li>span {
 	text-align: center;
-	text-decoration: none;
 	font-size: 15pt;
 	color: white;
 }
@@ -96,7 +95,6 @@ ul {
 }
 .leftbar>li>ul>li>span {
 	text-align: left;
-	text-decoration: none;
 	font-size: 11pt;
 	color: rgb(230, 230, 230);
 }
@@ -130,11 +128,8 @@ ul {
 	color: black;
 }
 
-.page-item.active .page-link {
-  z-index: 1;
-  color: #fff;
-  background-color: #000;
-  border-color: #000;
+.pagination li a{
+	text-decoration: none;
 }
 
 input[type=number]::-webkit-inner-spin-button,

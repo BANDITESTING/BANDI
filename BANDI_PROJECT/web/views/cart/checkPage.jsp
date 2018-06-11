@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" %>
+    pageEncoding="UTF-8" import="com.semi.bandi.model.vo.*, java.util.*, java.text.*"%>
+<%
+	ArrayList<OrderDetail> orderTable = (ArrayList<OrderDetail>)request.getAttribute("orderTable");
+	ArrayList<OrderTable> orderDetail = (ArrayList<OrderTable>)request.getAttribute("orderDetail");
+	ArrayList<OrderTable> orderCnt = (ArrayList<OrderTable>)request.getAttribute("orderCnt");
+	DecimalFormat df = new DecimalFormat("###,###");
+	int bookTotal = 0;
+	int forCnt = 0;
+%>
 <!DOCTYPE html>
 <html>
 
@@ -30,10 +38,8 @@
             </div>
 
             <!-- 주문자 정보 확인 테이블 -->
-            <div class="row justify-content-between" style="padding-top:5%;">
-                <div class="col-3">
-                    <p><b>- 주문자 정보</b></p>
-                </div>
+            <div class="row" style="padding-top:5%;">
+            	<p><h5><b>- 주문자 정보</b></h5></p>
             </div>
             <div class="row">
                 <table class="table table-bordered"> <!-- bootstrap.min.css 에서 table-bordered 안에 text-align:center 추가해줌 -->
@@ -52,108 +58,112 @@
 
             <!-- 배송 정보 -->
             <div class="row" style="padding-top:5%;">
-                <p><b>- 배송 정보</b></p>
+                <p><h5><b>- 배송 정보</b></h5></p>
             </div>
-            <div class="deliveryContain">
-	            <div class="row justify-content-between">
-	                <div class="col-6">
-	                    <p>XXX 시 XXX 구 XXX 동 XXX- XX 번지 XXXX호</p>
-	                </div>
-	                <div class="col-6 text-right" style="padding:0;"> 
-	                	<input type="button" class="btn6" value="주문 전체 취소">&nbsp;&nbsp;&nbsp;
-	                    <input type="button" class="btn6" value="주문 선택 취소">
-	                </div>
-	            </div>
-	
-	            <!-- 배송 정보 테이블 -->
-	            <div class="row">
-	                <table class="table table-bordered"> <!-- bootstrap.min.css 에서 table-bordered 안에 text-align:center 추가해줌 -->
-	                    <thead>
+            
+            <% for (int i = 0 ; i < orderTable.size() ; i++) { %>
+            
+	            <div class="deliveryContain" style="padding-top:2%;">
+		            <div class="row justify-content-between" style="background:rgb(247, 247, 247);">
+		                <div class="col-6" style="padding-top:1%;">
+		                    <p><%= orderTable.get(i).getShipping() %></p>
+		                </div>
+		                <div class="col-6 text-right" style="padding-top:1%;"> 
+		                	<input type="button" class="btn6 allCancleBtn" value="주문 전체 취소">&nbsp;&nbsp;&nbsp;
+		                    <input type="button" class="btn6 cancleBtn" value="주문 선택 취소">
+		                </div>
+		            </div>
+		
+		            <!-- 배송 정보 테이블 -->
+		            <div class="row deliveryData" style="padding-top:1%;">
+		                <table class="table table-bordered"> <!-- bootstrap.min.css 에서 table-bordered 안에 text-align:center 추가해줌 -->
 	                        <tr>
-	                            <th scope="col">주문번호</th>
+	                            <th class="orderTh" scope="col">주문번호</th>
 	                            <th scope="col">상품정보</th>
-	                            <th scope="col">배송 / 판매자</th>
 	                            <th scope="col">수량</th>
 	                            <th scope="col">판매가 합계</th>
 	                            <th scope="col">주문상태</th>
-	                            <th scope="col"><input type="checkbox" name="chkAll" id="chkAll"></th>
+	                            <th scope="col"><input type="checkbox" class="chkAll"></th>
 	                        </tr>
-	                    </thead>
-	                    <tbody>
-	                        <tr>
-	                            <td rowspan="3">201805070001<br>(2018-05-02)</td>
-	                            <td class="text-left" style="padding-left:3%;"><img src="<%=request.getContextPath()%>/resources/images/cart/BOOK/sample2.PNG" alt="퍼즈" style="padding-right:5%;">퍼즈</td>
-	                            <td>반딧불이 책방</td>
-	                            <td>1</td>
-	                            <td class="text-right" style="padding-right:3%;">15,500 원</td>
-	                            <td>주문 접수</td>
-	                            <td><input type="checkbox" name="chk1" id="chk1"></td> <!-- bootstrap.min.css 에서 .table td,.table th 안에 vertical-align:middle로 변경 -->
-	                        </tr>
-	                        <tr>
-	                            <td class="text-left" style="padding-left:3%;"><img src="<%=request.getContextPath()%>/resources/images/cart/BOOK/sample1.PNG" alt="신경끄기의기술" style="padding-right:5%;">신경끄기의기술</td>
-	                            <td>반딧불이 책방</td>
-	                            <td>1</td>
-	                            <td class="text-right" style="padding-right:3%;">21,000 원</td>
-	                            <td>주문 접수</td>
-	                            <td><input type="checkbox" name="chk1" id="chk1"></td> <!-- bootstrap.min.css 에서 .table td,.table th 안에 vertical-align:middle로 변경 -->
-	                        </tr>
-	                        <tr>
-	                            <td class="text-left" style="padding-left:3%;"><img src="<%=request.getContextPath()%>/resources/images/cart/BOOK/sample3.PNG" alt="미움받을용기" style="padding-right:5%;">미움받을용기</td>
-	                            <td>반딧불이 책방</td>
-	                            <td>2</td>
-	                            <td class="text-right" style="padding-right:3%;">34,000 원</td>
-	                            <td>주문 접수</td>
-	                            <td><input type="checkbox" name="chk1" id="chk1"></td> <!-- bootstrap.min.css 에서 .table td,.table th 안에 vertical-align:middle로 변경 -->
-	                        </tr>
-	                    </tbody>
-	                </table>
-	            </div>
-	            <div class="row">
-	                <table class="table table-bordered">
-	                    <tr>
-	                        <th>받으실 분</th>
-	                        <td class="text-left" style="padding-left:3%;">홍길동</td>
-	                    </tr>
-	                    <tr>
-	                        <th>주소</th>
-	                        <td class="text-left" style="padding-left:3%;">XXX 시 XXX 구 XXX 동 XXX- XX 번지 XXXX호</td>
-	                    </tr>
-	                    <tr>
-	                        <th>휴대폰 번호</th>
-	                        <td class="text-left" style="padding-left:3%;">010-1234-5678</td>
-	                    </tr>
-	                </table>
-	            </div>
-	
-	            <!-- 결제 정보 -->
-	            <div class="row justify-content-between" style="padding-top:5%;">
-	                <p><b>- 결제 정보</b></p>
-	            </div>
-	            <div class="row">
-	                <table class="table table-bordered">
-	                    <thead>
-	                        <tr>
-	                            <th>상품 금액</th>
-	                            <th>할인 금액</th>
-	                            <th>결제 예정 금액</th>
-	                            <th>적립 예정</th>
-	                        </tr>
-	                    </thead>
-	                    <tbody>
-	                        <tr>
-	                            <td>36,500 원</td>
-	                            <td>0 원</td>
-	                            <td>36,500 원</td>
-	                            <td>2,000 원</td>
-	                        </tr>
-	                    </tbody>
-	                </table>
-	            </div>
-			</div>
+	                        
+	                        <% 
+	                        	bookTotal = 0;
+	                        	for (int j = forCnt ; j < orderCnt.get(i).getCnt() + forCnt ; j++) { 
+	                        	bookTotal += orderDetail.get(j).getPrice();
+	                        %>
+		                        <tr>
+		                        	<% if (j == forCnt) { %>
+			                            <td class="tdOrderNum orderTh" rowspan="<%= orderCnt.get(i).getCnt() %>">
+			                            	<span class="order_UID"><%= orderTable.get(i).getOrderUID() %></span><br>(<%= orderTable.get(i).getOrderDate() %>)
+		                            	</td>
+	                            	<% } %>
+		                            <td class="text-left tdBook">
+		                            	<img class="bookImg" src="<%=request.getContextPath()%>/resources/bookimage/<%= orderDetail.get(j).getImage() %>" alt="<%= orderDetail.get(j).getTitle() %>" style="margin-left:5%;margin-right:5%;">
+		                            	<%= orderDetail.get(j).getTitle() %>
+		                            	<input type="hidden" class="bookUID" id="bookUID<%= j+1 %>" value="<%= orderDetail.get(j).getBookUID() %>">
+	                            	</td>
+		                            <td class="tdQuan">
+		                            	<%= orderDetail.get(j).getAmout() %>
+	                            	</td>
+		                            <td class="tdPrice">
+		                            	<%= df.format(orderDetail.get(j).getPrice()) %> 원
+	                            	</td>
+		                            <td class="tdState">
+		                            	<%= orderTable.get(i).getShippingSate() %>
+		                            </td>
+		                            <td class="tdChk">
+		                            	<input type="checkbox" class="chk" id="chk<%= j+1 %>">
+		                            </td> <!-- bootstrap.min.css 에서 .table td,.table th 안에 vertical-align:middle로 변경 -->
+		                        </tr>
+	                        <% } forCnt += orderCnt.get(i).getCnt(); %>
+		                </table>
+		            </div>
+		            <div class="row">
+		                <table class="table table-bordered">
+		                    <tr>
+		                        <th class="orderTh">받으실 분</th>
+		                        <td class="text-left" style="padding-left:3%;"><%= orderTable.get(i).getReceiver() %></td>
+		                    </tr>
+		                    <tr>
+		                        <th class="orderTh">주소</th>
+		                        <td class="text-left" style="padding-left:3%;"><%= orderTable.get(i).getShipping() %></td>
+		                    </tr>
+		                    <tr>
+		                        <th class="orderTh">휴대폰 번호</th>
+		                        <td class="text-left" style="padding-left:3%;"><%= orderTable.get(i).getPhone() %></td>
+		                    </tr>
+		                </table>
+		            </div>
+		            
+		            <!-- 결제 정보 -->
+		            <div class="row" style="padding-top:5%;">
+		                <p><h5><b>- 결제 정보</b></h5></p>
+		            </div>
+		            <div class="row priceTable">
+		                <table class="table table-bordered">
+	                       <tr>
+	                           <th>상품 금액</th>
+	                           <th>할인 금액</th>
+	                           <th>최종 결제 금액</th>
+	                           <th>적립 예정 금액</th>
+	                       </tr>
+	                       <tr>
+	                           <td><%= df.format(bookTotal) %> 원</td>
+	                           <td class="priceTd"><span class="finalPrice"><%= df.format(orderTable.get(i).getDiscount()) %></span> 원</td>
+	                           <td><%= df.format(orderTable.get(i).getPrice()) %> 원</td>
+	                           <td><%= df.format(orderTable.get(i).getPoint()) %> P</td>
+	                       </tr>
+		                </table>
+		            </div>
+				</div>
+			
+	            <hr>
+		
+			<% } %>
 			
             <!-- 쇼핑 버튼 -->
             <div class="row justify-content-end" style="padding-top:5%; padding-bottom:5%;">
-                <input type="button" class="btn3" value="쇼핑 계속하기">
+                <input type="button" class="btn3 shoppingBtn" value="쇼핑 계속하기">
             </div>
 
         </div>

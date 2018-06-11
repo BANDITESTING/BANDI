@@ -5,14 +5,28 @@ public class OrderTable
 	String orderUID;
 	int bookUID;
 	int amout;
+	int price;
+	String image;
+	String title;
+	int cnt;
 	
 	public OrderTable(){}
-
+	
 	public OrderTable(String orderUID, int bookUID, int amout) {
 		super();
 		this.orderUID = orderUID;
 		this.bookUID = bookUID;
 		this.amout = amout;
+	}
+
+	public OrderTable(String orderUID, int bookUID, int amout, int price, String image, String title) {
+		super();
+		this.orderUID = orderUID;
+		this.bookUID = bookUID;
+		this.amout = amout;
+		this.price = price;
+		this.image = image;
+		this.title = title;
 	}
 
 	public String getOrderUID() {
@@ -39,9 +53,42 @@ public class OrderTable
 		this.amout = amout;
 	}
 
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	
+	public int getCnt() {
+		return cnt;
+	}
+
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
+
 	@Override
 	public String toString() {
-		return "OrderTable [orderUID=" + orderUID + ", bookUID=" + bookUID + ", amout=" + amout + "]";
+		return "OrderTable [orderUID=" + orderUID + ", bookUID=" + bookUID + ", amout=" + amout + ", price=" + price
+				+ ", image=" + image + ", title=" + title + ", cnt=" + cnt + "]";
 	}
 
 	@Override

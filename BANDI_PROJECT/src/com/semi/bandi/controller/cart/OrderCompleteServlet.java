@@ -32,7 +32,6 @@ public class OrderCompleteServlet extends HttpServlet {
 		int deliveryPay = Integer.parseInt(request.getParameter("deliveryPay"));
 		int orderTotal = Integer.parseInt(request.getParameter("orderTotal"));
 		int priceTotal = Integer.parseInt(request.getParameter("priceTotal"));
-		int flag = 0;
 				
 		String[] bookArr = bookList.split(",");
 		String[] quanArr = quanList.split(",");
@@ -63,14 +62,12 @@ public class OrderCompleteServlet extends HttpServlet {
 		// ORDER_TABLE에 데이터 INSERT 성공하면 ORDER_DETAIL에 데이터 INSERT
 		CashService cService = new CashService();
 		
-		int result = cService.insertOrder(bookArr, quanArr, user);
 		String page = "";
 		double gradeRate = cService.changePointRate(user.getmGrade());
+		int result = cService.insertOrder(bookArr, quanArr, user, priceTotal, usePoint, (int)(priceTotal * gradeRate));
 		
 		if (result > 0) {
 			
-			flag = 1;
-
 			// 성공하면 ORDER에 INSERT된 데이터 CART에서 지우기
 			// Cart 객체 배열 만들기
 			Cart[] cart = new Cart[bookArr.length];
@@ -84,7 +81,7 @@ public class OrderCompleteServlet extends HttpServlet {
 			
 			if (result > 0) {
 
-				result = cService.updateUserPoint(sessionUser, usePoint, (priceTotal * gradeRate));
+				result = cService.updateUserPoint(sessionUser, usePoint);
 				sessionUser.setmBandi_Point((int)(priceTotal * gradeRate));
 				session.setAttribute("user", sessionUser);
 				
@@ -94,41 +91,34 @@ public class OrderCompleteServlet extends HttpServlet {
 					// 모두다 성공하면 주문 완료 페이지로 이동 (주문번호, 로그인된 계정의 이름 필요)
 					page = "/views/cart/orderComplete.jsp";
 					String orderUID = cService.selectOrderUID(user);
-					OrderDetail orderDetail = new OrderDetail(orderUID, user.getmAddress(), user.getmName(), user.getmPhone());
+					OrderDetail orderDetail = new OrderDetail(orderUID, user.getmAddress(), user.getmName(), user.getmPhone(), priceTotal, usePoint, (int)(priceTotal * gradeRate));
 
 					System.out.println("배송정보 확인 : " + orderDetail);
 					request.setAttribute("orderDetail", orderDetail);
 					request.setAttribute("orderTotal", orderTotal);
 					request.setAttribute("deliveryPay", deliveryPay);
-					request.setAttribute("usePoint", usePoint);
-					request.setAttribute("priceTotal", priceTotal);
-					request.setAttribute("point", (int)(priceTotal * gradeRate));
-					
 					
 				} else {
 					
-					page = "/views/cart/productOrder.jsp";
-					flag = 3;
+					page = "/views/common/errorPage.jsp";
+					request.setAttribute("msg", "사용자 포인트 갱신 실패. (관리자에게 문의 바랍니다)");
 					
 				}
 				
 			} else {
-				
-				page = "/views/cart/productOrder.jsp";
-				flag = 2;
+
+				page = "/views/common/errorPage.jsp";
+				request.setAttribute("msg", "장바구니 정보 삭제 실패. (관리자에게 문의 바랍니다)");
 				
 			}
 						
 		} else {
 			
 			page = "/views/cart/productOrder.jsp";
-			
+			request.setAttribute("msg", "주문 실패.");
 			
 		}
-		
-		// 주문이 실패할 경우 주문/결제 페이지에서 alert을 띄우기 위한 용도
-		request.setAttribute("flag", flag);
-		
+				
 		request.getRequestDispatcher(page).forward(request, response);
 		
 	}

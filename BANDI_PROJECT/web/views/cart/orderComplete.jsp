@@ -1,13 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="com.semi.bandi.model.vo.*, java.util.*, java.text.*"%>
 <%
-	int flag = (int)request.getAttribute("flag");
 	OrderDetail orderDetail = (OrderDetail)request.getAttribute("orderDetail");
 	int orderTotal = (int)request.getAttribute("orderTotal");
 	int deliveryPay = (int)request.getAttribute("deliveryPay");
-	int usePoint = (int)request.getAttribute("usePoint");
-	int priceTotal = (int)request.getAttribute("priceTotal");
-	int point = (int)request.getAttribute("point");
 	DecimalFormat df = new DecimalFormat("###,###");
 %>
 <!DOCTYPE html>
@@ -46,7 +42,7 @@
 	                <h2><b>주문이 성공적으로 접수 되었습니다.</b></h2>
 	            </div>
 	            <div class="row justify-content-center" style="padding-bottom:5%;">
-	                <p>주문번호 (<%= orderDetail.getOrderUID() %>) | <%= user.getmName() %> 고객님, 감사합니다.</p>&nbsp;&nbsp;&nbsp;<input type="button" class="btn7" value="주문내역 상세보기" onClick="location.href='checkPage.jsp'">
+	                <p>주문번호 (<%= orderDetail.getOrderUID() %>) | <%= user.getmName() %> 고객님, 감사합니다.</p>&nbsp;&nbsp;&nbsp;<input type="button" class="btn7 detailBtn" value="주문내역 상세보기">
 	            </div>
 	            <hr>
 	            
@@ -69,9 +65,9 @@
 	                        <tr>
 	                            <td><%= df.format(orderTotal) %> 원</td>
 	                            <td><%= df.format(deliveryPay) %> 원</td>
-	                            <td><%= df.format(usePoint) %> 원</td>
-	                            <td><%= df.format(priceTotal) %> 원</td>
-	                            <td><%= df.format(point) %> 원</td>
+	                            <td><%= df.format(orderDetail.getDiscount()) %> 원</td>
+	                            <td><%= df.format(orderDetail.getPrice()) %> 원</td>
+	                            <td><%= df.format(orderDetail.getPoint()) %> 원</td>
 	                        </tr>
 	                    </tbody>
 	                </table>
@@ -100,40 +96,13 @@
 	
 	            <!-- 쇼핑 계속 버튼 -->
 	            <div class="row justify-content-end" style="padding-top:5%; padding-bottom:5%;">
-	                <input type="button" class="btn3 shoppingBtn" value="쇼핑 계속하기">&nbsp;&nbsp;&nbsp;<input type="button" class="btn4 cartBtn" value="장바구니">&nbsp;&nbsp;&nbsp;<input type="button" class="btn5" value="주문내역 상세보기" id="detailBtn">
+	                <input type="button" class="btn3 shoppingBtn" value="쇼핑 계속하기">&nbsp;&nbsp;&nbsp;<input type="button" class="btn4 cartBtn" value="장바구니">&nbsp;&nbsp;&nbsp;<input type="button" class="btn5 detailBtn" value="주문내역 상세보기">
 	            </div>
             
             </div>
-
-	        <!-- 주문 실패시 나타날 화면 -->
-	        <div id="fail" style="display:none;">
-	        
-	        	<!-- 주문실패 목록 표시 글 -->
-	            <div class="d-flex align-items-center" style="padding-top:5%;">
-	                <i class="fas fa-shopping-cart fa-2x"></i><h3><b>&nbsp;&nbsp;주문 실패</b></h3>
-	            </div>
-	            
-	            <!-- 주문 실패 문구 -->
-	            <div class="row justify-content-center" style="padding-top:5%;">
-	                <h2><b>주문에 실패하였습니다.</b></h2>
-	            </div>
-	            <div class="row justify-content-center" style="padding-bottom:5%;">
-	                <p>주문 정보를 다시 확인해주세요. 문제 지속시 관리자에게 문의 바랍니다.</p>
-	            </div>
-	            <hr>
-	        
-	        	<!-- 쇼핑 계속 버튼 -->
-	            <div class="row justify-content-end" style="padding-top:5%; padding-bottom:5%;">
-	                <input type="button" class="btn3 shoppingBtn" value="쇼핑 계속하기">&nbsp;&nbsp;&nbsp;<input type="button" class="btn4 cartBtn" value="장바구니">
-	            </div>
-	       	</div>
 	       	
         </div>
                 
-        <script>
-        	var flag = <%= flag %>;
-        </script>
-        
         <footer>
         	<%@include file ="../common/Footer.jsp" %>
         </footer>

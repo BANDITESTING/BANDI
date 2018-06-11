@@ -57,7 +57,7 @@
                         		bookTotal += cartList.get(i-1).getPrice() * cartList.get(i-1).getBookQuantity(); %>
 	                    	<tr>
 	                            <td class="text-left tdBook">
-	                            	<img id="bookImg<%= i %>" class="bookImg" src="<%=request.getContextPath()%>/resources/images/cart/BOOK/<%= cartList.get(i-1).getImage() %>" alt="<%= cartList.get(i-1).getTitle() %>" style="margin-right:5%; margin-left:5%;"><%= cartList.get(i-1).getTitle() %>
+	                            	<img id="bookImg<%= i %>" class="bookImg" src="<%=request.getContextPath()%>/resources/bookimage/<%= cartList.get(i-1).getImage() %>" alt="<%= cartList.get(i-1).getTitle() %>" style="margin-right:5%; margin-left:5%;"><%= cartList.get(i-1).getTitle() %>
 	                            	<input type="hidden" id="bookUID" value="<%= cartList.get(i-1).getBookUID() %>">
 	                            </td>
 	                            <td class="tdPrice" id="sale<%= i %>">
@@ -218,7 +218,7 @@
                     <thead>
                         <tr>
                             <th>주문 금액 합계</th>
-                            <th>배송</th>
+                            <th>배송비</th>
                             <th>할인 금액</th>
                             <th>결제 금액</th>
                         </tr>

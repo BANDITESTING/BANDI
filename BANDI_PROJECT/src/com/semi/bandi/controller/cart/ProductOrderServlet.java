@@ -43,7 +43,7 @@ public class ProductOrderServlet extends HttpServlet {
 				
 		if (user == null) {		// 로그인 정보 확인 (로그인 되어있지 않으면 주문/결제에 접근할 수 없다.)
 			
-			page = "/views/main/Main.jsp";
+			page = "/views/member/jlogin.jsp";
 			
 		} else {
 			
@@ -58,13 +58,13 @@ public class ProductOrderServlet extends HttpServlet {
 				
 			} else {		// 주문 정보 조회 실패
 				
-				page = "views/cart/shoppingCart.jsp";
+				page = "views/common/errorPage.jsp";
+				request.setAttribute("msg", "주문 조회 실패");
 				
 			}
 			
 			request.setAttribute("user", user);
 			request.setAttribute("pointRate", pointRate);
-			request.setAttribute("flag", 1);
 			
 		}
 		

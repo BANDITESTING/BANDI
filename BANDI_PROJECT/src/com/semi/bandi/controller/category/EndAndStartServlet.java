@@ -1,8 +1,6 @@
 package com.semi.bandi.controller.category;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,19 +9,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.semi.bandi.model.service.category.CategoryService;
-import com.semi.bandi.model.vo.Category;
 
 /**
- * Servlet implementation class SortCategoryServlet
+ * Servlet implementation class EndAndStartServlet
  */
-@WebServlet("/sortCategory.do")
-public class SortCategoryServlet extends HttpServlet {
+@WebServlet("/EndAndStart.do")
+public class EndAndStartServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SortCategoryServlet() {
+    public EndAndStartServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,26 +29,24 @@ public class SortCategoryServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String CategoryCode = request.getParameter("CategoryCode");
-		String orderBy = request.getParameter("category");
-		String sStart = request.getParameter("start");
-		String sEnd = request.getParameter("end");
-		response.setContentType("application/json; charset=UTF-8");
-		Gson gson = new Gson();
+		String category = request.getParameter("category");
+		String categoryCode = request.getParameter("CategoryCode");
+		String cStart = request.getParameter("start");
+		//String cEnd = request.getParameter("end"); 
 		
-		// Shield for null Point Error
-		if(CategoryCode == null || orderBy == null || sStart == null || sEnd == null)  { gson.toJson("error",response.getWriter()); return; }
+		Gson gSon = new Gson();
 		
-		int start = Integer.parseInt(sStart);
-		int end  = Integer.parseInt(sEnd);
+		if(categoryCode == null || category == null || cStart == null )  { gSon.toJson("error",response.getWriter()); return; }
 		
-		CategoryService cs = new CategoryService();
+		int start = Integer.parseInt(cStart);
+		//int end = Integer.parseInt(cEnd);
 		
-		if(CategoryCode == null || orderBy == null) return;
-		ArrayList<Category> list = cs.bookCategoryAndCode(CategoryCode,orderBy, start, end);
+		CategoryService cService = new CategoryService();
 		
-		if(list == null)  { gson.toJson("error",response.getWriter()); return; }
-		else gson.toJson(list,response.getWriter());
+		int EndAndStart = cService.EndAndStartService(categoryCode,category,start);
+		
+		if(EndAndStart == 0)  { gSon.toJson("error",response.getWriter()); return; }
+		else gSon.toJson(EndAndStart,response.getWriter());
 	}
 
 	/**

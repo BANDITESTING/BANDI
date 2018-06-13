@@ -64,6 +64,7 @@ public class CashDao {
 				cart.setImage(rset.getString("IMAGE"));
 				cart.setPrice(rset.getInt("PRICE"));
 				cart.setTitle(rset.getString("TITLE"));
+				cart.setIsbn(rset.getString("ISBN"));
 				
 				result.add(cart);
 				
@@ -116,7 +117,7 @@ public class CashDao {
 		
 	}
 	
-	public ArrayList<Cart> seletCart(Connection con, String[] bookList, int useruid) {
+	public ArrayList<Cart> selectCart(Connection con, String[] bookList, int useruid) {
 		
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -164,6 +165,7 @@ public class CashDao {
 				cart.setImage(rset.getString("IMAGE"));
 				cart.setPrice(rset.getInt("PRICE"));
 				cart.setTitle(rset.getString("TITLE"));
+				cart.setIsbn(rset.getString("ISBN"));
 				
 				result.add(cart);
 				
@@ -326,13 +328,13 @@ public class CashDao {
 	}
 	
 	// 로그인 계정 포인트 업데이트
-	public int updateUserPoint(Connection con, User user, int usePoint) {
+	public int updateUserPoint(Connection con, User user, int usePoint, String query) {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		
 		try {
 			
-			pstmt = con.prepareStatement(prop.getProperty("updatePoint"));
+			pstmt = con.prepareStatement(prop.getProperty("updatePoint") + query);
 			
 			pstmt.setInt(1, usePoint);
 			pstmt.setInt(2, user.getmUser_UID());
@@ -386,7 +388,6 @@ public class CashDao {
 				result.add(order);
 							
 			}
-			
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
@@ -397,7 +398,7 @@ public class CashDao {
 			close(pstmt);
 			
 		}
-		
+
 		return result;
 	}
 
@@ -407,50 +408,53 @@ public class CashDao {
 		ResultSet rset = null;
 		
 		String query = " WHERE ORDER_UID = ";
-		
-		for (int i = 0 ; i < orderUID.length ; i++) {
-			
-			if (i != orderUID.length - 1) {
+
+		if (orderUID.length != 0) {
+			for (int i = 0 ; i < orderUID.length ; i++) {
 				
-				query += "? OR ORDER_UID = ";
-				
-			} else {
-				
-				query += "? ORDER BY 1 DESC";
-				
-			}
+				if (i != orderUID.length - 1) {
 					
+					query += "? OR ORDER_UID = ";
+					
+				} else {
+					
+					query += "? ORDER BY 1 DESC";
+					
+				}
+						
+			}
 		}
 		
 		try {
-			
-			pstmt = con.prepareStatement(prop.getProperty("selectOrderDetail") + query);
-			
-			for (int i = 0 ; i < orderUID.length ; i++) {
+			if (orderUID.length != 0) {
+				pstmt = con.prepareStatement(prop.getProperty("selectOrderDetail") + query);
 				
-				pstmt.setString((i + 1), orderUID[i]);
+				for (int i = 0 ; i < orderUID.length ; i++) {
+					
+					pstmt.setString((i + 1), orderUID[i]);
+					
+				}
 				
+				rset = pstmt.executeQuery();
+				
+				result = new ArrayList<OrderTable>();
+				
+				while (rset.next()) {
+					
+					OrderTable order = new OrderTable();
+					
+					order.setOrderUID(rset.getString(1));
+					order.setBookUID(rset.getInt(2));
+					order.setAmout(rset.getInt(3));
+					order.setPrice((rset.getInt(4) * rset.getInt(3)));
+					order.setImage(rset.getString(5));
+					order.setTitle(rset.getString(6));
+					order.setIsbn(rset.getString(7));
+					
+					result.add(order);
+					
+				}
 			}
-			
-			rset = pstmt.executeQuery();
-			
-			result = new ArrayList<OrderTable>();
-			
-			while (rset.next()) {
-				
-				OrderTable order = new OrderTable();
-				
-				order.setOrderUID(rset.getString(1));
-				order.setBookUID(rset.getInt(2));
-				order.setAmout(rset.getInt(3));
-				order.setPrice((rset.getInt(4) * rset.getInt(3)));
-				order.setImage(rset.getString(5));
-				order.setTitle(rset.getString(6));
-				
-				result.add(order);
-				
-			}
-			
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
@@ -571,6 +575,7 @@ public class CashDao {
 				order.setTitle(rset.getString(4));
 				order.setPrice(rset.getInt(5));
 				order.setImage(rset.getString(6));
+				order.setIsbn(rset.getString(7));
 				
 				result.add(order);
 				
@@ -645,7 +650,7 @@ public class CashDao {
 		return result;
 	}
 
-	public int updateTable(Connection con, int canclePrice, String orderUID, double pointRate) {
+	public int updateTable(Connection con, int canclePrice, String orderUID, double pointRate, int bookPrice, int point) {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		
@@ -653,10 +658,14 @@ public class CashDao {
 			
 			pstmt = con.prepareStatement(prop.getProperty("updateTable"));
 			
-			pstmt.setInt(1, canclePrice);
+			pstmt.setInt(1, bookPrice);
 			pstmt.setInt(2, canclePrice);
-			pstmt.setDouble(3, pointRate);
-			pstmt.setString(4, orderUID);
+			pstmt.setInt(3, point);
+			pstmt.setInt(4, bookPrice);
+			pstmt.setInt(5, canclePrice);
+			pstmt.setInt(6, point);
+			pstmt.setDouble(7, pointRate);
+			pstmt.setString(8, orderUID);
 			
 			result = pstmt.executeUpdate();
 			
@@ -673,22 +682,22 @@ public class CashDao {
 		return result;
 	}
 
-	public int selectTotalData(Connection con, String orderUID) {
+	public int updateCart(Connection con, int useruid, String[] bookList, String[] quanList) {
 		int result = 0;
 		PreparedStatement pstmt = null;
-		ResultSet rset = null;
 		
 		try {
 			
-			pstmt = con.prepareStatement(prop.getProperty("selectTotalData"));
+			pstmt = con.prepareStatement(prop.getProperty("updateCart"));
 			
-			pstmt.setString(1, orderUID);
+			pstmt.setInt(2, useruid);
 			
-			rset = pstmt.executeQuery();
-			
-			if (rset.next()) {
+			for (int i = 0 ; i < bookList.length ; i++) {
 				
-				result = rset.getInt(1);
+				pstmt.setInt(1, Integer.parseInt(quanList[i]));
+				pstmt.setInt(3, Integer.parseInt(bookList[i]));
+				
+				result += pstmt.executeUpdate();
 				
 			}
 			
@@ -698,12 +707,11 @@ public class CashDao {
 			
 		} finally {
 			
-			close(rset);
 			close(pstmt);
 			
 		}
 		
 		return result;
 	}
-
+	
 }

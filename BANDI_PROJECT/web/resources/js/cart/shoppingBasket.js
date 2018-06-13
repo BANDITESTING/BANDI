@@ -3,7 +3,7 @@ $(function() {
 	var bookList;
 	var bookUID;
 	var bookUIDList;
-	var cartQUANTITY;
+	var cartQUANTITY = "";
 	
 	// 처음 접속 시 체크박스 모두 선택
 	$('input:checkbox').each(function() {
@@ -32,15 +32,15 @@ $(function() {
 	// '바로구매' 버튼 기능 구현
 	$('.pickBtn').on('click', function() {
 		bookUID = $(this).parent().siblings().find('#bookUID').val();
-
-		console.log("bookUID : " + bookUID);
+		cartQUANTITY = $(this).parent().siblings().find('.quan').val();
 		
-		location.href="/BANDI/order.ct?bookUID=" + bookUID;
+		location.href="/BANDI/order.ct?bookUID=" + bookUID + "&quan=" + cartQUANTITY;
 	});
 	
 	// '선택상품 주문하기' 버튼 기능 구현
 	$('#orderBtn').on('click', function() {
 		bookUIDList = "";
+		cartQUANTITY = "";
 		
 		chkBookList();
 		
@@ -50,7 +50,7 @@ $(function() {
 				if ($(this).prop("checked") == true) {
 					
 					bookUIDList += $(this).siblings('input').val() + ",";
-					console.log("bookUID : " + $(this).siblings('input').val() + "/" + index);
+					cartQUANTITY += $(this).parent().siblings().find('.quan').val() + ",";
 					
 				}
 			});
@@ -60,9 +60,8 @@ $(function() {
 			alert("주문할 도서를 선택해주세요.");
 			
 		}
-		console.log("bookUID : " + bookUIDList);
-		
-		location.href="/BANDI/order.ct?bookUID=" + bookUIDList;
+
+		location.href="/BANDI/order.ct?bookUID=" + bookUIDList + "&quan=" + cartQUANTITY;
 	});
 	
 	// '전체상품 주문하기' 버튼 기능구현
@@ -72,13 +71,11 @@ $(function() {
 		$('.chk').each(function(index, item) {
 				
 			bookUIDList += $(this).siblings('input').val() + ",";
-			console.log("bookUID : " + $(this).siblings('input').val() + "/" + index);
+			cartQUANTITY += $(this).parent().siblings().find('.quan').val() + ",";
 				
 		});
-		
-		console.log("bookUID : " + bookUIDList);
-		
-		location.href="/BANDI/order.ct?bookUID=" + bookUIDList;
+				
+		location.href="/BANDI/order.ct?bookUID=" + bookUIDList + "&quan=" + cartQUANTITY;
 	});
 	
 	// 전체 선택 체크 박스 선택 시
@@ -119,40 +116,54 @@ $(function() {
 	// 선택 삭제 버튼 기능 구현
 	$('#selectDelBtn').on('click', function() {
 		if(confirm('선택한 상품을 삭제하시겠습니까?')){
-			chkBookList();	
-			$('#chkAll').prop("checked", false);
+		chkBookList();	
+		$('#chkAll').prop("checked", false);
+		
+		if (bookList.length > 0) {
+			$('.chk').each(function(index, item) {
+				
+				if ($(this).prop('checked') == true) {
+				
+		        	$(this).parent().parent().remove();
+					
+				} else {
+					
+					$(this).prop("checked", true);
+					$('#chkAll').prop("checked", true);
+					
+				}
+				
+			});
+		} else {
 			
-			if (bookList.length > 0) {
-				$('.chk').each(function(index, item) {
-					if ($(this).prop('checked') == true) {
-			        	$(this).parent().parent().remove();
-					} else {
-						$(this).prop("checked", true);
-						$('#chkAll').prop("checked", true);
-					}
-				});
-			} else {
-				alert("삭제 할 도서를 선택해 주세요.");
-			}
-			delBookList();
+			alert("삭제 할 도서를 선택해 주세요.");
+			
+		}
+		
+		delBookList();
 		}
 	});
 	
 	// 전체 삭제 버튼 기능 구현
 	$('#allDelBtn').on('click', function() {
 		if(confirm('장바구니의 모든 상품을 삭제하시겠습니까?')){
-			$('.chk').each(function(index, item) {
-				this.checked = true;
-			});
+		$('.chk').each(function(index, item) {
 			
-			chkBookList();
+			this.checked = true;
+			
+		});
 		
-			$('.chk').each(function(index, item) {
-		    	$(this).parent().parent().remove();
-			});
+		chkBookList();
+	
+		$('.chk').each(function(index, item) {
+	
+	    	$(this).parent().parent().remove();
 			
-			$('#chkAll').prop("checked", false);		
-			delBookList();
+		});
+		
+		$('#chkAll').prop("checked", false);
+		
+		delBookList();
 		}
 	});
 	
@@ -167,15 +178,17 @@ $(function() {
 			$(".quan").val(1);
 			
 		}
-		
-		console.log(parseInt($(this).parent().siblings().find('.onePrice').text().replace(",", "")));
-		console.log($(this).val());
+		if($('.quan').val()<1){
+			alert("책은 1권 이상 주문 가능합니다.");
+			$('.quan').val(1);
+		};
 		
 		total = (parseInt($(this).parent().siblings().find('.onePrice').text().replace(",", "")) * parseInt($(this).val()));
 		
 		$(this).parent().siblings().find('.bookPrice').text(total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 		
 		resetTotal();
+		
 	});
 		
 	// 하나의 도서 정보 삭제 구현
@@ -206,7 +219,6 @@ $(function() {
 			}
 		});
 		
-		console.log(bookList);
 	}
 	
 	// '삭제' 버튼 클릭시 해당 도서 정보 담는 기능 구현
@@ -243,9 +255,7 @@ $(function() {
 				alert("도서 삭제 오류");
 			}
 		});
-		
-		console.log(bookList);
-		
+				
 	}
 	
 	// 1개 이상 체크 된 도서 정보 리스트
@@ -266,7 +276,6 @@ $(function() {
 			
 		});
 		
-		console.log(bookList);
 	}
 	
 	// 도서 삭제 시 금액 테이블 reset
@@ -279,17 +288,9 @@ $(function() {
 			if ($(this).prop('checked') == true) {
 				
 				total += parseInt($(this).parent().siblings().find('.bookPrice').text().replace(",", ""));
-				console.log("total1 : " + total);
-			} else {
-				
-				console.log("test");
-				
 			}
-			
 		});
-		
-		console.log("total : " + total);
-		
+				
 		$('#total').text(total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+ " 원");
 		
 		$('.totalBook').each(function(index, item) {

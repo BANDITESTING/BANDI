@@ -62,7 +62,7 @@ public class CashService {
 		
 		Connection con = getInstance();
 		
-		ArrayList<Cart> result = cDao.seletCart(con, bookList, useruid);
+		ArrayList<Cart> result = cDao.selectCart(con, bookList, useruid);
 		
 		close(con);
 		
@@ -137,10 +137,10 @@ public class CashService {
 	}
 	
 	// 로그인 계정 포인트 업데이트 서비스
-	public int updateUserPoint(User user, int usePoint) {
+	public int updateUserPoint(User user, int usePoint, String query) {
 		Connection con = getInstance();
 		
-		int result = cDao.updateUserPoint(con, user, usePoint);
+		int result = cDao.updateUserPoint(con, user, usePoint, query);
 		
 		if (result > 0) {
 			
@@ -247,10 +247,10 @@ public class CashService {
 	}
 
 	// ORDER_TABLE 변경된 금액 업데이트 서비스 
-	public int updateTable(int canclePrice, String orderUID, double pointRate) {
+	public int updateTable(int canclePrice, String orderUID, double pointRate, int bookPrice, int point) {
 		Connection con = getInstance();
 		
-		int result = cDao.updateTable(con, canclePrice, orderUID, pointRate);
+		int result = cDao.updateTable(con, canclePrice, orderUID, pointRate, bookPrice, point);
 		
 		if (result > 0) {
 			commit(con);
@@ -262,15 +262,18 @@ public class CashService {
 		
 		return result;
 	}
-
-
-	// 해당 주문 번호의 가격을 조회해서 DELETE해야 하는지 판단하는 서비스
-	public int selectTotalData(String orderUID) {
+	
+	// 주문 수량 변경 서비스
+	public int updateCart(int useruid, String[] bookList, String[] quanList) {
 		Connection con = getInstance();
 		
-		int result = cDao.selectTotalData(con, orderUID);
+		int result = cDao.updateCart(con, useruid, bookList, quanList);
 		
-		close(con);
+		if (result > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
 		
 		return result;
 	}

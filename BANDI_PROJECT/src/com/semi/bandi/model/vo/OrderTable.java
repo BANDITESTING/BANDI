@@ -9,6 +9,7 @@ public class OrderTable
 	String image;
 	String title;
 	int cnt;
+	String isbn;
 	
 	public OrderTable(){}
 	
@@ -83,6 +84,14 @@ public class OrderTable
 
 	public void setCnt(int cnt) {
 		this.cnt = cnt;
+	}
+
+	public String getIsbn() {
+		return isbn;
+	}
+
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
 	}
 
 	@Override

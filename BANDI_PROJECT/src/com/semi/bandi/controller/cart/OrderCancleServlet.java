@@ -27,7 +27,10 @@ public class OrderCancleServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String orderUID = request.getParameter("orderUID");
 		String[] bookUID = request.getParameter("bookUID").split(",");
-		int price = Integer.parseInt(request.getParameter("canclePrice"));
+		int point = Integer.parseInt(request.getParameter("point"));
+		int cnt = Integer.parseInt(request.getParameter("cnt"));
+		int flag = Integer.parseInt(request.getParameter("flag"));
+		int bookTotal = Integer.parseInt(request.getParameter("bookTotal"));
 		
 		ArrayList<OrderTable> result = null;
 				
@@ -46,7 +49,14 @@ public class OrderCancleServlet extends HttpServlet {
 				
 				page = "/views/cart/canclePage.jsp";
 				request.setAttribute("cancleData", result);
-				request.setAttribute("price", price);
+				request.setAttribute("point", point);
+				request.setAttribute("cnt", cnt);
+				request.setAttribute("flag", flag);
+				if (cnt != flag) {
+					request.setAttribute("bookTotal", bookTotal);
+				} else {
+					request.setAttribute("bookTotal", (bookTotal - point));
+				}
 				
 			} else {
 				

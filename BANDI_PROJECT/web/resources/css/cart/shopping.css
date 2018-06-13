@@ -10,6 +10,7 @@ input[type=number]::-webkit-outer-spin-button {
     border : 0;
     color : white;
     background-color : rgb(163, 87, 118);
+   cursor: pointer;
 }
 
 .btn2 {
@@ -17,6 +18,7 @@ input[type=number]::-webkit-outer-spin-button {
     height : 27px;
     border-radius : 5px;
     border : 0;
+   cursor: pointer;
 }
 
 .btn3 {
@@ -24,6 +26,7 @@ input[type=number]::-webkit-outer-spin-button {
     height : 50px;
     border-radius : 5px;
     border : 0;
+   cursor: pointer;
 }
 
 .btn4 {
@@ -33,6 +36,7 @@ input[type=number]::-webkit-outer-spin-button {
     border : 0;
     color : white;
     background-color : rgb(163, 87, 118);
+   cursor: pointer;
 }
 
 .btn5 {
@@ -42,6 +46,7 @@ input[type=number]::-webkit-outer-spin-button {
     border : 0;
     color : white;
     background-color : rgb(95, 75, 139);
+   cursor: pointer;
 }
 
 .btn6 {
@@ -51,6 +56,7 @@ input[type=number]::-webkit-outer-spin-button {
     border : 0;
     color : white;
     background-color : rgb(132, 141, 197);
+   cursor: pointer;
 }
 
 .btn7 {
@@ -61,6 +67,7 @@ input[type=number]::-webkit-outer-spin-button {
     border : 0;
     color : white;
     background-color : rgb(95, 75, 139);
+   cursor: pointer;
 }
 
 .btn8 {
@@ -70,6 +77,7 @@ input[type=number]::-webkit-outer-spin-button {
     font-size : 10pt;
     border-radius : 5px;
     border : 0;
+   cursor: pointer;
 }
 
 .btn9 {
@@ -78,6 +86,7 @@ input[type=number]::-webkit-outer-spin-button {
     text-align : center;
     border-radius : 5px;
     border : 0;
+   cursor: pointer;
 }
 
 .tdChk {
@@ -132,4 +141,26 @@ input[type=number]::-webkit-outer-spin-button {
 
 .orderTh {
 	width : 20%;
+}
+
+.sidebar {
+	position: absolute;
+    height: 100%;
+    left: 0;
+    display: block;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: #773376;
+    opacity : 0.8;
+    color:snow;
+    border-right: 1px solid #eee;
+}
+
+th {
+	text-align: center;
+}
+
+td {
+	text-align: center;
 }

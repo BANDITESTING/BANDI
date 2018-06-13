@@ -81,19 +81,17 @@ public class OrderCompleteServlet extends HttpServlet {
 			
 			if (result > 0) {
 
-				result = cService.updateUserPoint(sessionUser, usePoint);
-				sessionUser.setmBandi_Point((int)(priceTotal * gradeRate));
+				result = cService.updateUserPoint(sessionUser, usePoint, " - ? WHERE USER_UID = ? AND E_MAIL = ?");
+				sessionUser.setmBandi_Point(sessionUser.getmBandi_Point() - usePoint);
 				session.setAttribute("user", sessionUser);
 				
 				if (result > 0) {
 
-					System.out.println("확인1");
 					// 모두다 성공하면 주문 완료 페이지로 이동 (주문번호, 로그인된 계정의 이름 필요)
 					page = "/views/cart/orderComplete.jsp";
 					String orderUID = cService.selectOrderUID(user);
 					OrderDetail orderDetail = new OrderDetail(orderUID, user.getmAddress(), user.getmName(), user.getmPhone(), priceTotal, usePoint, (int)(priceTotal * gradeRate));
 
-					System.out.println("배송정보 확인 : " + orderDetail);
 					request.setAttribute("orderDetail", orderDetail);
 					request.setAttribute("orderTotal", orderTotal);
 					request.setAttribute("deliveryPay", deliveryPay);

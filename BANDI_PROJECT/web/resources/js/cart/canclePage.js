@@ -30,7 +30,7 @@ $(function() {
 						
 		});
 		
-		location.href = "/BANDI/canclecomplete.ct?orderUID=" + orderUID + "&bookUID=" + bookUID + "&canclePrice=" + canclePrice;
+		location.href = "/BANDI/canclecomplete.ct?orderUID=" + orderUID + "&bookUID=" + bookUID + "&canclePrice=" + canclePrice + "&cnt=" + cnt + "&flag=" + flag + "&bookPrice=" + bookPrice + "&point=" + point;
 		
 	});
 	

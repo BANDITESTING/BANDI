@@ -22,7 +22,10 @@ public class SearchBook extends Book implements Serializable{
 //	private int    mPage;         	// How many page for book [12]
 //	private String mPublisher;    	// Publisher        [13]
 	private String mWriter;
-	// 차후 평점도 추가
+	private double mRating;
+	private int mCommentCount;
+	private String mIssueYear;
+	private String mIssueMonth;
 
 	public SearchBook() {}
 
@@ -32,6 +35,38 @@ public class SearchBook extends Book implements Serializable{
 
 	public void setmWriter(String mWriter) {
 		this.mWriter = mWriter;
+	}
+	
+	public double getmRating() {
+		return mRating;
+	}
+	
+	public void setmRating(double mRating) {
+		this.mRating = mRating;
+	}
+
+	public int getmCommentCount() {
+		return mCommentCount;
+	}
+
+	public void setmCommentCount(int mCommentCount) {
+		this.mCommentCount = mCommentCount;
+	}
+
+	public String getmIssueYear() {
+		return mIssueYear;
+	}
+
+	public void setmIssueYear(String mIssueYear) {
+		this.mIssueYear = mIssueYear;
+	}
+
+	public String getmIssueMonth() {
+		return mIssueMonth;
+	}
+
+	public void setmIssueMonth(String mIssueMonth) {
+		this.mIssueMonth = mIssueMonth;
 	}
 	
 }

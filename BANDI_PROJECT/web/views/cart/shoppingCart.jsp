@@ -17,12 +17,20 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <script src="<%=request.getContextPath()%>/resources/js/cart/jquery-3.3.1.min.js"></script>
         <script src="<%=request.getContextPath()%>/resources/js/cart/bootstrap.min.js"></script>
-        <script src="<%=request.getContextPath()%>/resources/js/cart/shoppingBasket.js"></script>
+        <script src="<%=request.getContextPath()%>/resources/js/cart/shoppingBasket.js?ver=2"></script>
         <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/cart/bootstrap.min.css">
         <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/cart/shopping.css">
         <link href="<%=request.getContextPath()%>/resources/css/cart/fontawesome-all.min.css" rel="stylesheet">
+    <style>
+    	.finger{
+    		cursor: pointer;
+    	}
+    	
+    	.test{
+    		border: 1px dotted green;
+    	}
+    </style>
     </head>
-
     <body>
     
     	<header>
@@ -59,7 +67,14 @@
 	                            	<input type="checkbox" class="chk" id="chk<%= i %>"><input type="hidden" id="bookUID" value="<%= cartList.get(i-1).getBookUID() %>">
 	                            </td> <!-- bootstrap.min.css 에서 .table td,.table th 안에 vertical-align:middle로 변경 -->
 	                            <td class="text-left tdBook">
-	                            	<img id="bookImg<%= i %>" class="bookImg" src="<%=request.getContextPath()%>/resources/bookimage/<%= cartList.get(i-1).getImage() %>" alt="<%= cartList.get(i-1).getTitle() %>" style="margin-right:5%; margin-left:5%;"><%= cartList.get(i-1).getTitle() %>
+									<div class="row">
+										<div class="test col-sm-5 text-center">
+											<img id="bookImg<%= i %>" class="bookImg" src="<%=request.getContextPath()%>/resources/bookimage/<%= cartList.get(i-1).getImage() %>" alt="<%= cartList.get(i-1).getTitle() %>">
+										</div>
+										<div class="test col-sm-7">
+											<%= cartList.get(i-1).getTitle() %>
+										</div>
+									</div>
 	                            </td>
 	                            <td class="tdPrice" id="sale<%= i %>">
 	                            	<span class="onePrice"><%= df.format(cartList.get(i-1).getPrice())%></span> 원
@@ -71,7 +86,7 @@
 	                            	<span class="bookPrice"><%= df.format(cartList.get(i-1).getPrice() * cartList.get(i-1).getBookQuantity()) %></span> 원
 	                            </td>
 	                            <td class="tdBtn">
-	                            	<input type="button" class="btn1 pickBtn" value="바로구매">&nbsp;&nbsp;&nbsp;<input type="button" class="btn2 delBtn" value="삭제">
+	                            	<input type="button" class="btn1 pickBtn finger" value="바로구매">&nbsp;&nbsp;&nbsp;<input type="button" class="btn2 delBtn finger" value="삭제">
 	                            </td>
 	                        </tr>
                     	<% 	}
@@ -86,8 +101,8 @@
             
             <!-- 삭제 버튼 -->
             <div class="row">
-            	<input type="button" class="btn9" id="selectDelBtn" value="선택 삭제">&nbsp;&nbsp;&nbsp;
-                <input type="button" class="btn1" id="allDelBtn" value="전체 삭제">
+            	<input type="button" class="btn9 finger" id="selectDelBtn" value="선택 삭제">&nbsp;&nbsp;&nbsp;
+                <input type="button" class="btn1 finger" id="allDelBtn" value="전체 삭제">
             </div>
 
             <!-- 금액 테이블 -->
@@ -132,12 +147,16 @@
 
             <!-- 구매 버튼 -->
             <div class="row justify-content-end" style="margin-top:5%; margin-bottom:5%;">
-                <input type="button" class="btn3" id="shopBtn" name="shopBtn" value="쇼핑 계속하기">&nbsp;&nbsp;&nbsp;
-                <input type="button" class="btn4" id="orderBtn" name="orderBtn" value="선택상품 주문하기">&nbsp;&nbsp;&nbsp;
-                <input type="button" class="btn5" id="allBtn" name="allBtn" value="전체상품 주문하기">
+                <input type="button" class="btn3 finger" id="shopBtn" name="shopBtn" value="쇼핑 계속하기">&nbsp;&nbsp;&nbsp;
+                <input type="button" class="btn4 finger" id="orderBtn" name="orderBtn" value="선택상품 주문하기">&nbsp;&nbsp;&nbsp;
+                <input type="button" class="btn5 finger" id="allBtn" name="allBtn" value="전체상품 주문하기">
             </div>
             
         </div>
+        
+        <script>
+        	
+        </script>
         
         <script>
         	var bookTotal ="<%=bookTotal%>";

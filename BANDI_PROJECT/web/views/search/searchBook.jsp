@@ -27,11 +27,13 @@
 <title>검색화면</title>
 
 <link rel="stylesheet"
-   href="<%=request.getContextPath()%>/resources/css/searchBook/hkLocal.css?ver=1">
+   href="<%=request.getContextPath()%>/resources/css/searchBook/hkLocal.css?ver=2">
 <link rel="stylesheet"
    href="<%=request.getContextPath()%>/resources/css/category/bootstrap.min.css">
 <link rel="stylesheet"
    href="<%=request.getContextPath()%>/resources/css/join/font-awesome.min.css">
+<link rel="stylesheet"
+   href="<%=request.getContextPath()%>/resources/css/cart/fontawesome-all.min.css">   
 <link rel="stylesheet"
    href="http://fonts.googleapis.com/earlyaccess/jejugothic.css">
 <script
@@ -59,7 +61,7 @@
                         <ul>
                            <li><span id="A1" class="gSearch">&nbsp;&nbsp;&nbsp; 소설</span></li>
                            <li><span id="A2" class="gSearch">&nbsp;&nbsp;&nbsp; 시</span></li>
-                           <li><span id="A3" class="gSearch">&nbsp;&nbsp;&nbsp; 에세이(자서전)</span></li>
+                           <li><span id="A3" class="gSearch">&nbsp;&nbsp;&nbsp; 에세이</span></li>
                         </ul></li>
                      <li><span id="B_" class="gSearch">인문</span>
                         <ul>
@@ -105,23 +107,24 @@
                               alt="책" class="bookImg"></a>
                         </div>
                         <div class="col-lg-5 bookInfo">
-                           <div class="bookTitle mb-1"><a href="<%=request.getContextPath()%>/detail.show?ISBN=<%=book.getmISBN()%>"><%=book.getmTitle()%></a></div>
-                           <div><%=book.getmWriter()%> / <%=book.getmPublisher()%></div>
+                           <div class="bookTitle"><a href="<%=request.getContextPath()%>/detail.show?ISBN=<%=book.getmISBN()%>"><%=book.getmTitle()%></a></div>
+                           <div class="bookData mb-1"><%=book.getmWriter()%> | <%=book.getmPublisher()%> | <%=book.getmIssueYear()%>년 <%=book.getmIssueMonth()%>월</div>
                            <div class="price"><%=book.getmPrice()%></div>
+                           <div class="rating"><%=book.getmRating()%>|<%=book.getmCommentCount()%></div>
                         </div>
                         <div class="col-lg-4" style="margin: auto;">
                            <div class="input-group mb-1 mt-1">
                               <div class="input-group-prepend">
                                  <label class="input-group-text" for="bookCount">수량</label>
                                  <input class="input-group" type="number" min="1" value="1"
-                                    id="bookCount" name="<%=book.getmBook_UID()%>"/>
+                                    id="bookCount" class="bookCount" name="<%=book.getmBook_UID()%>"/>
                               </div>
                            </div>
                            <div class="mt-2">
                               <button class="btn btn-block bg-ultravio" onclick="insertCart(<%=book.getmBook_UID()%>);">장바구니</button>
                            </div>
                            <div class="mt-2 mb-2">
-                              <div class="btn btn-block btn-light">바로구매</div>
+                              <button class="btn btn-block" onclick="orderDirect(<%=book.getmBook_UID()%>);">바로구매</button>
                            </div>
                         </div>
                      </div>
@@ -178,7 +181,7 @@
 	<footer><%@ include file="../common/Footer.jsp"%></footer>
 	
    <script>
-   		// 페이징 기능
+	  // 페이징 기능
       function paging(currentPage){
          $.ajax({
         	url : "paging.sb",
@@ -191,7 +194,7 @@
         		},
         	dataType : "json",
         	success : function(data){
-
+				
 				var book = data.list;
 				var pi = data.pi;
 				
@@ -207,25 +210,26 @@
                           alt="책" class="bookImg"></a>
                     </div>
                     <div class="col-lg-5 bookInfo">
-                       <div class="bookTitle mb-1">
+                       <div class="bookTitle">
                        <a href="<%=request.getContextPath()%>/detail.show?ISBN=`+book[i].mISBN+`">`
                     		   +book[i].mTitle+`</a></div>
-                       <div>`+book[i].mWriter+` / `+book[i].mPublisher+`</div>
+                       <div class="bookData mb-1">`+book[i].mWriter+` | `+book[i].mPublisher+` | `+book[i].mIssueYear+`년 `+book[i].mIssueMonth+`월</div>
                        <div class="price">`+book[i].mPrice+`</div>
+                       <div class="rating">`+book[i].mRating+`|`+book[i].mCommentCount+`</div>
                     </div>
                     <div class="col-lg-4" style="margin: auto;">
                        <div class="input-group mb-1 mt-1">
                           <div class="input-group-prepend">
                              <label class="input-group-text" for="bookCount">수량</label>
                              <input class="input-group bookCount7" type="number" min="1" value="1"  
-                             id="bookCount" name="`+book.getmBook_UID+`"/>
+                             id="bookCount" class="bookCount" name="`+book[i].mBook_Uid+`"/>
                           </div>
                        </div>
                        <div class="mt-2">
-                       		<button class="btn btn-block bg-ultravio" onclick="insertCart(`+book[i].mBook_UID+`);">장바구니</button>
+                       		<button class="btn btn-block bg-ultravio" onclick="insertCart(`+book[i].mBook_Uid+`);">장바구니</button>
                        </div>
                        <div class="mt-2 mb-2">
-                          <button class="btn btn-block">바로구매</button>
+                          <button class="btn btn-block" onclick="orderDirect(`+book[i].mBook_Uid+`);">바로구매</button>
                        </div>
 
                     </div>
@@ -270,12 +274,11 @@
              </ul>`;
 
 			$('.pageDiv').append(innerHtmlPage);
-			
-	         $(".price").each(function(index, item){
-	             var price = $(this).text();
-	             $(this).text(price.replace(/\B(?=(\d{3})+(?!\d))/g, ',') +"원");
-	          });
-			
+		
+			 countLimit()
+	         commaPrice();
+	         ratingCount();
+	         
         	}, error : function(data){
         		console.log(data);
         	}
@@ -285,6 +288,11 @@
       // 검색어 검색창에 남기기
       $(function(){
          $('#searchBar').val('<%=getText%>');
+      });
+      
+      // 검색 구분자 남기기
+      $(function(){      
+      $('#searchBy').val('<%=option%>').prop('selected', true);
       });
       
       // 장르 선택시 색깔표시
@@ -312,22 +320,60 @@
          <%}%>            
          if(gCount != 0) $(this).children('span').text($(this).children('span').text()+"("+gCount+")");         
       });
-      
+
+      // 처음 실행 시 가격 콤마, 평점 실행
+      $(function(){
+   	  	countLimit()
+		commaPrice();
+		ratingCount();
+      });
+        
       // 가격 콤마 찍어주기
-      $(function (){
-         $(".price").each(function(index, item){
-            var price = $(this).text();
-            $(this).text(price.replace(/\B(?=(\d{3})+(?!\d))/g, ',') +"원");
-         });
-      });
+      function commaPrice(){
+          $(".price").each(function(index, item){
+             var price = $(this).text();
+             $(this).text(price.replace(/\B(?=(\d{3})+(?!\d))/g, ',') +"원");
+          });
+      };
       
-      // 수량 100권 제한
-      $('#bookCount').on('input', function(){
-         if($('#bookCount').val()>100){
-            alert("책은 100권까지만 주문 가능합니다.");
-            $('#bookCount').val(100);
-         };
-      });
+   	  // 평점 표시
+      function ratingCount(){
+ 		 $(".rating").each(function(index, item){
+ 				console.log($(this).text());
+ 				var rating = $(this).text().substr(0,3);
+ 				var count = $(this).text().substr(4,5);				
+ 				var star = '';
+ 				if(rating < 1) star = '<i class="far fa-star"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+ 				else if(rating < 2) star = '<i class="fas fa-star-half"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+ 				else if(rating < 3) star = '<i class="fas fa-star"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+ 				else if(rating < 4) star = '<i class="fas fa-star"></i><i class="fas fa-star-half"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+ 				else if(rating < 5) star = '<i class="fas fa-star"></i><i class="fas fa-star"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+ 				else if(rating < 6) star = '<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half"></i>&nbsp;&nbsp;&nbsp;&nbsp;';
+ 				else if(rating < 7) star = '<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>&nbsp;&nbsp;&nbsp;&nbsp;';
+ 				else if(rating < 8) star = '<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half"></i>&nbsp;&nbsp;';
+ 				else if(rating < 9) star = '<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>&nbsp;&nbsp;';
+ 				else if(rating < 10) star = '<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half"></i>';
+ 				else if(rating == 10) star = '<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>';
+ 				
+ 				if(count == 0) $(this).remove();
+ 				else $(this).html(star+'&nbsp;&nbsp;&nbsp;'+rating+'&nbsp;&nbsp;&nbsp;리뷰('+count+')');
+ 	         });
+ 	 };
+   
+      // 수량 max 100권, min 1권 제한
+      function countLimit(){    	  
+	      $('#bookCount').on('input', function(){
+	         if($('#bookCount').val()>100){
+	            alert("책은 100권 이하로 주문 가능합니다.");
+	            $('#bookCount').val(100);
+	         };
+	         
+	         if($('#bookCount').val()<1){
+	             alert("책은 1권 이상 주문 가능합니다.");
+	             $('#bookCount').val(1);
+	          };
+	      });
+      };
       
       // 카테고리 선택 이동
       $('.gSearch').on('click', function(){
@@ -371,6 +417,35 @@
     	  }
       };
 
+      // 바로구매 버튼
+      function orderDirect(bookId){
+    	  if(<%=isUser%> != null){
+     		 var userId = <%=isUser%>;
+    		 var bookCount = $('input[name='+bookId+']').val();
+			    		 
+    		 $.ajax({
+    	        	url : "insertCart.ct",
+    	        	type : "GET",
+    	        	data : {
+							userId : userId,
+							bookId : bookId,
+							bookCount : bookCount
+    	        		},
+    	        	dataType : "json",
+    	        	success : function(data){
+        				location.href="<%=request.getContextPath()%>/order.ct?bookUID="+bookId;		
+    	        	}, error : function(data){
+    	        		console.log(data);
+    	        	}   	        		
+    	        	});
+    		 
+    	  } else {    		  
+			if(confirm('로그인이 필요한 기능입니다. 로그인을 하시겠습니까?')) {
+				location.href="<%=request.getContextPath()%>/views/member/jlogin.jsp";
+			}
+    	  }
+      };
+      
    </script>
    
 </body>

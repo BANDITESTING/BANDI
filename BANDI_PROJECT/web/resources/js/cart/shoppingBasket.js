@@ -24,7 +24,9 @@ $(function() {
 	
 	// 테이블 안에 삭제 버튼 기능 구현
 	$('.delBtn').on('click',function(){
-		oneDelBook(this);
+		if(confirm('해당 상품을 삭제하시겠습니까?')){
+			oneDelBook(this);
+		}
 	});
 	
 	// '바로구매' 버튼 기능 구현
@@ -116,54 +118,42 @@ $(function() {
 	
 	// 선택 삭제 버튼 기능 구현
 	$('#selectDelBtn').on('click', function() {
-		chkBookList();	
-		$('#chkAll').prop("checked", false);
-		
-		if (bookList.length > 0) {
-			$('.chk').each(function(index, item) {
-				
-				if ($(this).prop('checked') == true) {
-				
-		        	$(this).parent().parent().remove();
-					
-				} else {
-					
-					$(this).prop("checked", true);
-					$('#chkAll').prop("checked", true);
-					
-				}
-				
-			});
-		} else {
+		if(confirm('선택한 상품을 삭제하시겠습니까?')){
+			chkBookList();	
+			$('#chkAll').prop("checked", false);
 			
-			alert("삭제 할 도서를 선택해 주세요.");
-			
+			if (bookList.length > 0) {
+				$('.chk').each(function(index, item) {
+					if ($(this).prop('checked') == true) {
+			        	$(this).parent().parent().remove();
+					} else {
+						$(this).prop("checked", true);
+						$('#chkAll').prop("checked", true);
+					}
+				});
+			} else {
+				alert("삭제 할 도서를 선택해 주세요.");
+			}
+			delBookList();
 		}
-		
-		delBookList();
-		
 	});
 	
 	// 전체 삭제 버튼 기능 구현
 	$('#allDelBtn').on('click', function() {
-		
-		$('.chk').each(function(index, item) {
+		if(confirm('장바구니의 모든 상품을 삭제하시겠습니까?')){
+			$('.chk').each(function(index, item) {
+				this.checked = true;
+			});
 			
-			this.checked = true;
+			chkBookList();
+		
+			$('.chk').each(function(index, item) {
+		    	$(this).parent().parent().remove();
+			});
 			
-		});
-		
-		chkBookList();
-	
-		$('.chk').each(function(index, item) {
-	
-	    	$(this).parent().parent().remove();
-			
-		});
-		
-		$('#chkAll').prop("checked", false);
-		
-		delBookList();
+			$('#chkAll').prop("checked", false);		
+			delBookList();
+		}
 	});
 	
 	// 수량 변경 시 데이터 수정 기능 구현

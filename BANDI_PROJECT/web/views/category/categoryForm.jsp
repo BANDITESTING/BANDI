@@ -18,15 +18,10 @@
 	ArrayList<Category> banner = (ArrayList<Category>)session.getAttribute("CategoryBanner");
 	
 	int PageCount = (Integer)session.getAttribute("PageCount");
+
 	
-	PageCount = (PageCount/8) + 1;
-	
-	System.out.println("a"+array);
-	System.out.println("b"+rateBook);
-	System.out.println("c"+bookArray);
-	System.out.println("d"+CategoryCode);
-	System.out.println("e"+banner);
-	System.out.println("f"+PageCount);
+
+	System.out.println("f : "+PageCount);
 	
 %>
 <!DOCTYPE html>
@@ -42,6 +37,7 @@
         <link rel="stylesheet"
 			href="http://fonts.googleapis.com/earlyaccess/jejugothic.css">
 		<script src ="<%=request.getContextPath()%>/resources/js/main/owl.carousel.js"></script>
+		
 		<link href = "<%=request.getContextPath()%>/resources/css/main/owl.carousel.css" rel ="stylesheet">
 		<link href = "<%=request.getContextPath()%>/resources/css/main/owl.theme.default.css" rel = "stylesheet">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Gugi">
@@ -121,7 +117,7 @@
 	        	   			<%if(bookArray != null) { %>
 							<% for(int i = 0; i < bookArray.size(); i++) { %>
 							 <div class="item">
-							          <img src ="<%=request.getContextPath()%>/resources/bookimage/<%=bookArray.get(i).getmImagePath()%>?ver=1" class ="owl_carousel_img_sheet w3-hover-shadow" 
+							          <img src ="<%=request.getContextPath()%>/resources/bookimage/<%=bookArray.get(i).getmImagePath()%>?ver=2" class ="owl_carousel_img_sheet w3-hover-shadow" 
 							          id="<%=bookArray.get(i).getmISBN()%>" onclick="imageEvent(this);">
 							        </div>
 							    <% }} %>
@@ -193,29 +189,43 @@
         		<%for(int i =0 ; i < array.size(); i++) { %>
         			<div class = "w3-col l3 m3 s3 showArray" style="text-align:center"> 
         				<img class = "rankImage orderImage" src="<%=request.getContextPath()%>/resources/bookimage/<%=array.get(i).getcImage()%>" 
-        				name ="<%=array.get(i).getcISBN()%>" style="width: 100%; padding-left: 20px; padding-right: 20px;"/>	
+        				name ="<%=array.get(i).getcISBN()%>" style="width: 100%; padding-left: 20px; padding-right: 20px;"/><div class="w3-display-hover w3-display-middle">      
+                  			<a href="<%=request.getContextPath()%>/detail.show?ISBN=<%=array.get(i).getcISBN()%>" class="main_spec_view_a"><span>상세보기</span></a>
+              			</div>	
         				<span class= "orderTitle"><%if(array.get(i).getcTitle().length() >= 12){%><%=array.get(i).getcTitle().substring(0, 12)+".."%> <%}else{ %> <%=array.get(i).getcTitle() %><%} %></span><br>
         				<span class ="orderWriter"><%=array.get(i).getcWriter()%></span>
         			</div>
         		<%} %>
-        		<div class="w3-center">
-					<div class="w3-bar pagination">
+        	</div>
+        	
+        	<div class="w3-center">
+					<div class="w3-bar pagination pagingArray">
+						
 						<%
-							int listBtn = PageCount;
-							if(PageCount > 5) listBtn =5;
+							boolean nextArrow = false;
+							boolean FirstArrow = true;
+							int listBtn = (int)(Math.ceil(PageCount/2.0));
+							
+							if(listBtn > 5) {listBtn =5; nextArrow = true;FirstArrow = false;};
+							
+							
 						%>
+						<% if(FirstArrow ) {%>
+							<button disabled>&lt;</button>
+							<% }else { %>
+							 <button onclick="categorybackBtn();" class="pagingFirst"> &lt;&lt; </button> 
+							 <% } %>
 					 	<%for(int i = 1; i <= listBtn; i++) {%>
-					 		<button onclick="location.href='/myWeb/cPage.do?currentPage=<%=i%>'"> <%=i%></button>
-					 	<%}%>
+					 		<button onclick="categoryPageBtn(name);" name="<%=i%>" class= "pagingmiddle"> <%=i%></button>
+					 	<%} %>
 					 	
-					 	<%if(PageCount > 5) {%>
-					 		<button onclick="location.href='/myWeb/cPage.do?currentPage=<%=6%>'"> ></button> 
+					 		
+					 	<%if(nextArrow) {%>
+					 		<button onclick="categoryJumpBtn(name);" class="pagingLast" name ="1">&gt;&gt;</button> 
 					 	<%} %>
 					 	
 					</div>
-				</div>
-        		
-        	</div>
+		</div>
         	
         </div>
         
@@ -224,6 +234,172 @@
 		</footer>
 		
         <script>
+        
+        var showCount = 8;
+        var showCountDouble = 8.0;
+        var buttonCount = 5;
+   
+        //Back Page
+        function categorybackBtn(){
+        	
+        }
+        
+        
+        // Next Page
+        function categoryJumpBtn(i)
+        {
+        	// 1. IMAGE
+        	var num = (showCount * buttonCount * i) + 1;
+        	categoryNextImage(num);
+        	
+        	// 2. Button [startAndEnd]
+        	 categoryNextButton(num);
+        }
+        
+        // PREV BUTTON
+        function categoryPrevButton(num)
+        {
+        	var start = num;
+        	var end = num + showCount -1;
+        	
+        	$cRecent = $('#cRecent');
+    		$cTitle  = $('#cTitle');
+    		$cWriter = $('#cWriter');
+    		$cBS    = $('#cBS');
+        	
+        	if($cRecent.hasClass('thick1Ck') == true) order= "ISSUE_DATE";
+    		if($cTitle.hasClass('thick2Ck') == true) order= "TITLE";
+    		if($cWriter.hasClass('thick3Ck') == true) order= "WRITER_NAME";
+    		if($cBS.hasClass('thick4Ck') == true) order= "QUANTITY";
+        	
+        	var categoryCode = "<%=CategoryCode%>";
+        	$.ajax({
+	        	url: "/BANDI/EndAndStart.do",
+				type: "POST",
+				data:{"category":order,
+						"CategoryCode":categoryCode,
+						"start":start,
+					},
+				success: function(data){
+					// MAKE BUTTON
+					$prevBtn = $('.pagingFirst');
+    	    		$nextBtn = $('.pagingLast');
+    	    		$pageBtn = $('.pagingmiddle');
+    				
+    				$prevBtn.remove();
+    				$nextBtn.remove();
+    				$pageBtn.remove();
+    				$pageArray = $('.pagingArray');
+    				
+    				$pageArray.append("<button onclick='categoryPrevButton(num);' class='pagingLast' num ='"+(num++)+"'> << </button>");
+    				
+				},error: function(data){ console.log(data);}
+        	});
+        }
+        
+        //NEXT BUTTON
+        function categoryNextButton(num)
+        {
+        	var start = num; //41
+        	//var end  =  num + showCount - 1;// 
+        	
+        	$cRecent = $('#cRecent');
+    		$cTitle  = $('#cTitle');
+    		$cWriter = $('#cWriter');
+    		$cBS    = $('#cBS');
+        	
+        	if($cRecent.hasClass('thick1Ck') == true) order= "ISSUE_DATE";
+    		if($cTitle.hasClass('thick2Ck') == true) order= "TITLE";
+    		if($cWriter.hasClass('thick3Ck') == true) order= "WRITER_NAME";
+    		if($cBS.hasClass('thick4Ck') == true) order= "QUANTITY";
+        	
+        	var categoryCode = "<%=CategoryCode%>";
+        	$.ajax({
+	        	url: "/BANDI/startAndEnd.do",
+				type: "POST",
+				data:{"category":order,
+						"CategoryCode":categoryCode,
+						"start":start,
+					},
+				success: function(data){
+					// MAKE BUTTON
+					$prevBtn = $('.pagingFirst');
+    	    		$nextBtn = $('.pagingLast');
+    	    		$pageBtn = $('.pagingmiddle');
+    				
+    				$prevBtn.remove();
+    				$nextBtn.remove();
+    				$pageBtn.remove();
+    				$pageArray = $('.pagingArray');
+    				
+    				$pageArray.append("<button onclick='categoryNextButton(num);' class='pagingFirst' num ='"+num+"'> >> </button>");
+				},error: function(data){ console.log(data);}
+        	});
+        }
+        
+        //NEXT IMAGE
+        function categoryNextImage(num)
+        {
+        	var start = num; //41
+        	var end  =  num + showCount - 1;// 
+        	
+        	$cRecent = $('#cRecent');
+    		$cTitle  = $('#cTitle');
+    		$cWriter = $('#cWriter');
+    		$cBS    = $('#cBS');
+        	
+        	if($cRecent.hasClass('thick1Ck') == true) order= "ISSUE_DATE";
+    		if($cTitle.hasClass('thick2Ck') == true) order= "TITLE";
+    		if($cWriter.hasClass('thick3Ck') == true) order= "WRITER_NAME";
+    		if($cBS.hasClass('thick4Ck') == true) order= "QUANTITY";
+        	
+        	var categoryCode = "<%=CategoryCode%>";
+        	$.ajax({
+	        	url: "/BANDI/sortCategory.do",
+				type: "POST",
+				data:{"category":order,
+						"CategoryCode":categoryCode,
+						"start":start,
+						"end":end
+					},
+				success: function(data){
+					rePaintImage(data);
+				},error: function(data){ console.log(data);}
+        	});
+        }
+        
+        
+        // When Button Press
+        function categoryPageBtn(i)
+        {
+        	// 버튼을 눌렀을 시 , 이미지 갱신.
+        	var start = ((i-1)*showCount) + 1;
+        	var end = i*showCount;
+        	
+        	$cRecent = $('#cRecent');
+    		$cTitle  = $('#cTitle');
+    		$cWriter = $('#cWriter');
+    		$cBS    = $('#cBS');
+        	var order =  "ISSUE_DATE";
+        	if($cRecent.hasClass('thick1Ck') == true) order= "ISSUE_DATE";
+    		if($cTitle.hasClass('thick2Ck') == true) order= "TITLE";
+    		if($cWriter.hasClass('thick3Ck') == true) order= "WRITER_NAME";
+    		if($cBS.hasClass('thick4Ck') == true) order= "QUANTITY";
+        	
+        	var categoryCode = "<%=CategoryCode%>";
+        	$.ajax({
+	        	url: "/BANDI/sortCategory.do",
+				type: "POST",
+				data:{"category":order,
+						"CategoryCode":categoryCode,
+						"start":start,
+						"end":end
+					},
+				success: function(data){
+					rePaintImage(data);
+				},error: function(data){ console.log(data);}
+        	});
+        }
         
         $(function(){
     		$('#cRecent').addClass('thick1Ck');
@@ -245,12 +421,41 @@
         	orderByBook(order);
         }
         
+        // rePaint Image View -HANSTAR
+       	function rePaintImage(data)
+       	{
+       		$('.showArray').remove();
+			$('.orderImage').remove();
+			$('.orderTitle').remove();
+			$('.orderWriter').remove();
+			
+			/*  MAKE IMAGE, WHEN PRESS BUTTON ABOUT CATEGORY BUTTON */
+			for(var idx in data){
+				
+				if(data[idx].cTitle.length >= 10){
+					var titleLength = data[idx].cTitle.substring(0,12)+"..";
+				}else{
+					var titleLength = data[idx].cTitle;
+				}
+			
+    			var iTag = '<img class = "rankImage orderImage" src="/BANDI/resources/bookimage/'+ data[idx].cImage + '" name ="' +data[idx].cISBN + '" style="width: 100%; padding-left: 20px; padding-right: 20px;"/>';
+    			var tTage =  '<span class ="orderTitle">'+ titleLength  +'</span><br>';
+    			var wtag = '<span class ="orderWriter">'+data[idx].cWriter +'</span>';
+    			$('#showArrayParent').append('<div class = "w3-col l3 m3 s3 showArray" style="text-align:center">'+ iTag +tTage + wtag + '</div>');
+    				
+    			
+			}
+       	}
+        
         function orderByBook(order)
     	{
     		$cRecent = $('#cRecent');
     		$cTitle  = $('#cTitle');
     		$cWriter = $('#cWriter');
     		$cBS    = $('#cBS');
+    		$prevBtn = $('.pagingFirst');
+    		$nextBtn = $('.pagingLast');
+    		$pageBtn = $('.pagingmiddle');
     		
     		if($cRecent.hasClass('thick1Ck') == true) $cRecent.removeClass('thick1Ck');
     		if($cTitle.hasClass('thick2Ck') == true) $cTitle.removeClass('thick2Ck');
@@ -272,31 +477,50 @@
     			url: "/BANDI/sortCategory.do",
     			type: "POST",
     			data:{"category":order,
-    					"CategoryCode":categoryCode
+    					"CategoryCode":categoryCode,
+    					"start":1,
+    					"end":2
     				},
     			success: function(data){
-    				$('.showArray').remove();
-    				$('.orderImage').remove();
-    				$('.orderTitle').remove();
-    				$('.orderWriter').remove();
     				
-    				for(var idx in data){
-    					
-    					
-    					if(data[idx].cTitle.length >= 10){
-    						var titleLength = data[idx].cTitle.substring(0,12)+"..";
-    					}else{
-    						var titleLength = data[idx].cTitle;
+    				rePaintImage(data);
+    				
+    				$prevBtn = $('.pagingFirst');
+    	    		$nextBtn = $('.pagingLast');
+    	    		$pageBtn = $('.pagingmiddle');
+    				
+    				$prevBtn.remove();
+    				$nextBtn.remove();
+    				$pageBtn.remove();
+    				
+    				/* MAKE PAGE BUTTON [FIRST]*/ 
+    				$.ajax({
+    					url: "/BANDI/makeCategoryBtns.make",
+    					type:"POST",
+    					data:{
+    						"category":order,
+        					"CategoryCode":categoryCode
+    					},
+    					success: function(data){
+    						if(data != "error")
+    						{
+    							// total count Button [WARNING]
+    							var btnPage = Math.ceil(data/showCountDouble);
+    							
+    							var nextFlag = (btnPage > buttonCount) ? true : false;
+    							if(btnPage > buttonCount) btnPage = buttonCount;
+    							
+    							$pageArray = $('.pagingArray');
+    							for(var i =1; i <= btnPage; i++)
+    								$pageArray.append("<button onclick='categoryPageBtn(name);' name ='" + i + "' class ='pagingmiddle' style='margin-left:7px;'> " + i +"</button>");	
+    							
+    						
+    						}
+    						
+    					}, error: function(data){
+    						
     					}
-    				
-    					console.log(data[idx].cTitle.length);
-    					console.log(data[idx].cTitle.substring(1,9)+"..");
-            			var iTag = '<img class = "rankImage orderImage" src="/BANDI/resources/bookimage/'+ data[idx].cImage + '" name ="' +data[idx].cISBN + '" style="width: 100%; padding-left: 20px; padding-right: 20px;"/>';
-            			var tTage =  '<span class ="orderTitle">'+ titleLength  +'</span><br>';
-            			var wtag = '<span class ="orderWriter">'+data[idx].cWriter +'</span>';
-            			$('#showArrayParent').append('<div class = "w3-col l3 m3 s3 showArray" style="text-align:center">'+ iTag +tTage + wtag + '</div>');
-            			
-    				}
+    				});
     			},
     			error: function(request,status,error)
     			{
@@ -304,7 +528,8 @@
     			}
     		});
     	}
-        
+        // PAGING AJAX
+             
         jQuery(document).ready(function($) {
             $('.loop').owlCarousel({
               center: false,
@@ -336,6 +561,17 @@
 
             
           });
+        
+        function imageEvent(e)
+    	{
+    		window.location.href = CONTEXTPATH+"/detail.show?ISBN="+$(e).attr('id');
+    	}
+
+
+
+
+        
+        
         </script>
 </body>
 </html>

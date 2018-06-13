@@ -373,6 +373,7 @@ img{
 
 .one {
   border-color: snow;
+  background:transparent;
   color: black;
 }
 
@@ -380,6 +381,11 @@ img{
   background-color: #5F4B8B;
   border-color: #fff;
   color: #fff;
+}
+
+.selectedButton{
+  	background-color: #5F4B8B !important;
+  	color:snow;
 }
 
 

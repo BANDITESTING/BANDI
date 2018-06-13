@@ -52,7 +52,7 @@
                         </li>
                         
                         <li>
-                        	<a href="<%=request.getContextPath()%>/views/admin/RecommendBooks.jsp"><i class="fa fa-audio-description fa-fw"></i>Event Banner</a>
+                        	<a href="<%=request.getContextPath()%>/views/admin/AdminEvent.jsp"><i class="fa fa-audio-description fa-fw"></i>Event Banner</a>
                         </li>
                         
                         <li>

@@ -2,6 +2,20 @@ $(function() {
 	
 	var chkTotal = 0;
 	var keyTotal = parseInt($('#priceTotal').text().replace(",", ""));
+	var bookList = "";
+	var quanList = "";
+
+	$('.bookImg').each(function(index, item) {
+	
+		bookList += $(this).parent().siblings('#bookUID').val() + ",";
+		quanList += $(this).parent().parent().siblings().find('.bookQuan').text() + ",";
+		
+	});
+	
+	// 결제 관련 [START]
+	var IMP = window.IMP; // 생략가능
+	IMP.init('imp16979355'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+	// 결제 관련 [END]
 	
 	// 장바구니로 돌아가는 기능
 	$('#returnBtn').on('click', function() {
@@ -216,31 +230,46 @@ $(function() {
 			
 		}
 		
-		console.log($('#priceTotal').text().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 		$('#payTotal').text($('#priceTotal').text().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 		
 	});
 	
 	// 결제 완료 기능 (order table에 담을 데이터 전달 기능)
 	$('#payBtn').on('click', function() {
+		// 주문 결제 기능
+		IMP.request_pay({
+		    merchant_uid : 'merchant_' + new Date().getTime(),
+		    name : '반디책방',
+		    amount : $('#payTotal').text().replace(",", ""),
+		    buyer_email : email,
+		    buyer_name : name,
+		    buyer_tel : tel,
+		    buyer_addr : address
+		}, function(rsp) {
+		    if ( rsp.success ) {
+		        var msg = '결제가 완료되었습니다.';
+		        msg += '고유ID : ' + rsp.imp_uid;
+		        msg += '상점 거래ID : ' + rsp.merchant_uid;
+		        msg += '결제 금액 : ' + rsp.paid_amount;
+		        msg += '카드 승인번호 : ' + rsp.apply_num;
+		        
+		        changePage();
+		    } else {
+		        var msg = '결제에 실패하였습니다.';
+		        msg += '에러내용 : ' + rsp.error_msg;
+		    }
+		    alert(msg);
+		});
 		
-		var bookList = "";
-		var quanList = "";
+	}); 
+	
+	function changePage() {
 		var userData = "";
 		var usePoint = $('#discount').text().replace(",", "");
 		var deliveryPay = $('#deliveryTotal').text().replace(",", "");
 		var orderTotal = $("#orderTotal").text().replace(",", "");
 		var priceTotal = $("#priceTotal").text().replace(",", "");
-		
-		console.log(deliveryPay);
-
-		$('.bookImg').each(function(index, item) {
-		
-			bookList += $(this).siblings('input').val() + ",";
-			quanList += $(this).parent().siblings().find('.bookQuan').text() + ",";
-			
-		});
-		
+				
 		if ($('#newD').prop("checked") == true || $('#newD_new').prop("checked") == true) {
 			
 			userData += ($('#nameText').val()
@@ -255,7 +284,6 @@ $(function() {
 		
 		location.href = "/BANDI/complete.ct?bookList=" + bookList + "&quanList=" + quanList + "&userData=" + userData + "&usePoint=" + usePoint
 						+ "&deliveryPay=" + deliveryPay + "&orderTotal=" + orderTotal + "&priceTotal=" + priceTotal;
-		
-	}); 
-		
+	}
+	
 });

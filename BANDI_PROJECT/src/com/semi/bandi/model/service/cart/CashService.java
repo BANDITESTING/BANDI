@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import com.semi.bandi.model.dao.cart.CashDao;
 import com.semi.bandi.model.vo.Cart;
 import com.semi.bandi.model.vo.OrderDetail;
+import com.semi.bandi.model.vo.OrderTable;
 import com.semi.bandi.model.vo.User;
 
 import static com.semi.bandi.template.JDBCTemplate.*;
@@ -61,7 +62,7 @@ public class CashService {
 		
 		Connection con = getInstance();
 		
-		ArrayList<Cart> result = cDao.seletCart(con, bookList, useruid);
+		ArrayList<Cart> result = cDao.selectCart(con, bookList, useruid);
 		
 		close(con);
 		
@@ -99,12 +100,12 @@ public class CashService {
 	}
 	
 	// 주문 내역 ORDER_TABLE/DETAIL INSERT 기능
-	public int insertOrder(String[] bookArr, String[] quanArr, User user) {
+	public int insertOrder(String[] bookArr, String[] quanArr, User user, int priceTotal, int usePoint, int point) {
 		
 		Connection con = getInstance();
 		
 		int sequence = cDao.selectSequence(con);
-		int result = cDao.insertOrderTable(con, user, sequence);
+		int result = cDao.insertOrderTable(con, user, sequence, priceTotal, usePoint, point);
 		
 		if (result > 0) {
 			
@@ -136,10 +137,10 @@ public class CashService {
 	}
 	
 	// 로그인 계정 포인트 업데이트 서비스
-	public int updateUserPoint(User user, int usePoint, double addPoint) {
+	public int updateUserPoint(User user, int usePoint, String query) {
 		Connection con = getInstance();
 		
-		int result = cDao.updateUserPoint(con, user, usePoint, addPoint);
+		int result = cDao.updateUserPoint(con, user, usePoint, query);
 		
 		if (result > 0) {
 			
@@ -167,12 +168,112 @@ public class CashService {
 		return result;
 	}
 
+	// 주문 상세보기 ordertable 조회 서비스
 	public ArrayList<OrderDetail> selectOrderTable(int useruid) {
 		Connection con = getInstance();
 		
 		ArrayList<OrderDetail> result = cDao.selectOrderTable(con, useruid);
 		
 		close(con);
+		
+		return result;
+	}
+
+	// 주문 상세보기 orderdetail 조회 서비스
+	public ArrayList<OrderTable> selectOrderDetail(String[] orderUID) {
+		Connection con = getInstance();
+		
+		ArrayList<OrderTable> result = cDao.selectOrderDetail(con, orderUID);
+		
+		close(con);
+		
+		return result;
+	}
+
+	// 주문 상세보기 테이블 그리기 위한 카운터를 새는 서비스
+	public ArrayList<OrderTable> selectCntOrderUid(String[] orderUID) {
+		Connection con = getInstance();
+		
+		ArrayList<OrderTable> result = cDao.selectCntOrderUid(con, orderUID);
+		
+		close(con);
+		
+		return result;
+	}
+
+	// 주문 취소한 도서 정보를 읽는 서비스
+	public ArrayList<OrderTable> selectCancleData(String orderUID, String[] bookUID) {
+		Connection con = getInstance();
+		
+		ArrayList<OrderTable> result = cDao.selectCancleData(con, orderUID, bookUID);
+		
+		close(con);
+		
+		return result;
+	}
+
+	// ORDER_DETAIL 테이블 삭제 서비스
+	public int deleteDetail(String orderUID, String[] bookUID) {
+		Connection con = getInstance();
+		
+		int result = cDao.deleteDetail(con, orderUID, bookUID);
+		
+		if (result > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return result;
+	}
+
+	// ORDER_TABLE 테이블 삭제 서비스
+	public int deleteTable(String orderUID) {
+		Connection con = getInstance();
+		
+		int result = cDao.deleteTable(con, orderUID);
+		
+		if (result > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return result;
+	}
+
+	// ORDER_TABLE 변경된 금액 업데이트 서비스 
+	public int updateTable(int canclePrice, String orderUID, double pointRate, int bookPrice, int point) {
+		Connection con = getInstance();
+		
+		int result = cDao.updateTable(con, canclePrice, orderUID, pointRate, bookPrice, point);
+		
+		if (result > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return result;
+	}
+	
+	// 주문 수량 변경 서비스
+	public int updateCart(int useruid, String[] bookList, String[] quanList) {
+		Connection con = getInstance();
+		
+		int result = cDao.updateCart(con, useruid, bookList, quanList);
+		
+		if (result > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
 		
 		return result;
 	}

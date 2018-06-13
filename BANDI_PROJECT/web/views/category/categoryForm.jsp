@@ -36,7 +36,7 @@
 		<link href="<%=request.getContextPath()%>/resources/css/admin/bootstrap.min.css" rel="stylesheet">
         <script src="<%=request.getContextPath()%>/resources/js/main/jquery-3.3.1.min.js"></script>
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-        <link href="<%=request.getContextPath()%>/resources/css/category/category.css?ver=2" rel="stylesheet">
+        <link href="<%=request.getContextPath()%>/resources/css/category/category.css?ver=8" rel="stylesheet">
         <link rel="stylesheet"
 			href="http://fonts.googleapis.com/earlyaccess/jejugothic.css">
 		<script src ="<%=request.getContextPath()%>/resources/js/main/owl.carousel.js"></script>
@@ -61,6 +61,8 @@
 	text-decoration : none;
 	color : orange;
 }
+
+
 </style>
 
 <body>
@@ -355,6 +357,15 @@
         	});
         }
         
+        function settingClickedBtn(name)
+        {
+        	$('.pagingmiddle').removeClass('selectedButton');
+        	$('.pagingmiddle').each(function(inx){
+        		if($(this).attr('name') == name) $(this).addClass('selectedButton');
+        	});
+        	
+        }
+        
         
         // When Button Press
         function categoryPageBtn(i)
@@ -362,7 +373,7 @@
         	// 버튼을 눌렀을 시 , 이미지 갱신.
         	var start = ((i-1)*showCount) + 1;
         	var end = i*showCount;
-        	
+        	settingClickedBtn(i);
         	$cRecent = $('#cRecent');
     		$cTitle  = $('#cTitle');
     		$cWriter = $('#cWriter');
@@ -395,10 +406,11 @@
     		$('li span').each(function(idx){
     			if($(this).attr('id') == categoryCode)
     			{
-    				console.log('나' + categoryCode);
     				$(this).addClass('selectNavBar');
     			}
     		});
+    		
+    		settingClickedBtn(1);
     	});
         
         function orderBtn(id)
@@ -511,6 +523,8 @@
     							
     							if(nextFlag)
     								$pageArray.append("<button onclick='categoryJumpBtn(name);' class='pagingLast myButt one' name ='1'> &gt; </button>");
+    							
+    							settingClickedBtn(1);
     						}
     						
     					}, error: function(data){    						

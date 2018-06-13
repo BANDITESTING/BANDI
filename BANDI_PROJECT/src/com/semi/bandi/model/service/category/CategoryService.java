@@ -72,11 +72,7 @@ public class CategoryService {
 	}
 
 
-	public int EndAndStartService(String categoryCode, String category, int start) {
-		Connection con = getInstance();
-		int endAndStart = new CategoryDao().EndAndStart(con, categoryCode, category,start);
-		return endAndStart;
-	}
+	
 
 
 

@@ -35,19 +35,16 @@ public class StartAndEndServlet extends HttpServlet {
 		String category = request.getParameter("category");
 		String categoryCode = request.getParameter("CategoryCode");
 		String cStart = request.getParameter("start");
-		//String cEnd = request.getParameter("end"); || cEnd == null
-		
+
 		Gson gSon = new Gson();
 		
 		if(categoryCode == null || category == null || cStart == null )  { gSon.toJson("error",response.getWriter()); return; }
 		
 		int start = Integer.parseInt(cStart);
-		//int end = Integer.parseInt(cEnd);
 		
 		CategoryService cService = new CategoryService();
 		
 		int startAndEnd = cService.StartAndEndService(categoryCode,category,start);
-		
 		if(startAndEnd == 0)  { gSon.toJson("error",response.getWriter()); return; }
 		else gSon.toJson(startAndEnd,response.getWriter());
 

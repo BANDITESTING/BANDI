@@ -220,7 +220,7 @@ public class CategoryDao {
 		ResultSet rSet = null;
 		int result = 0;
 		String query = prop.getProperty("selectPageCount");
-		System.out.println("코드 " +categoryCode);
+		
 		try{
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, categoryCode);
@@ -237,7 +237,7 @@ public class CategoryDao {
 			close(rSet);
 			close(pstmt);
 		}
-		System.out.println("DAO1 :"+result);
+	
 		return result;
 	}
 
@@ -273,25 +273,37 @@ public class CategoryDao {
 			close(pstmt);
 			close(con);
 		}
-		System.out.println("Count : "+result);
+		
 		return result;
 	}
 
-	public int StartAndEndDao(Connection con, String categoryCode, String category, int start) {
+	public int StartAndEndDao(Connection con, String categoryCode, String orderBy, int start) {
 		PreparedStatement pstmt = null;
 		ResultSet rSet = null;
 		int result = 0;
 		String query2 = "";
-		if(category.equals("ISSUE_DATE")){
-			query2 = "SELECT * FROM(SELECT row_number() OVER (ORDER BY ISSUE_DATE DESC, TITLE DESC) AS RANKED, GENRE_CODE, TITLE, ISBN, ISSUE_DATE, IMAGE, PRICE, WRITER_NAME FROM GENRE JOIN BANDI_BOOK USING(GENRE_CODE) JOIN WRITER USING(WRITER_CODE)) ";
-		}else if(category.equals("TITLE")){
-			query2 = "SELECT * FROM(SELECT row_number() OVER (ORDER BY TITLE ASC) AS RANKED, GENRE_CODE, TITLE, ISBN, ISSUE_DATE, IMAGE, PRICE, WRITER_NAME FROM GENRE JOIN BANDI_BOOK USING(GENRE_CODE) JOIN WRITER USING(WRITER_CODE)) ";
-		}else if(category.equals("WRITER_NAME")){
-			query2 = "SELECT * FROM(SELECT row_number() OVER (ORDER BY WRITER_NAME ASC, TITLE DESC) AS RANKED, GENRE_CODE, TITLE, ISBN, ISSUE_DATE, IMAGE, PRICE, WRITER_NAME FROM GENRE JOIN BANDI_BOOK USING(GENRE_CODE) JOIN WRITER USING(WRITER_CODE)) ";
-		}else if(category.equals("QUANTITY")){
-			query2 = "SELECT * FROM(SELECT row_number() OVER (ORDER BY QUANTITY DESC, TITLE DESC) AS RANKED, GENRE_CODE, TITLE, ISBN, ISSUE_DATE, IMAGE, PRICE, WRITER_NAME FROM GENRE JOIN BANDI_BOOK USING(GENRE_CODE) JOIN WRITER USING(WRITER_CODE)) ";
+//		if(category.equals("ISSUE_DATE")){
+//			query2 = "SELECT COUNT(*) FROM(SELECT row_number() OVER (ORDER BY ISSUE_DATE DESC, TITLE DESC) AS RANKED, GENRE_CODE, TITLE, ISBN, ISSUE_DATE, IMAGE, PRICE, WRITER_NAME FROM GENRE JOIN BANDI_BOOK USING(GENRE_CODE) JOIN WRITER USING(WRITER_CODE)) ";
+//		}else if(category.equals("TITLE")){
+//			query2 = "SELECT COUNT(*) FROM(SELECT row_number() OVER (ORDER BY TITLE ASC) AS RANKED, GENRE_CODE, TITLE, ISBN, ISSUE_DATE, IMAGE, PRICE, WRITER_NAME FROM GENRE JOIN BANDI_BOOK USING(GENRE_CODE) JOIN WRITER USING(WRITER_CODE)) ";
+//		}else if(category.equals("WRITER_NAME")){
+//			query2 = "SELECT COUNT(*) FROM(SELECT row_number() OVER (ORDER BY WRITER_NAME ASC, TITLE DESC) AS RANKED, GENRE_CODE, TITLE, ISBN, ISSUE_DATE, IMAGE, PRICE, WRITER_NAME FROM GENRE JOIN BANDI_BOOK USING(GENRE_CODE) JOIN WRITER USING(WRITER_CODE)) ";
+//		}else if(category.equals("QUANTITY")){
+//			query2 = "SELECT COUNT(*) FROM(SELECT row_number() OVER (ORDER BY QUANTITY DESC, TITLE DESC) AS RANKED, GENRE_CODE, TITLE, ISBN, ISSUE_DATE, IMAGE, PRICE, WRITER_NAME FROM GENRE JOIN BANDI_BOOK USING(GENRE_CODE) JOIN WRITER USING(WRITER_CODE)) ";
+//		}
+		
+		if(orderBy.equals("ISSUE_DATE")){
+			query2 = "SELECT COUNT(*) FROM (SELECT T1.*, ROWNUM R_NUM FROM ( SELECT * FROM GENRE JOIN BANDI_BOOK USING(GENRE_CODE) JOIN WRITER USING(WRITER_CODE) ORDER BY ISSUE_DATE DESC) T1 ";
+		}else if(orderBy.equals("TITLE")){
+			query2 = "SELECT COUNT(*) FROM (SELECT T1.*, ROWNUM R_NUM FROM ( SELECT * FROM GENRE JOIN BANDI_BOOK USING(GENRE_CODE) JOIN WRITER USING(WRITER_CODE) ORDER BY TITLE ASC) T1 ";
+		}else if(orderBy.equals("WRITER_NAME")){
+			query2 = "SELECT COUNT(*) FROM (SELECT T1.*, ROWNUM R_NUM FROM ( SELECT * FROM GENRE JOIN BANDI_BOOK USING(GENRE_CODE) JOIN WRITER USING(WRITER_CODE) ORDER BY WRITER_NAME ASC) T1 ";
+		}else if(orderBy.equals("QUANTITY")){
+			query2 = "SELECT COUNT(*) FROM (SELECT T1.*, ROWNUM R_NUM FROM ( SELECT * FROM GENRE JOIN BANDI_BOOK USING(GENRE_CODE) JOIN WRITER USING(WRITER_CODE) JOIN ORDER_DETAIL USING(BOOK_UID) ORDER BY QUANTITY DESC) T1 ";
 		}
+			
 		String query = query2 +prop.getProperty("selectJumpButton");
+	
 		try{
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, categoryCode);
@@ -299,6 +311,8 @@ public class CategoryDao {
 			
 			rSet = pstmt.executeQuery();
 			
+			while(rSet.next())
+				result = rSet.getInt(1);
 			
 		} catch(SQLException e){
 			e.printStackTrace();
@@ -309,39 +323,5 @@ public class CategoryDao {
 		}
 		return result;
 	}
-
-	public int EndAndStart(Connection con, String categoryCode, String category, int start) {
-		PreparedStatement pstmt = null;
-		ResultSet rSet = null;
-		int result = 0;
-		String query2 = "";
-		if(category.equals("ISSUE_DATE")){
-			query2 = "SELECT * FROM(SELECT row_number() OVER (ORDER BY ISSUE_DATE DESC, TITLE DESC) AS RANKED, GENRE_CODE, TITLE, ISBN, ISSUE_DATE, IMAGE, PRICE, WRITER_NAME FROM GENRE JOIN BANDI_BOOK USING(GENRE_CODE) JOIN WRITER USING(WRITER_CODE)) ";
-		}else if(category.equals("TITLE")){
-			query2 = "SELECT * FROM(SELECT row_number() OVER (ORDER BY TITLE ASC) AS RANKED, GENRE_CODE, TITLE, ISBN, ISSUE_DATE, IMAGE, PRICE, WRITER_NAME FROM GENRE JOIN BANDI_BOOK USING(GENRE_CODE) JOIN WRITER USING(WRITER_CODE)) ";
-		}else if(category.equals("WRITER_NAME")){
-			query2 = "SELECT * FROM(SELECT row_number() OVER (ORDER BY WRITER_NAME ASC, TITLE DESC) AS RANKED, GENRE_CODE, TITLE, ISBN, ISSUE_DATE, IMAGE, PRICE, WRITER_NAME FROM GENRE JOIN BANDI_BOOK USING(GENRE_CODE) JOIN WRITER USING(WRITER_CODE)) ";
-		}else if(category.equals("QUANTITY")){
-			query2 = "SELECT * FROM(SELECT row_number() OVER (ORDER BY QUANTITY DESC, TITLE DESC) AS RANKED, GENRE_CODE, TITLE, ISBN, ISSUE_DATE, IMAGE, PRICE, WRITER_NAME FROM GENRE JOIN BANDI_BOOK USING(GENRE_CODE) JOIN WRITER USING(WRITER_CODE)) ";
-		}
-		String query = query2 +prop.getProperty("selectJumpButton2");
-		try{
-			pstmt = con.prepareStatement(query);
-			pstmt.setString(1, categoryCode);
-			pstmt.setInt(2, start);
-			
-			rSet = pstmt.executeQuery();
-			
-			
-		} catch(SQLException e){
-			e.printStackTrace();
-		} finally{
-			close(rSet);
-			close(pstmt);
-			close(con);
-		}
-		return result;
-	}
-
 
 }

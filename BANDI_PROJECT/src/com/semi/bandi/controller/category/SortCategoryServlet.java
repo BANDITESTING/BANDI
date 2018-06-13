@@ -46,7 +46,7 @@ public class SortCategoryServlet extends HttpServlet {
 		int end  = Integer.parseInt(sEnd);
 		
 		CategoryService cs = new CategoryService();
-		
+
 		if(CategoryCode == null || orderBy == null) return;
 		ArrayList<Category> list = cs.bookCategoryAndCode(CategoryCode,orderBy, start, end);
 		

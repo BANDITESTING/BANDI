@@ -38,15 +38,15 @@ public class EndAndStartServlet extends HttpServlet {
 		
 		if(categoryCode == null || category == null || cStart == null )  { gSon.toJson("error",response.getWriter()); return; }
 		
-		int start = Integer.parseInt(cStart);
+//		int start = Integer.parseInt(cStart);
 		//int end = Integer.parseInt(cEnd);
 		
-		CategoryService cService = new CategoryService();
+//		CategoryService cService = new CategoryService();
 		
-		int EndAndStart = cService.EndAndStartService(categoryCode,category,start);
+//		int EndAndStart = cService.EndAndStartService(categoryCode,category,start);
 		
-		if(EndAndStart == 0)  { gSon.toJson("error",response.getWriter()); return; }
-		else gSon.toJson(EndAndStart,response.getWriter());
+//		if(EndAndStart == 0)  { gSon.toJson("error",response.getWriter()); return; }
+//		else gSon.toJson(EndAndStart,response.getWriter());
 	}
 
 	/**

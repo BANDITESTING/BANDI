@@ -59,7 +59,7 @@ ul {
 	padding: 3px;
 	padding-right: 3%;
 	background: #5F4B8B;
-	height: 1200px;
+	height: 110vh;
 }
 
 .leftbar {
@@ -86,13 +86,16 @@ ul {
 	color: lightgray;
 	font-size: 16pt;
 }
+
 .leftbar>li>ul{
 	min-width:inherit;
 	width:inherit;
 }
+
 .leftbar>li>ul>li{
 	margin-top:2%;
 }
+
 .leftbar>li>ul>li>span {
 	text-align: left;
 	font-size: 11pt;
@@ -110,8 +113,17 @@ ul {
 }
 
 .bookTitle {
-	font-size: 17pt;
+	font-size: 15pt;
 	font-style: bold;
+}
+
+.price {
+	font-size: 13pt;
+	color: red;
+}
+
+.bookData{
+	color: gray;
 }
 
 .booklist {

@@ -9,7 +9,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Properties;
 
@@ -78,6 +80,14 @@ public class SearchBookDao {
 				book.setmPage(rset.getInt("PAGE"));
 				book.setmImagePath(rset.getString("IMAGE"));
 				book.setmIssueDate(rset.getDate("ISSUE_DATE"));
+				book.setmRating(rset.getDouble("BOOKRATING"));
+				book.setmCommentCount(rset.getInt("COMMENT_COUNT"));
+				
+				Date issue = book.getmIssueDate(); 
+				SimpleDateFormat transFormat = new SimpleDateFormat("yyyyMM");
+				String dateToString = transFormat.format(issue);
+				book.setmIssueYear(dateToString.substring(0, 4));
+				book.setmIssueMonth(dateToString.substring(4, 6));
 				
 				list.add(book);
 			}
@@ -187,6 +197,14 @@ public class SearchBookDao {
 				book.setmPage(rset.getInt("PAGE"));
 				book.setmImagePath(rset.getString("IMAGE"));
 				book.setmIssueDate(rset.getDate("ISSUE_DATE"));
+				book.setmRating(rset.getDouble("BOOKRATING"));
+				book.setmCommentCount(rset.getInt("COMMENT_COUNT"));
+
+				Date issue = book.getmIssueDate(); 
+				SimpleDateFormat transFormat = new SimpleDateFormat("yyyyMM");
+				String dateToString = transFormat.format(issue);
+				book.setmIssueYear(dateToString.substring(0, 4));
+				book.setmIssueMonth(dateToString.substring(4, 6));
 				
 				list.add(book);
 			}

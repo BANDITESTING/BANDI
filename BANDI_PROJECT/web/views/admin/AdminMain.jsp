@@ -16,10 +16,13 @@
 	@SuppressWarnings("unchecked")
 	ArrayList<OrderAdmin> orders = (ArrayList<OrderAdmin>)session.getAttribute("orders");
 	
+	String year = (String)session.getAttribute("adminYear");
+	
 	if(stocks == null || incomes == null || comments == null || orders == null)
 	{
 		// go to Error Page;
 		response.sendRedirect(request.getContextPath() + "/views/common/errorPage.jsp");
+		return;
 	}
 %>
 
@@ -128,10 +131,10 @@
             	
             	<div class="col-lg-4">
             		<div class="word" style ="padding-left: 50px; text-align: center;">
-						<span>2</span>
-						<span>0</span>
-						<span>1</span>
-						<span>8</span>
+						<span class ="adminYear"><%=year.substring(0,1)%></span>
+						<span class ="adminYear"><%=year.substring(1,2)%></span>
+						<span class ="adminYear"><%=year.substring(2,3)%></span>
+						<span class ="adminYear"><%=year.substring(3,4)%></span>
 						<span>년</span>
 					</div>
             	</div>
@@ -430,9 +433,15 @@
 	
 	<script>
 		$(function(){
+			var year = "";
+			$('.adminYear').each(function(index){
+				year += $(this).text();
+			});
+			
 			$.ajax({
 				url: "/BANDI/income.admin",
 				type: "POST",
+				data: {year : year},
 				success: function(data)
 				{
 					$('#incomeCount').text(data.total);
@@ -480,9 +489,15 @@
 		/* PIE CHART */
 		$(function() {
 			
+			var year = "";
+			$('.adminYear').each(function(index){
+				year += $(this).text();
+			});
+			
 			$.ajax({
 				url : "/BANDI/getGenreCount.get",
 				type: "POST",
+				data:{year:year},
 				success: function(data){
 					if(data != "error")
 					var plotObj = $.plot($("#flot-pie-chart"), data, {

@@ -1,6 +1,9 @@
 package com.semi.bandi.controller.admin;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,14 +36,24 @@ public class GetAdminNoticeServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		AdminDQLService ads = new AdminDQLService();
 		
-		int totalIncome = ads.getTotalIncome(2018);
+		// Get This Year
+		String sYear = request.getParameter("year");
+		int year = -1;
+		if(sYear != null) year = Integer.parseInt(sYear);
+		else
+		{
+			Calendar cal = new GregorianCalendar();
+			year = cal.get(Calendar.YEAR);
+		}
+		
+		int totalIncome = ads.getTotalIncome(year);
 		
 		// Minimum Stock of Books, You Should Setting For Minimum
 		int stockOfBook = ads.getStockOfBooks(100);
 		
-		int commentCount = ads.getCommentOfCount(2018);
+		int commentCount = ads.getCommentOfCount(year);
 		
-		int orderCount  = ads.getOrderCount(2018);
+		int orderCount  = ads.getOrderCount(year);
 		
 		if((totalIncome < 0) || (stockOfBook < 0) || (commentCount < 0) || (orderCount < 0))
 		{

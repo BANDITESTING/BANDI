@@ -2,6 +2,8 @@ package com.semi.bandi.controller.admin;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,7 +36,16 @@ public class GetGenreCountServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		AdminDQLService ads = new AdminDQLService();
 		
-		ArrayList<PieChartData> data = ads.getGenreCountData(2018);
+		String sYear = request.getParameter("year");
+		int year = -1;
+		if(sYear != null) year = Integer.parseInt(sYear);
+		else
+		{
+			Calendar cal = new GregorianCalendar();
+			year = cal.get(Calendar.YEAR);
+		}
+		
+		ArrayList<PieChartData> data = ads.getGenreCountData(year);
 		Gson gson = new Gson();
 		response.setContentType("application/json; charset=UTF-8;");
 		

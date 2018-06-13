@@ -113,7 +113,7 @@
 					        </div>
 					        <div class='bottom'>
 					          <h3>
-					            Name:
+					            Name: <%if(user != null) {%>
 					            <span><%=user.getmName()%></span>
 					          </h3>
 					          <h3>
@@ -122,7 +122,7 @@
 					          </h3>
 					          <h3>
 					            Phone:
-					            <span><%=user.getmPhone()%></span>
+					            <span><%=user.getmPhone()%></span> <%} %>
 					          </h3>
 					        </div>
 					      </div>

@@ -2,6 +2,18 @@
     pageEncoding="UTF-8"%>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta charset="utf-8">
+	<style>
+		.navBarText{
+			font-family: 'Gaegu';
+			font-size: 1.5em;
+		}
+		
+		.navBarText a{
+			color : rgb(95,75,139);
+		}
+				
+	</style>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Gaegu">
 		<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0; background: url('<%=request.getContextPath()%>/resources/images/eventBanner/cabk.png'); color:snow;">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -32,19 +44,19 @@
 
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
-                    <ul class="nav" id="side-menu">
+                    <ul class="nav navBarText" id="side-menu">
                         <li><img src ="<%=request.getContextPath()%>/resources/images/common/bandi.png" style ="width:100%; height:auto;"></li>
                         
                         <li>
                             <a href="<%=request.getContextPath()%>/views/admin/AdminMain.jsp"><i class="fa fa-dashboard fa-fw"></i>Home</a>
                         </li>
                         
-                        <!-- <li>
-                        	<a href="AdminMain.jsp"><i class="fa fa-audio-description fa-fw"></i>Event Banner</a>
-                        </li> -->
+                        <li>
+                        	<a href="<%=request.getContextPath()%>/views/admin/RecommendBooks.jsp"><i class="fa fa-audio-description fa-fw"></i>Event Banner</a>
+                        </li>
                         
                         <li>
-                        	<a href="<%=request.getContextPath()%>/views/admin/RecommendBooks.jsp"><i class="fa fa-book fa-fw"></i>Recommend Book</a>
+                        	<a href="<%=request.getContextPath()%>/views/admin/RecommendBooks.jsp"><i class="fa fa-book fa-fw"></i>BADNI 관리자 추천 책</a>
                         </li>
 
                         <li>

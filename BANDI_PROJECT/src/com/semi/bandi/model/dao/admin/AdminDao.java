@@ -242,11 +242,11 @@ public class AdminDao
 				annual = new AnnualIncome();
 				annual.setmOrderDate(rSet.getString(1));
 				annual.setmOrderCount(rSet.getInt(3));
-				annual.setmPacketPrice(rSet.getInt(4));
+				annual.setmPacketPrice(rSet.getInt(4)); // Change for Point, But Use This Name Packet. --> Point
 				annual.setmOrderBooksCount(rSet.getInt(5));
 				
 				// Total Income.
-				annual.setmSumPrice(rSet.getInt(2) + annual.getmPacketPrice());
+				annual.setmSumPrice(rSet.getInt(2) - annual.getmPacketPrice()); //  - Point 
 				
 				arrayIncome.add(annual);
 			}
@@ -283,7 +283,7 @@ public class AdminDao
 			// But this While loop, only one Execute, Because Just return one resultSet;
 			while(rSet.next()) 
 			{
-				totalIncome =  rSet.getInt(1) + rSet.getInt(2);
+				totalIncome =  rSet.getInt(1); // + rSet.getInt(2);
 			}
 		}catch(SQLException e)
 		{

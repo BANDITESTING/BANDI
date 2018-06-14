@@ -8,7 +8,7 @@ import com.semi.bandi.model.vo.Writer;
 
 import static com.semi.bandi.template.JDBCTemplate.*;
 
-public class AdminDMLService 
+public class AdminDMLService
 {
 	public AdminDMLService(){}
 	

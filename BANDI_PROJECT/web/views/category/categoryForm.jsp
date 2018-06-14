@@ -161,10 +161,9 @@
 	        	   				class ="rankImage userbookimg" id ="" name="<%=rateBook.get(j).getcISBN()%>" onclick="imageEvent(name)">
 	        	   			</div>
 	        	   			
-	        	   			<div class ="w3-col l8 w3-center">
-	        	   				<span style ="font-size: 4em; font-family: 'Gaegu'"><%=rateBook.get(j).getcTitle()%></span> <br>
-	        	   				<span style ="font-family :'Gaegu'; font-size:1.5em; color:darkslategray;">[<%=rateBook.get(j).getcWriter()%>]</span> 
-	        	   				
+	        	   			<div class ="w3-col l8 w3-center">	<% String title = rateBook.get(j).getcTitle(); if(title.length() > 14){title = rateBook.get(j).getcTitle().substring(0,11) + "...";} %>
+	        	   				<span style ="font-size: 4em; font-family: 'Gaegu'"><%=title%></span> <br>
+	        	   				<span style ="font-family :'Gaegu'; font-size:1.5em; color:darkslategray;">[<%=rateBook.get(j).getcWriter()%>]</span><br> 
 	        	   				<br>
 	        	   				<br>
 	        	   				<% String temp = rateBook.get(j).getcIntroduce(); 

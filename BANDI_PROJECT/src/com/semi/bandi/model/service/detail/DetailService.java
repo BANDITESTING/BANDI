@@ -14,7 +14,7 @@ public class DetailService {
 	public Detail selectOne(String isbn) {
 		Connection con = getInstance();
 		Detail detail = new DetailDao().selectOne(con, isbn);
-		
+		if(detail != null) if(detail.getWriter_introduce() == null)  detail.setWriter_introduce("");
 		close(con);
 		
 		return detail;

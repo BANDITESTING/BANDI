@@ -1,15 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="com.semi.bandi.model.vo.*, java.util.*, java.text.*"%>
 <%
+	@SuppressWarnings("unchecked")
 	ArrayList<OrderDetail> orderTable = (ArrayList<OrderDetail>)request.getAttribute("orderTable");
+
+	@SuppressWarnings("unchecked")
 	ArrayList<OrderTable> orderDetail = (ArrayList<OrderTable>)request.getAttribute("orderDetail");
+	
+	@SuppressWarnings("unchecked")
 	ArrayList<OrderTable> orderCnt = (ArrayList<OrderTable>)request.getAttribute("orderCnt");
 	DecimalFormat df = new DecimalFormat("###,###");
 	int bookTotal = 0;
 	int forCnt = 0;
-	System.out.println("1 : " + orderTable);
-	System.out.println("2 : " + orderDetail);
-	System.out.println("3 : " + orderCnt);
+	
 %>
 <!DOCTYPE html>
 <html>

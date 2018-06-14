@@ -114,7 +114,7 @@
 				                            	<a href = "<%=request.getContextPath()%>/detail.show?ISBN=<%= orderDetail.get(j).getIsbn()%>" style="font-size:12pt;">
 				                            		<img class="bookImg" src="<%=request.getContextPath()%>/resources/bookimage/<%= orderDetail.get(j).getImage() %>" alt="<%= orderDetail.get(j).getTitle() %>" style="margin-right:5%; margin-left:5%;">
 				                            		<% if (orderDetail.get(j).getTitle().length() > 9) {%>
-				                            			<%=orderDetail.get(j).getTitle().substring(0, 9) %>...
+				                            			<%=orderDetail.get(j).getTitle().substring(0, 8) %>...
 				                            		<% } else { %>
 				                            			<%=orderDetail.get(j).getTitle() %>
 				                            		<% } %>

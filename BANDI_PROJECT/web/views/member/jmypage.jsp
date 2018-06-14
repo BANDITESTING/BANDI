@@ -183,11 +183,11 @@
 			  	</div>
 			  	<div class="modal-body">
         			<ol>
-        				<li>B 브론즈 : 전체 구매 금액의 <strong>0.1%</strong> 할인</li>
-        				<li>S 실버 : 전체 구매 금액의 <strong>0.2%</strong> 할인</li>
-        				<li>G 골드 : 전체 구매 금액의 <strong>0.3%</strong> 할인</li>
-        				<li>P 플래티넘 : 전체 구매 금액의 <strong>0.4%</strong> 할인</li>
-        				<li>D 다이아 : 전체 구매 금액의 <strong>0.5%</strong> 할인</li>
+        				<li>B 브론즈 : 전체 구매 금액의 <strong>0.1%</strong> 적립</li>
+        				<li>S 실버 : 전체 구매 금액의 <strong>0.2%</strong> 적립</li>
+        				<li>G 골드 : 전체 구매 금액의 <strong>0.3%</strong> 적립</li>
+        				<li>P 플래티넘 : 전체 구매 금액의 <strong>0.4%</strong> 적립</li>
+        				<li>D 다이아 : 전체 구매 금액의 <strong>0.5%</strong> 적립</li>
         			</ol>
       			</div>
 			  </div>

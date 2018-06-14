@@ -154,6 +154,14 @@
     	color : limegreen;
     }  
     
+    //리뷰 수정용 모달 창 별점 css
+    .starRating2 a{
+    	color : lightgray;
+    	font-size : 20px;
+    }
+    .starRating2 a.star2 {
+    	color : limegreen;
+    }
     /* 독자 리뷰 보기 별점 css */
     
     /* 글자 css  */

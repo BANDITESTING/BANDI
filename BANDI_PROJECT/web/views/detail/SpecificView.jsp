@@ -86,12 +86,6 @@
 <title>Insert title here</title>
 </head>
 
-<style>
-	.menu{
-		
-	}	
-</style>
-
 <body>
 	
 	<header>
@@ -461,11 +455,11 @@
 		        </div>
 		        <div class="modal-body">
 		        	<div>
-		        		<p class="starRating">
+		        		<p class="starRating2">
 		        			<span>별점  </span>
-		        			<a href="#" class="star">★</a>
-		        			<a href="#" class="star">★</a>
-		        			<a href="#" class="star">★</a>
+		        			<a href="#" class="star2">★</a>
+		        			<a href="#" class="star2">★</a>
+		        			<a href="#" class="star2">★</a>
 		        			<a href="#">★</a>
 		        			<a href="#">★</a>
 		        		</p>
@@ -625,13 +619,20 @@
    		
    		$('#updateContent').keyup();
    	});
-    //별점기능
+    
+    //리뷰 등록 모달용 별점기능
     $('.starRating a').on('click', function(){ 	
     	$('.starRating').children('a').removeClass('star');
     	$(this).addClass('star').prevAll('a').addClass('star');
     
     });
     
+  //리뷰 수정 모달용 별점기능
+    $('.starRating2 a').on('click', function(){ 	
+    	$('.starRating2').children('a').removeClass('star');
+    	$(this).addClass('star2').prevAll('a').addClass('star');
+    
+    });
  	
    
     
@@ -661,7 +662,7 @@
     	}else{
 	    	$.ajax({
 	    		url : "/BANDI/reviewInsert.show",
-	    		data : {rate : $('.star').length,
+	    		data : {rate : $('.star').length*2,
 	    				isbn : misbn, // 일단 보내놓긴 해보자
 						bookUid : mBookUid, 
 						userUid : muserUid, 

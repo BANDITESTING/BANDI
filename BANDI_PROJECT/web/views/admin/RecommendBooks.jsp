@@ -299,6 +299,7 @@
 						var imagePath = "<%=request.getContextPath()%>/resources/bookimage/";
 						$('.selectedImage').attr('src', imagePath+data.mImagePath);
 						$('.selectedImage').attr('name', data.mISBN);
+						modifiedInfo(data.mISBN);
 						alert('변경되었습니다.');
 					}else
 					{
@@ -314,6 +315,28 @@
 			$("#myModal").modal('hide');
 		}
 	});
+	
+	function modifiedInfo(name)
+	{
+		$.ajax({
+			url: "/BANDI/getRecInfo.get",
+			type:"POST",
+			data: {ISBN:name},
+			success: function(data)
+			{
+				if(data.error == "error"){} // GO TO ERROR PAGE
+				$('#inTitle').text(data.mTitle);
+				$('#inISBN').text(data.mISBN);
+				$('#inGenre').text(data.mGenreCode);
+				$('#inWriter').text(data.mWriterName);
+				$('#inPage').text(data.mPage);
+				$('#inPrice').text(data.mPrice);
+			},
+			error: function(data)
+			{	
+			}
+		});
+	}
 	
 	function getInfo(name,id)
 	{

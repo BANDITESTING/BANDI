@@ -17,7 +17,7 @@
 	<script src ="<%=request.getContextPath()%>/resources/js/admin/bootstrap.min.js?ver=1"></script>
 	<script src ="<%=request.getContextPath()%>/resources/js/admin/metisMenu.min.js?ver=1"></script>
 	<script src ="<%=request.getContextPath()%>/resources/js/admin/sb-admin-2.min.js?ver=1"></script>
-	
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Gugi">
 <title>BANDI By Admin</title>
 </head>
 <body>
@@ -28,7 +28,7 @@
             <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">반디불이 작가 데이터확인</h1>
+                    <h1 class="page-header" style ="font-family: Gugi">반디불이 작가</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>

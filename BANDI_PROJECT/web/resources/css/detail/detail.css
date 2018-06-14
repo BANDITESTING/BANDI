@@ -1,0 +1,180 @@
+
+   		*:focus {
+    outline: none;
+	}
+    a:hover{
+        text-decoration: none;
+    }
+    a:link{
+        text-decoration: none;
+    }
+    
+    #bookPicture:hover{
+     	 cursor:pointer;
+    }
+    #bookPicture{
+    	width:100%;
+        height:auto;
+    }
+        
+    #carouselPicture{
+        width:300px;
+        height:300px;
+    }
+    #left, #right{
+    	
+    	font-size : 20px;
+    	text-align : center;
+    }
+   	#left{
+   		margin : 0px 0px 0px 420px;
+   	}
+   	#right{
+   		margin : 0px 250px 0px 0px;
+   	}
+    
+
+   
+    .row{
+        outline: 1px solid #DA70D5;
+        width: 1120px;
+        max-width: none !important;
+    }
+
+    #choice{
+        /* background-color: #BF94E4; */
+        background-color: white;
+        padding: 10px 0px 10px 100px;
+    }
+    
+    #choice ul li{
+        list-style: none;
+        color : black;
+        margin-right: 60px;
+        text-align: center;
+        font-size : 30px;
+        font-family:'Gugi';
+    }
+   
+    #choice ul li:first-child {
+		border-left: none;
+	}
+    
+
+   
+    .more {
+        display:block;
+        width: 55px;
+        height: 16px;
+    
+    }
+
+    .blind {
+        position: absolute;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        margin: -1px;
+        width: 1px;
+        height: 1px;
+    }
+
+    .more:hover, .close:hover {
+         cursor:pointer;
+    }
+
+    .close {
+        display:block;
+        width: 42px;
+        height: 16px;
+        background-position: -166px -78px;
+    }
+
+    .boardTitle{
+        font-weight: bold;
+        font-family:Gamja Flower;
+        font-size: 35px;
+    }
+    
+    .more{
+        color: orange;
+    }
+    
+    #modalButton{
+        color :limegreen;
+        text-decoration: underline;
+        font-weight :bold;
+        float: right;
+    }
+    
+    .modal-title{
+    	color :limegreen;
+    }
+    
+    #reviewTitle, #reviewContent{
+    	resize : none;
+    	
+    }
+    
+    .modalBody1, .modalBody2{
+    	position: relative;
+
+    }
+    .modalBody1 span{
+    	position: absolute;
+    }
+    
+    .modalBody2 span{
+    	position: absolute;	
+    }
+    
+    #titleCounter, #updateTCounter{
+    	background-color:tomato;
+ 		border-radius: 0.5em;
+ 	 	padding: 0.1em 0.1em;
+	 	font-size: 1em;
+    }
+    
+    #contentCounter, #updateCounter{
+    	background-color:dodgerblue;
+ 		border-radius: 0.5em;
+ 	 	padding: 0.1em 0.1em;
+	 	font-size: 1em;
+    }
+    
+    //모달 창 별점 css
+    .starRating a{
+    	color : lightgray;
+    	font-size : 20px;
+    }
+    .starRating a.star {
+    	color : limegreen;
+    }  
+    
+    /* 독자 리뷰 보기 별점 css */
+    
+    /* 글자 css  */
+    #detailTitle{
+    	font-family:'Black Han Sans';
+    	font-size : 3em;
+    } 
+    
+    #sizeUpPicture{
+		width: 100%;
+		height: 600px;
+	}
+	
+	.detailContent, #bookIntro, #writerIntro{
+		font-family:'Poor Story';
+		font-weight : bold;
+		font-size : 20px;
+	}
+	
+	#wrapper { 
+		display: table; 
+	} 
+	.pageCur { 
+		display: table-cell; 
+		vertical-align: middle; 
+		text-align:center;
+	}
+   

@@ -362,15 +362,15 @@
    
       // 수량 max 100권, min 1권 제한
       function countLimit(){    	  
-	      $('#bookCount').on('input', function(){
-	         if($('#bookCount').val()>100){
+	      $('input[type=number]').on('input', function(){
+	         if($(this).val()>100){
 	            alert("책은 100권 이하로 주문 가능합니다.");
-	            $('#bookCount').val(100);
+	            $(this).val(100);
 	         };
 	         
-	         if($('#bookCount').val()<1){
+	         if($(this).val()<0){
 	             alert("책은 1권 이상 주문 가능합니다.");
-	             $('#bookCount').val(1);
+	             $(this).val(1);
 	          };
 	      });
       };

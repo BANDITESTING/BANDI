@@ -182,5 +182,26 @@
 		text-align:center;
 	}
 	
-	
+	#talkbubble {
+	   width: 400px;
+	   height: 200px;
+	   background: #FDFD96;
+	   position: relative;
+	   -moz-border-radius:    20px;
+	   -webkit-border-radius: 20px;
+	   border-radius:         20px;
+	   word-break:break-all;
+	}
+	#talkbubble:before {
+	   content:"";
+	   position: absolute;
+	   right: 100%;
+	   top: 26px;
+	   width: 0;
+	   height: 0;
+	   border-top: 13px solid transparent;
+	   border-right: 26px solid #FDFD96;
+	   border-bottom: 13px solid transparent;
+	   word-break:break-all;
+	}
    

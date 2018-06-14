@@ -72,7 +72,7 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href = "<%=request.getContextPath()%>/resources/css/detail/owl.carousel.css" rel ="stylesheet">
-    <link href = "<%=request.getContextPath()%>/resources/css/detail/detail.css?ver=6" rel ="stylesheet">
+    <link href = "<%=request.getContextPath()%>/resources/css/detail/detail.css?ver=7" rel ="stylesheet">
     <link href = "<%=request.getContextPath()%>/resources/css/detail/owl.theme.default.css" rel = "stylesheet">
     <link href = "<%=request.getContextPath()%>/resources/css/detail/animate.css" rel = "stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Black+And+White+Picture|Black+Han+Sans|Dokdo|Gugi|Hi+Melody|Gamja+Flower|Jua|Poor Story|" rel="stylesheet">
@@ -127,6 +127,23 @@
                 	장바구니
                 </button>
                 <button id="buyNow" class="btn btn-success" style="font-family:'Jua'; font-size: 20px;" onclick="buNowGo()">바로구매</button>
+            </div>
+            
+            <div class="col-xs-5" id="talkbubble">
+            	<span style="color:green; font-size:20px ">Review</span>
+            	<%if(pagingReview != null && pagingReview.size() != 0){ %>
+            		&nbsp; <a style="font-family:Gugi; color:#FD7F4F" href="#"  onclick="move('bookReview');">리뷰 쓰러가기</a><br>
+            		
+             	 	<span style="font-family:Jua">제목 :<%= pagingReview.get(0).getComment_title() %></span>
+             	 	&nbsp; <span style="font-family:Jua"><%= pagingReview.get(0).getName() %>  <%= pagingReview.get(0).getWriteDate() %></span><br>
+             	 	<span style="font-family:Jua">내용 :<%= pagingReview.get(0).getBook_comment() %></span>
+             	 	
+             	 
+             	
+             	<% } else { %>
+             		 &nbsp; <a style="font-family:Gugi; color:#FD7F4F" href="#"  onclick="move('bookReview');">리뷰 쓰러가기</a><br>
+             		  <span style="font-family:Jua">아직 리뷰가 없습니다.</span>
+             	<% } %> 
             </div>
         </div>
         

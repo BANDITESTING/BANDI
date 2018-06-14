@@ -38,6 +38,7 @@ public class WriterSearchServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String  getName = request.getParameter("writerName");
+		if(getName == null) {response.getWriter().println("error"); return;}
 		AdminDQLService ads = new AdminDQLService();
 		ArrayList<Writer> writer = ads.getWriterArray(getName);
 		JSONArray writerArray = new JSONArray();

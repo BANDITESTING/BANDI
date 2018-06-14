@@ -13,6 +13,13 @@
 	int bookTotal = 0;
 	int forCnt = 0;
 	
+	User mUser = (User)session.getAttribute("user");
+	//Defense
+	if(mUser == null){
+		response.sendRedirect(request.getContextPath() + "/views/common/errorPage.jsp");
+		return;
+	}
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -79,7 +86,7 @@
 		                <p><h5><b>- 배송 정보</b></h5></p>
 		            </div>
 		            
-		            <% if (orderDetail != null || orderCnt!= null || orderTable != null) {
+		            <% if (orderDetail != null || orderCnt!= null) {
 		            	for (int i = 0 ; i < orderTable.size() ; i++) { %>
 		            
 			            <div class="deliveryContain" style="padding-top:2%;">

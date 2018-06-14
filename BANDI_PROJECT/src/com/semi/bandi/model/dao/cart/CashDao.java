@@ -473,46 +473,51 @@ public class CashDao {
 		ArrayList<OrderTable> result = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
+		String query = "";
 		
-		String query = " WHERE ORDER_UID = ";
-		
-		for (int i = 0 ; i < orderUID.length ; i++) {
+		if (orderUID.length != 0) {
+			query = " WHERE ORDER_UID = ";
 			
-			if (i != orderUID.length - 1) {
+			for (int i = 0 ; i < orderUID.length ; i++) {
 				
-				query += "? OR ORDER_UID = ";
-				
-			} else {
-				
-				query += "? GROUP BY ORDER_UID ORDER BY ORDER_UID DESC";
-				
-			}
+				if (i != orderUID.length - 1) {
 					
+					query += "? OR ORDER_UID = ";
+					
+				} else {
+					
+					query += "? GROUP BY ORDER_UID ORDER BY ORDER_UID DESC";
+					
+				}
+						
+			}
 		}
 		
 		try {
 			
-			pstmt = con.prepareStatement(prop.getProperty("cntOrderUid") + query);
-			
-			for (int i = 0 ; i < orderUID.length ; i++) {
+			if (orderUID.length != 0) {
+				pstmt = con.prepareStatement(prop.getProperty("cntOrderUid") + query);
 				
-				pstmt.setString((i + 1), orderUID[i]);
+				for (int i = 0 ; i < orderUID.length ; i++) {
+					
+					pstmt.setString((i + 1), orderUID[i]);
+					
+				}
 				
-			}
-			
-			rset = pstmt.executeQuery();
-			
-			result = new ArrayList<OrderTable>();
-			
-			while (rset.next()) {
+				rset = pstmt.executeQuery();
 				
-				OrderTable order = new OrderTable();
+				result = new ArrayList<OrderTable>();
 				
-				order.setCnt(rset.getInt(1));
-				order.setOrderUID(rset.getString(2));
-				
-				result.add(order);
-				
+				while (rset.next()) {
+					
+					OrderTable order = new OrderTable();
+					
+					order.setCnt(rset.getInt(1));
+					order.setOrderUID(rset.getString(2));
+					
+					result.add(order);
+					
+				}
 			}
 			
 		} catch (SQLException e) {

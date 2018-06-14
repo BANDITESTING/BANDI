@@ -25,7 +25,7 @@ public class SearchBookServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String option = request.getParameter("searchBy");
 		String getText = request.getParameter("searchText");
-		String text = getText.replaceAll(" ", "");
+		String text = getText.replaceAll(" ", "").toLowerCase();
 		SearchBookService sbs = new SearchBookService();
 
 		ArrayList<SearchBook> list = null;

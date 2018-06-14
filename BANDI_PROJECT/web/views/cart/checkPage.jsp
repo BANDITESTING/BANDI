@@ -1,12 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="com.semi.bandi.model.vo.*, java.util.*, java.text.*"%>
 <%
+	@SuppressWarnings("unchecked")
 	ArrayList<OrderDetail> orderTable = (ArrayList<OrderDetail>)request.getAttribute("orderTable");
+
+	@SuppressWarnings("unchecked")
 	ArrayList<OrderTable> orderDetail = (ArrayList<OrderTable>)request.getAttribute("orderDetail");
+	
+	@SuppressWarnings("unchecked")
 	ArrayList<OrderTable> orderCnt = (ArrayList<OrderTable>)request.getAttribute("orderCnt");
 	DecimalFormat df = new DecimalFormat("###,###");
 	int bookTotal = 0;
 	int forCnt = 0;
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -73,7 +79,7 @@
 		                <p><h5><b>- 배송 정보</b></h5></p>
 		            </div>
 		            
-		            <% if (orderDetail != null) {
+		            <% if (orderDetail != null || orderCnt!= null || orderTable != null) {
 		            	for (int i = 0 ; i < orderTable.size() ; i++) { %>
 		            
 			            <div class="deliveryContain" style="padding-top:2%;">

@@ -126,6 +126,7 @@ public class CategoryDao {
 				
 				c.setcTitle(rset.getString("TITLE"));
 				c.setcImage(rset.getString("IMAGE"));
+				c.setcISBN(rset.getString("ISBN"));
 				c.setcWriter(rset.getString("WRITER_NAME"));
 				c.setcIntroduce(rset.getString("BOOK_INTRODUCE"));
 				list.add(c);

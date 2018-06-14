@@ -295,7 +295,7 @@
 				 alert("전화번호를 입력해주세요.");
              } else if($("#addr3").val() == ""){
             	 $("#addr3").val(" ");
-             } return;
+             } else return;
              event.preventDefault();
         });  
       </script>

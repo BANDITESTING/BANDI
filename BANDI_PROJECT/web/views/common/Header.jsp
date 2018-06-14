@@ -197,7 +197,7 @@
 	function checkBlank()
 	{
 		var checkBlank = $('#searchBar').val();
-
+		checkBlank = checkBlank.trim();
 		if(checkBlank == ""){
 			alert("검색어를 입력하세요");	
 			return false;

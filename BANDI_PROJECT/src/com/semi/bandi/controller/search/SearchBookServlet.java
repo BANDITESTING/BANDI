@@ -25,6 +25,15 @@ public class SearchBookServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String option = request.getParameter("searchBy");
 		String getText = request.getParameter("searchText");
+		
+		//Defense Code for Null Point
+		if(getText == null) 
+		{
+			ServletContext context = getServletContext();
+			RequestDispatcher rq = context.getRequestDispatcher("/views/common/errorPage.jsp");
+			rq.forward(request, response);
+			return;
+		}
 		String text = getText.replaceAll(" ", "").toLowerCase();
 		SearchBookService sbs = new SearchBookService();
 

@@ -27,6 +27,7 @@ public class SearchBookPaging extends HttpServlet {
 		String option = request.getParameter("option");
 		String getText = request.getParameter("getText");
 		String genreCode = request.getParameter("genreCode");
+		if(getText == null){return;}
 		String text = getText.replaceAll(" ", "");
 		SearchBookService sbs = new SearchBookService();
 		ArrayList<SearchBook> list = null;

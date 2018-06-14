@@ -23,6 +23,8 @@
 	/* Shield  for null */
 	
 	if(detail == null) {
+		response.sendRedirect(request.getContextPath() + "/views/common/errorPage.jsp");
+		return;
 	} // go to error page.
 	
 	//페이징 처리에서 쓸 현제 isbn값

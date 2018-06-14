@@ -213,7 +213,7 @@ $(function() {
 		}
 		console.log(pointPrice);
 		
-		if (point < allPoint) {		// 보유 포인트보다 큰 포인트를 사용하지 못하게 막는 부분
+		if (point <= allPoint && point > 0) {		// 보유 포인트보다 큰 포인트를 사용하지 못하게 막는 부분
 
 			if ($('#pointT').val() != "") {
 
@@ -221,7 +221,8 @@ $(function() {
 				$('#discount').text(point.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 				$('#pointAll').prop("checked", false);
 				
-			} else {
+			}			
+			else {
 
 				$('#discount').text("0");
 				$('#priceTotal').text(pointPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
@@ -230,16 +231,20 @@ $(function() {
 			}
 			
 		} else {
-			
-			alert("보유 포인트보다 많이 사용할 수 없습니다.");
-			$('#pointT').val(allPoint);
-			$('#pointAll').prop("checked", true);
-			$('#discount').text("10,000");
-			$('#priceTotal').text((pointPrice - 10000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-			
+			if (point > allPoint) {
+				alert("보유 포인트보다 많이 사용할 수 없습니다.");
+				$('#pointT').val(allPoint);
+				$('#pointAll').prop("checked", true);
+				$('#discount').text("10,000");
+				$('#priceTotal').text((pointPrice - 10000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+			} else {	
+				alert("1포인트 이상 사용해주세요.");
+				$('#discount').text("1");
+				$('#pointT').val(1);
+			}
 		}
 		
-//		$('#payTotal').text($('#priceTotal').text().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+		$('#payTotal').text($('#priceTotal').text().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 		
 	});
 	

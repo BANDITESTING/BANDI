@@ -72,13 +72,12 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href = "<%=request.getContextPath()%>/resources/css/detail/owl.carousel.css" rel ="stylesheet">
-    <link href = "<%=request.getContextPath()%>/resources/css/detail/detail.css" rel ="stylesheet">
+    <link href = "<%=request.getContextPath()%>/resources/css/detail/detail.css?ver=6" rel ="stylesheet">
     <link href = "<%=request.getContextPath()%>/resources/css/detail/owl.theme.default.css" rel = "stylesheet">
     <link href = "<%=request.getContextPath()%>/resources/css/detail/animate.css" rel = "stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Black+And+White+Picture|Black+Han+Sans|Dokdo|Gugi|Hi+Melody|Gamja+Flower|Jua|Poor Story|" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/css/detail/component.css" />
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/css/detail/demo.css" />
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/css/detail/nomarlize.css" />
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src ="<%=request.getContextPath()%>/resources/js/detail/owl.carousel.js"></script>  
@@ -86,10 +85,15 @@
 <title>Insert title here</title>
 </head>
 
+<style>
+	.menu{
+		
+	}	
+</style>
 
 <body>
 	
-	 <header>
+	<header>
 		<!-- Here is Need to Header Line -->
 		<%@include file ="../common/Header.jsp" %>
 	</header>
@@ -107,12 +111,12 @@
             </div> 
             
             <div class="col-xs-4" id="bookPrice">
-                <i class="fa fa-star-o"></i><span style="font-family:'Jua'; font-size: 20px;">오픈 기념 빵빵한 포인트</span><br><br>
-                <i class="fa fa-krw" style="color:orangered"></i><span style="color :orangered; font-family:'Jua'; font-size: 20px;"><%=detail.getPrice()%>원</span><br>
+                <i class="fa fa-star-o"></i><span style="font-family:'Jua'; font-size: 20px;">오픈 기념 빵빵한 적립금</span><br><br>
+                <i class="fa fa-krw" style="color:orangered"></i><span style="color :orangered; font-family:'Jua'; font-size: 20px;"> [정가]<%=detail.getPrice()%>원</span><br>
                 <i class="fa fa-krw"></i>
                 <span style="font-family:'Jua'; font-size: 20px;">
                  	<% if(uId != -1) { %>
-                 		[적립금]<%=point%>POINT
+                 		[적립금]<%=(int)point%>POINT
 	              	<% } else { %>
 	              		<%= noUser %>
 	              	<% } %>
@@ -128,12 +132,12 @@
         
         <div class="row" id="choice" > 
         	<nav class="menu">
-					<ul class="menuBar">
-						<li style="display:inline" class="menuLink" ><a href="#"  onclick="move('bookInfo');">품목정보</a></li>
-						<li style="display:inline" class="menuLink"><a href="#"  onclick="move('bookField');">관련분야</a></li>
-						<li style="display:inline" class="menuLink"><a href="#"  onclick="move('bookContent');">책 소개</a></li>
-						<li style="display:inline" class="menuLink"><a href="#"  onclick="move('bookWriter');">저자소개</a></li>
-						<li style="display:inline" class="menuLink"><a href="#"  onclick="move('bookReview');">독자리뷰</a></li>
+					<ul style="display:inline;" class="menuBar">
+						<li  class="menuLink" style="display:inline;"><a href="#"  onclick="move('bookInfo');">품목정보</a></li>
+						<li  class="menuLink" style="display:inline;"><a href="#"  onclick="move('bookField');">관련분야</a></li>
+						<li  class="menuLink" style="display:inline;"><a href="#"  onclick="move('bookContent');">책 소개</a></li>
+						<li  class="menuLink" style="display:inline;"><a href="#"  onclick="move('bookWriter');">저자소개</a></li>
+						<li  class="menuLink" style="display:inline;"><a href="#"  onclick="move('bookReview');">독자리뷰</a></li>
 					</ul>
 			</nav>    
         </div >
@@ -153,7 +157,7 @@
 		<!-- ....이  -->
         <div class="row" id="bookContent">
             <p class="boardTitle">책 소개</p> 
-            <span class="more" id="introButton" style="float: right;" onclick="intro();">더보기+</span><br>
+            <span class="more" id="introButton" style="float: right;" onclick="intro();">열기+</span><br>
             	<span class="detailContent">
             	<% if (detail.getBook_introduce().length() > 80) { %>
             	<%=detail.getBook_introduce().substring(0,80)%><span id=skipBook>.....</span>
@@ -170,7 +174,7 @@
         
         <div class="row" id="bookWriter">
             <p class="boardTitle">저자소개</p> 
-            <span class="more" id="writerButton" style="float: right;" onclick="writer();">더보기+</span><br>
+            <span class="more" id="writerButton" style="float: right;" onclick="writer();">열기+</span><br>
             	<span class="detailContent">
             	<% if (detail.getWriter_introduce().length() > 80) { %>
 				<%=detail.getWriter_introduce().substring(0,80)%><span id=skipWriter>.....</span>
@@ -208,11 +212,10 @@
             
             
             <div id="bookReviews"> 
-            	<span class="detailContent">
-            	<span class="reviewPaging">       	
+            	<span class="detailContent">           	       	
               	<% if(pagingReview != null){
               		for(Review list : pagingReview){  %>
-	              		<div style="border-bottom:2px solid gray">
+	              		<div style="border-bottom : 2px solid gray">	              		
 	              		 	<p class="reviewShow">
 		              			<%if(list.getRateing() <= 2) {%>	
 		              			<span>제목 : </span><span><%=list.getComment_title() %></span><br>
@@ -271,11 +274,11 @@
 		              			<% } %>
 	              			</p>
 	              		</div>
-              	<% } }%>
-              	</span>
+              	<% } }%>              
               	</span>
              </div>
-              <!-- 동기식 독자 리뷰 페이징 처리 부분  -->
+             
+             <!-- 동기식 독자 리뷰 페이징 처리 부분  -->
             <div style="text-align:center;">
 	            <%if(maxPage != 0){ %>
 				<%  if(currentPage <= 1) {  %>
@@ -379,6 +382,7 @@
 		    </div>
 		  </div>    
         
+        
         <!-- 독자 리뷰 모달 창 -->
     	<!-- 리뷰 등록 Modal -->
 		  <div class="modal fade" data-backdrop="static" id="reviewModal" role="dialog">
@@ -403,13 +407,13 @@
 		        		</p>
 		        	</div>
 		          	<div class="modalBody1">
-		          		<textarea name="reviewTitle" id="reviewTitle" cols="70" rows="1" 
+		          		<textarea name="reviewTitle" id="reviewTitle" cols="50" rows="1" 
 		          		placeholder="제목은 30자 제한" maxlength="30" ></textarea>
 		          		&nbsp;&nbsp;&nbsp;<span id="titleCounter">###</span>
 		          	</div>
 		          	
 		          	<div class="modalBody2">
-		          		<textarea name="reviewContent" id="reviewContent" cols="70" rows="10" 
+		          		<textarea name="reviewContent" id="reviewContent" cols="50" rows="10" 
 		          		placeholder="내용은 300자 제한" maxlength="300"></textarea>
 		          		&nbsp;&nbsp;&nbsp;<span id="contentCounter">###</span>	
 		          	</div>
@@ -449,13 +453,13 @@
 		        		</p>
 		        	</div>
 		          	<div class="modalBody1">
-		          		<textarea name="updateTitle" id="updateTitle" cols="70" rows="1" 
+		          		<textarea name="updateTitle" id="updateTitle" cols="50" rows="1" 
 		          		placeholder="제목은 30자 제한" maxlength="30" ></textarea>
 		          		&nbsp;&nbsp;&nbsp;<span id="updateTCounter">###</span>
 		          	</div>
 		          	
 		          	<div class="modalBody2">
-		          		<textarea name="updateContent" id="updateContent" cols="70" rows="10" 
+		          		<textarea name="updateContent" id="updateContent" cols="50" rows="10" 
 		          		placeholder="내용은 300자 제한" maxlength="300"></textarea>
 		          		
 		          		&nbsp;&nbsp;&nbsp;<span id="updateCounter">###</span>	
@@ -472,6 +476,7 @@
 		    </div>
 		  </div>  
 		<!-- 캐러셀 부분 -->
+        
         <div class="row" style="padding:0">
         	<span style="font-family : Jua; color:#DA70D5; font-size:25px">BANDI BOOK BEST SELLER TOP4</span>
         	<div  id="bestBook" class="owl-carousel" >
@@ -503,15 +508,15 @@
     });
  	
    
-	//책소개 더보기 접기
+	//책소개 열기 접기
     function intro(){
         $('#bookIntro').toggleClass("hide");
         $('#skipBook').toggleClass("hide");
-        if($('#introButton').text() == "더보기+"){
+        if($('#introButton').text() == "열기+"){
             $('#introButton').text("접기-");
         }
         else{
-            $('#introButton').text("더보기+");
+            $('#introButton').text("열기+");
         }
     }
    
@@ -519,11 +524,11 @@
     function writer(){
         $('#writerIntro').toggleClass("hide");
         $('#skipWriter').toggleClass("hide");
-        if($('#writerButton').text() == "더보기+"){
+        if($('#writerButton').text() == "열기+"){
             $('#writerButton').text("접기-");
         }
         else{
-            $('#writerButton').text("더보기+");
+            $('#writerButton').text("열기+");
         }
     }
     
@@ -756,7 +761,7 @@
 				type : "GET",
 				data : {
 					userId : userId, 
-					bookId : bookId,
+					bookId : bookUid,
 					bookCount : bookCount
 				},
 				dataType : "json",
@@ -792,12 +797,13 @@
 				type : "GET",
 				data : {
 					userId : userId,
-					bookId : bookId,
+					bookId : bookUid,
 					bookCount : bookCount
 				},
 				dataType : "json",
 				success : function(data){
-					location.href="<%=request.getContextPath()%>/order.ct?bookUID="+bookId;
+					location.href="<%=request.getContextPath()%>/order.ct?bookUID="+bookUid;
+					
 				}, error : function(data){
 					console.log(data);
 				}

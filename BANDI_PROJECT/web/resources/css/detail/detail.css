@@ -1,5 +1,5 @@
 
-   		*:focus {
+   	*:focus {
     outline: none;
 	}
     a:hover{
@@ -36,14 +36,14 @@
 
    
     .row{
-        outline: 1px solid #DA70D5;
+        outline: 2px double #5F4B8B;
         width: 1120px;
         max-width: none !important;
     }
 
     #choice{
         /* background-color: #BF94E4; */
-        background-color: white;
+        background-color: #BF94E4;
         padding: 10px 0px 10px 100px;
     }
     
@@ -115,6 +115,10 @@
     	
     }
     
+    #updateTitle, #updateContent{
+    	resize : none;
+    }
+    
     .modalBody1, .modalBody2{
     	position: relative;
 
@@ -177,4 +181,6 @@
 		vertical-align: middle; 
 		text-align:center;
 	}
+	
+	
    

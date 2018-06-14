@@ -36,15 +36,15 @@ public class ReviewInsertServlet extends HttpServlet {
 		
 		//bookUid
 		int bookUid = Integer.parseInt(request.getParameter("bookUid"));
-		System.out.println(bookUid);
+		
 		
 		//userUid
 		int userUid = Integer.parseInt(request.getParameter("userUid"));
-		System.out.println(userUid);
+		
 		
 		//userName
 		String userName = request.getParameter("userName");
-		System.out.println(userName);
+		
 		
 		//리뷰 평점, 제목, 내용 	
 		int rate = Integer.parseInt(request.getParameter("rate"));

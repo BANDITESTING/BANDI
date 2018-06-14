@@ -30,7 +30,7 @@ public class ReviewDeleteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("딜리트 서블릿");
+		
 		//isbn값 
 		String isbn = request.getParameter("ISBN");
 		

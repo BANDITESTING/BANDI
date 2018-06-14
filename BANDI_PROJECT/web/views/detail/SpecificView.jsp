@@ -57,8 +57,7 @@
 	int maxPage = pi.getMaxPage();
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();
-	System.out.print("맥스페이지"+maxPage);
-	System.out.print("스타트페이지"+startPage);
+	
 	
 	
 	ArrayList<Review> pagingReview = (ArrayList<Review>)request.getAttribute("pagingReview"); 

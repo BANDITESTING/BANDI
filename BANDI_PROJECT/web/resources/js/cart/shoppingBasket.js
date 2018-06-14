@@ -186,7 +186,9 @@ $(function() {
 		total = (parseInt($(this).parent().siblings().find('.onePrice').text().replace(",", "")) * parseInt($(this).val()));
 		
 		$(this).parent().siblings().find('.bookPrice').text(total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-		
+
+		console.log("합계 : " + $('.bookPrice').text());
+		console.log("total : " + total);
 		resetTotal();
 		
 	});
@@ -286,24 +288,27 @@ $(function() {
 		$('.chk').each(function(index, item) {
 			
 			if ($(this).prop('checked') == true) {
-				
-				total += parseInt($(this).parent().siblings().find('.bookPrice').text().replace(",", ""));
+				total += parseInt($(this).parent().siblings().find('.bookPrice').text().replace(/,/gi, ""));
 			}
 		});
-				
-		$('#total').text(total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+ " 원");
 		
-		$('.totalBook').each(function(index, item) {
+		console.log(">>total : "+ total);
+				
+		$('#total').text(total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+		
+		console.log(total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+		
+		/*$('.totalBook').each(function(index, item) {
 			
 			total += $(this).value();
 			
-		});
+		});*/
 		
 		if (total > 30000 || total == 0) {
 			
 			$('#delivery').text("0 원");
-			$('#orderPrice').text(total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+ " 원");
-			$('#point').text((total * point).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " P");
+			$('#orderPrice').text(total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+			$('#point').text((total * point).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 			
 		} else {
 			

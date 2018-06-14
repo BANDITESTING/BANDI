@@ -17,9 +17,9 @@ import com.semi.bandi.template.AdminQueryProperties;
 
 import static com.semi.bandi.template.JDBCTemplate.*;
 
-public class AdminDao 
+public class  AdminDao 
 {
-	public AdminDao(){};
+	public AdminDao(){}
 	
 	public ArrayList<Writer>  getWriterArray(Connection con, String writerName)
 	{
@@ -119,7 +119,7 @@ public class AdminDao
 		return  writer;
 	}
 	
-	public boolean existISBN(Connection con,  String ISBN)
+	public  boolean existISBN(Connection con,  String ISBN)
 	{
 		if(con == null) return false;
 		
@@ -153,7 +153,7 @@ public class AdminDao
 		return result;
 	}
 
-	public boolean insertBook(Connection con, Book book, String date) {
+	public synchronized boolean insertBook(Connection con, Book book, String date) {
 		if(con == null) return false;
 		boolean result = false;
 		
@@ -192,7 +192,7 @@ public class AdminDao
 		return result;
 	}
 
-	public boolean insertWriter(Connection con, Writer writer) {
+	public synchronized boolean insertWriter(Connection con, Writer writer) {
 		if(con == null) return false;
 		boolean result = false;
 		
@@ -242,11 +242,11 @@ public class AdminDao
 				annual = new AnnualIncome();
 				annual.setmOrderDate(rSet.getString(1));
 				annual.setmOrderCount(rSet.getInt(3));
-				annual.setmPacketPrice(rSet.getInt(4));
+				annual.setmPacketPrice(rSet.getInt(4)); // Change for Point, But Use This Name Packet. --> Point
 				annual.setmOrderBooksCount(rSet.getInt(5));
 				
 				// Total Income.
-				annual.setmSumPrice(rSet.getInt(2) + annual.getmPacketPrice());
+				annual.setmSumPrice(rSet.getInt(2) - annual.getmPacketPrice()); //  - Point 
 				
 				arrayIncome.add(annual);
 			}
@@ -283,7 +283,7 @@ public class AdminDao
 			// But this While loop, only one Execute, Because Just return one resultSet;
 			while(rSet.next()) 
 			{
-				totalIncome =  rSet.getInt(1) + rSet.getInt(2);
+				totalIncome =  rSet.getInt(1); // + rSet.getInt(2);
 			}
 		}catch(SQLException e)
 		{
@@ -639,7 +639,7 @@ public class AdminDao
 		return book;
 	}
 
-	public boolean updateRecBandiBooks(Connection con, String before, String after) {
+	public synchronized boolean updateRecBandiBooks(Connection con, String before, String after) {
 		if(con == null) return false;
 		
 		boolean key = false;

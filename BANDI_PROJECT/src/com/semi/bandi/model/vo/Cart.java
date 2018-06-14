@@ -8,6 +8,7 @@ public class Cart
 	String image;
 	int price;
 	String title;
+	String isbn;
 	
 	public Cart(){}
 
@@ -32,6 +33,17 @@ public class Cart
 		this.image = image;
 		this.price = price;
 		this.title = title;
+	}
+
+	public Cart(int userUID, int bookUID, int bookQuantity, String image, int price, String title, String isbn) {
+		super();
+		this.userUID = userUID;
+		this.bookUID = bookUID;
+		this.bookQuantity = bookQuantity;
+		this.image = image;
+		this.price = price;
+		this.title = title;
+		this.isbn = isbn;
 	}
 
 	public int getUserUID() {
@@ -80,6 +92,14 @@ public class Cart
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public String getIsbn() {
+		return isbn;
+	}
+
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
 	}
 
 	@Override

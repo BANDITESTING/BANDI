@@ -46,8 +46,6 @@ public class logoutServlet extends HttpServlet {
 			page = "index.jsp";
 		}
 		
-		System.out.println("logout Servelt Called");
-		
 		RequestDispatcher rq =request.getRequestDispatcher(page);
 		rq.forward(request, response);
 	}

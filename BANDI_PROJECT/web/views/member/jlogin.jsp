@@ -26,13 +26,17 @@
 <div class="container">
 	<div class="row">
     	<div class="col-ms">
-        	<img src="<%=request.getContextPath()%>/resources/images/member/logo.jpg" class="img-responsive" style="margin:0 auto;"
+        	<img src="<%=request.getContextPath()%>/resources/images/member/logo.jpg" class="img-responsive" style="margin:0 auto; cursor: pointer;"
         	onclick="location='<%=request.getContextPath()%>/index.jsp'">
         </div>
 	</div>
 	<form class="form-signin" id="LoginForm" method="post" action="<%=request.getContextPath()%>/login.me">
 		<input type="email" id="mEmail" name="mEmail" class="form-control input-lg" placeholder="E-mail"><br />
-		<input type="password" id="mPassword" name="mPassword" class="form-control input-lg" placeholder="Password"><br /><br />
+		<input type="password" id="mPassword" name="mPassword" class="form-control input-lg" placeholder="Password"><br />
+		<div class="container" style="margin-left:30%">
+			<button type="button" class="btn btn-link" onclick="location='<%=request.getContextPath()%>/views/member/jfindUser.jsp'">아이디 찾기</button>/
+			<button type="button" class="btn btn-link" onclick="location='<%=request.getContextPath()%>/views/member/jfindPwd.jsp'">비밀번호 찾기</button>
+		</div><br />
 		<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 	</form>
 	<script>
@@ -55,10 +59,9 @@
 				success : function(data)
 				{
 					if(data == "0"){
-						alert("회원 정보가 없습니다. 다시 확인해주세요.");
+						alert("회원 정보가 없습니다. 확인해주세요.");
 						event.preventDefault();
 					} 
-				
 				}
 			});
 			

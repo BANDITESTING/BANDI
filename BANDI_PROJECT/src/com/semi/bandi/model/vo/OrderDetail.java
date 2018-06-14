@@ -11,15 +11,21 @@ public class OrderDetail
 	String receiver;
 	String shippingSate;
 	String phone;
+	int price;
+	int discount;
+	int point;
 	
 	public OrderDetail(){}
 
-	public OrderDetail(String orderUID, String shipping, String receiver, String phone) {
+	public OrderDetail(String orderUID, String shipping, String receiver, String phone, int price, int discount, int point) {
 		super();
 		this.orderUID = orderUID;
 		this.shipping = shipping;
 		this.receiver = receiver;
 		this.phone = phone;
+		this.price = price;
+		this.discount = discount;
+		this.point = point;
 	}
 	
 	public OrderDetail(String orderUID, int userUID, Date orderDate, String shipping, String receiver,
@@ -97,10 +103,35 @@ public class OrderDetail
 		this.phone = phone;
 	}
 
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+	public int getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(int discount) {
+		this.discount = discount;
+	}
+
+	public int getPoint() {
+		return point;
+	}
+
+	public void setPoint(int point) {
+		this.point = point;
+	}
+
 	@Override
 	public String toString() {
 		return "OrderDetail [orderUID=" + orderUID + ", userUID=" + userUID + ", orderDate=" + orderDate + ", shipping="
-				+ shipping + ", receiver=" + receiver + ", shippingSate=" + shippingSate + ", phone=" + phone + "]";
+				+ shipping + ", receiver=" + receiver + ", shippingSate=" + shippingSate + ", phone=" + phone
+				+ ", price=" + price + ", discount=" + discount + ", point=" + point + "]";
 	}
 
 	@Override

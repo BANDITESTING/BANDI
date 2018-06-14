@@ -143,19 +143,19 @@ public class CategoryDao {
 		return list;
 	}
 
-	public ArrayList<Category> selectCategoryCodeAndOrder(Connection con, String categoryCode, String orderBy) {
+	public ArrayList<Category> selectCategoryCodeAndOrder(Connection con, String categoryCode, String orderBy , int start, int end) {
 		PreparedStatement pstmt = null;
 		ResultSet rSet = null;
 		ArrayList<Category> list = new ArrayList<Category>();
 		String query2 ="";
 		if(orderBy.equals("ISSUE_DATE")){
-			query2 = "SELECT * FROM (SELECT * FROM GENRE JOIN BANDI_BOOK USING(GENRE_CODE) JOIN WRITER USING(WRITER_CODE) ORDER BY ISSUE_DATE DESC, TITLE DESC) ";
+			query2 = "SELECT * FROM (SELECT T1.*, ROWNUM R_NUM FROM ( SELECT * FROM GENRE JOIN BANDI_BOOK USING(GENRE_CODE) JOIN WRITER USING(WRITER_CODE) ORDER BY ISSUE_DATE DESC) T1 ";
 		}else if(orderBy.equals("TITLE")){
-			query2 = "SELECT * FROM (SELECT * FROM GENRE JOIN BANDI_BOOK USING(GENRE_CODE) JOIN WRITER USING(WRITER_CODE) ORDER BY TITLE ASC) ";
+			query2 = "SELECT * FROM (SELECT T1.*, ROWNUM R_NUM FROM ( SELECT * FROM GENRE JOIN BANDI_BOOK USING(GENRE_CODE) JOIN WRITER USING(WRITER_CODE) ORDER BY TITLE ASC) T1 ";
 		}else if(orderBy.equals("WRITER_NAME")){
-			query2 = "SELECT * FROM (SELECT * FROM GENRE JOIN BANDI_BOOK USING(GENRE_CODE) JOIN WRITER USING(WRITER_CODE) ORDER BY WRITER_NAME ASC) ";
+			query2 = "SELECT * FROM (SELECT T1.*, ROWNUM R_NUM FROM ( SELECT * FROM GENRE JOIN BANDI_BOOK USING(GENRE_CODE) JOIN WRITER USING(WRITER_CODE) ORDER BY WRITER_NAME ASC) T1 ";
 		}else if(orderBy.equals("QUANTITY")){
-			query2 = "SELECT * FROM (SELECT * FROM GENRE JOIN BANDI_BOOK USING(GENRE_CODE) JOIN WRITER USING(WRITER_CODE) JOIN ORDER_DETAIL USING(BOOK_UID) ORDER BY QUANTITY DESC) ";
+			query2 = "SELECT * FROM (SELECT T1.*, ROWNUM R_NUM FROM ( SELECT * FROM GENRE JOIN BANDI_BOOK USING(GENRE_CODE) JOIN WRITER USING(WRITER_CODE) JOIN ORDER_DETAIL USING(BOOK_UID) ORDER BY QUANTITY DESC) T1 ";
 		}
 		String query = query2+prop.getProperty("selectCategoryCodeAndOrder");
 		
@@ -163,8 +163,10 @@ public class CategoryDao {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, categoryCode);
 			
+			// Setting for Current Page
+			pstmt.setInt(2, start);
+			pstmt.setInt(3, end);
 			rSet = pstmt.executeQuery();
-			
 			
 			while(rSet.next()){
 				Category c = new Category();
@@ -180,6 +182,7 @@ public class CategoryDao {
 		} finally {
 			close(rSet);
 			close(pstmt);
+			close(con);
 		}
 		return list;
 	}
@@ -211,56 +214,20 @@ public class CategoryDao {
 		return list;
 	}
 
-	public int selectPageCategoryCount(Connection con, String categoryCode, String orderBy, int currentPage, int limit) {
-		
-		PreparedStatement pstmt = null;
-		ResultSet rSet = null;
-		int result = 0;
-		System.out.println("pagingDAO : ");
-		String query2 = "";
-		if(orderBy.equals("ISSUE_DATE")){
-			query2 = "SELECT row_number() OVER (ORDER BY ISSUE_DATE DESC, TITLE DESC) ";
-		}else if(orderBy.equals("TITLE")){
-			query2 = "SELECT row_number() OVER (ORDER BY TITLE ASC, TITLE DESC) ";
-		}else if(orderBy.equals("WRITER_NAME")){
-			query2 = "SELECT row_number() OVER (ORDER BY WRITER_NAME ASC, TITLE DESC) ";
-		}else if(orderBy.equals("QUANTITY")){
-			query2 = "SELECT row_number() OVER (ORDER BY QUANTITY DESC, TITLE DESC) ";
-		}
-		String query = query2+prop.getProperty("selectCategoryCodeAndOrder");
-		try{
-			pstmt = con.prepareStatement(query);
-			pstmt.setString(1, categoryCode);
-			pstmt.setInt(2, currentPage);
-			pstmt.setInt(3, limit);
-			rSet = pstmt.executeQuery();
-			
-			while(rSet.next()){
-				result = rSet.getInt(1);
-			}
-		} catch(SQLException e){
-			e.printStackTrace();
-		} finally{
-			close(rSet);
-			close(pstmt);
-		}
-		System.out.println("DAOresult"+result);
-		return result;
-	}
-
 	public int PagingCount(Connection con, String categoryCode) {
 		
 		PreparedStatement pstmt = null;
 		ResultSet rSet = null;
 		int result = 0;
 		String query = prop.getProperty("selectPageCount");
+		
 		try{
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, categoryCode);
 			
 			rSet = pstmt.executeQuery();
 			
-			while(rSet.next()){
+			if(rSet.next()){
 				result = rSet.getInt(1);
 			}
 			
@@ -270,9 +237,91 @@ public class CategoryDao {
 			close(rSet);
 			close(pstmt);
 		}
-		System.out.println("DAO1 :"+result);
+	
 		return result;
 	}
 
+	public int FirstCategoryDao(Connection con, String category, String categoryCode) {
+		PreparedStatement pstmt = null;
+		ResultSet rSet = null;
+		int result = 0;
+		String query2 = "";
+		if(category.equals("ISSUE_DATE")){
+			query2 = "SELECT COUNT(*) FROM (SELECT * FROM GENRE JOIN BANDI_BOOK USING(GENRE_CODE) JOIN WRITER USING(WRITER_CODE) ORDER BY ISSUE_DATE DESC) ";
+		}else if(category.equals("TITLE")){
+			query2 = "SELECT COUNT(*) FROM (SELECT * FROM GENRE JOIN BANDI_BOOK USING(GENRE_CODE) JOIN WRITER USING(WRITER_CODE) ORDER BY TITLE ASC) ";
+		}else if(category.equals("WRITER_NAME")){
+			query2 = "SELECT COUNT(*) FROM (SELECT * FROM GENRE JOIN BANDI_BOOK USING(GENRE_CODE) JOIN WRITER USING(WRITER_CODE) ORDER BY WRITER_NAME ASC) ";
+		}else if(category.equals("QUANTITY")){
+			query2 = "SELECT COUNT(*) FROM (SELECT * FROM GENRE JOIN BANDI_BOOK USING(GENRE_CODE) JOIN WRITER USING(WRITER_CODE) JOIN ORDER_DETAIL USING(BOOK_UID) ORDER BY QUANTITY DESC) ";
+		}
+		String query = query2 + prop.getProperty("selectFirstCategoryCount");
+		try{
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, categoryCode);
+			
+			rSet = pstmt.executeQuery();
+			
+			if(rSet.next()){
+				result = rSet.getInt(1);
+			}
+			
+		} catch(SQLException e){
+			e.printStackTrace();
+		} finally{
+			close(rSet);
+			close(pstmt);
+			close(con);
+		}
+		
+		return result;
+	}
+
+	public int StartAndEndDao(Connection con, String categoryCode, String orderBy, int start) {
+		PreparedStatement pstmt = null;
+		ResultSet rSet = null;
+		int result = 0;
+		String query2 = "";
+//		if(category.equals("ISSUE_DATE")){
+//			query2 = "SELECT COUNT(*) FROM(SELECT row_number() OVER (ORDER BY ISSUE_DATE DESC, TITLE DESC) AS RANKED, GENRE_CODE, TITLE, ISBN, ISSUE_DATE, IMAGE, PRICE, WRITER_NAME FROM GENRE JOIN BANDI_BOOK USING(GENRE_CODE) JOIN WRITER USING(WRITER_CODE)) ";
+//		}else if(category.equals("TITLE")){
+//			query2 = "SELECT COUNT(*) FROM(SELECT row_number() OVER (ORDER BY TITLE ASC) AS RANKED, GENRE_CODE, TITLE, ISBN, ISSUE_DATE, IMAGE, PRICE, WRITER_NAME FROM GENRE JOIN BANDI_BOOK USING(GENRE_CODE) JOIN WRITER USING(WRITER_CODE)) ";
+//		}else if(category.equals("WRITER_NAME")){
+//			query2 = "SELECT COUNT(*) FROM(SELECT row_number() OVER (ORDER BY WRITER_NAME ASC, TITLE DESC) AS RANKED, GENRE_CODE, TITLE, ISBN, ISSUE_DATE, IMAGE, PRICE, WRITER_NAME FROM GENRE JOIN BANDI_BOOK USING(GENRE_CODE) JOIN WRITER USING(WRITER_CODE)) ";
+//		}else if(category.equals("QUANTITY")){
+//			query2 = "SELECT COUNT(*) FROM(SELECT row_number() OVER (ORDER BY QUANTITY DESC, TITLE DESC) AS RANKED, GENRE_CODE, TITLE, ISBN, ISSUE_DATE, IMAGE, PRICE, WRITER_NAME FROM GENRE JOIN BANDI_BOOK USING(GENRE_CODE) JOIN WRITER USING(WRITER_CODE)) ";
+//		}
+		
+		if(orderBy.equals("ISSUE_DATE")){
+			query2 = "SELECT COUNT(*) FROM (SELECT T1.*, ROWNUM R_NUM FROM ( SELECT * FROM GENRE JOIN BANDI_BOOK USING(GENRE_CODE) JOIN WRITER USING(WRITER_CODE) ORDER BY ISSUE_DATE DESC) T1 ";
+		}else if(orderBy.equals("TITLE")){
+			query2 = "SELECT COUNT(*) FROM (SELECT T1.*, ROWNUM R_NUM FROM ( SELECT * FROM GENRE JOIN BANDI_BOOK USING(GENRE_CODE) JOIN WRITER USING(WRITER_CODE) ORDER BY TITLE ASC) T1 ";
+		}else if(orderBy.equals("WRITER_NAME")){
+			query2 = "SELECT COUNT(*) FROM (SELECT T1.*, ROWNUM R_NUM FROM ( SELECT * FROM GENRE JOIN BANDI_BOOK USING(GENRE_CODE) JOIN WRITER USING(WRITER_CODE) ORDER BY WRITER_NAME ASC) T1 ";
+		}else if(orderBy.equals("QUANTITY")){
+			query2 = "SELECT COUNT(*) FROM (SELECT T1.*, ROWNUM R_NUM FROM ( SELECT * FROM GENRE JOIN BANDI_BOOK USING(GENRE_CODE) JOIN WRITER USING(WRITER_CODE) JOIN ORDER_DETAIL USING(BOOK_UID) ORDER BY QUANTITY DESC) T1 ";
+		}
+			
+		String query = query2 +prop.getProperty("selectJumpButton");
+	
+		try{
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, categoryCode);
+			pstmt.setInt(2, start);
+			
+			rSet = pstmt.executeQuery();
+			
+			while(rSet.next())
+				result = rSet.getInt(1);
+			
+		} catch(SQLException e){
+			e.printStackTrace();
+		} finally{
+			close(rSet);
+			close(pstmt);
+			close(con);
+		}
+		return result;
+	}
 
 }

@@ -21,10 +21,11 @@
 	
 	@SuppressWarnings("unchecked")
 	ArrayList<CommentUserInfo> comArray = (ArrayList<CommentUserInfo>)session.getAttribute("commentArray");
-    
+   
 	// If Wrong Access This Page. Move to Index.jsp
-	 if(array == null || bookArray == null || rateBook == null || comArray ==null) response.sendRedirect("views/common/errorPage.jsp");
-	 
+	 if(array == null || bookArray == null || rateBook == null || comArray ==null){
+		 response.sendRedirect(request.getContextPath() + "/views/common/errorPage.jsp");
+	  }
 %>
 
 <meta charset="UTF-8">
@@ -82,7 +83,7 @@
 
     <!-- Wrapper for slides -->
     <div class="carousel-inner" role="listbox">
-
+	<%if(array != null) { %>
       <div class="item active">
         <img src="<%=request.getContextPath()%>/resources/images/eventBanner/<%=array[0]%>" name ="eventBanner">  
       </div>
@@ -98,7 +99,7 @@
       <div class="item">
         <img src="<%=request.getContextPath()%>/resources/images/eventBanner/<%=array[3]%>" name ="eventBanner">
       </div>
-  
+  <%} %>
     </div>
 
     <!-- Left and right controls -->
@@ -127,12 +128,13 @@
   		border-bottom:3px solid #5F4B8B;">
     
 	    <div class="loop owl-carousel owl-theme" id ="bandirecommend">
+	    <% if(bookArray != null) { %>
 	    <% for(int i = 0; i < bookArray.length; i++) { %>
 	        <div class="item">
 	          <img src ="<%=request.getContextPath()%>/resources/bookimage/<%=bookArray[i].getmImagePath()%>?ver=1" class ="owl_carousel_img_sheet w3-hover-shadow" name ="recommendBooks" 
 	          id="<%=bookArray[i].getmISBN()%>" onclick="imageEvent(this);">
 	        </div>
-	    <% } %>
+	    <% } } %>
       	</div>
   	</div>
 	<!-- recommend by BANDI END -->
@@ -189,6 +191,7 @@
 	<!--  Best Seller Book[VIEW] START -->
 	<div class="w3-content" style="max-width:1100px; margin-top:10px;margin-bottom:10px">
 		<div class="w3-row">
+		  <% if(bestSellerArray != null) { %>
 		  <% for(int i = 0; i < bestSellerArray.length/2; i++) { %>
 			  <div class="w3-col l3 s6">
 			  	<div class="w3-container sellerDiv1" style = "margin-bottom: 50px;">
@@ -216,7 +219,7 @@
             		<span class = "TAG_SPAN_PRICE_TEXT"><%=bestSellerArray[i+bestSellerHalfCount].getmPrice()%>원</span>
 		          </div>
 			  </div>
-			  <%}%>
+			  <%} }%>
 		</div>
 	</div>
 	<!--  Best Seller Book[VIEW] END -->
@@ -271,14 +274,18 @@
 	<div class="w3-content" style="max-width:1100px; margin-top:10px; margin-bottom:10px; border:3px dashed #5F4B8B;" id ="userContent">
 		<div class ="w3-row">
 			<div class ="w3-col l4 s12 m6 w3-center">
+				<% if(rateBook != null) { %>
         		<img src ="<%=request.getContextPath()%>/resources/bookimage/<%=rateBook.getmImagePath()%>" class ="owl_carousel_img_sheet w3-hover-shadow userbookimg" id ="recUserImg" name="<%=rateBook.getmISBN()%>">
+        		<%} %>
       		</div>
       		
       		<div class ="w3-col l8 s12 m6" style ="text-align: center;">
+      		  <% if(rateBook != null) { %>
       			<span style ="font-size: 4em; font-family: 'Gaegu'" id ="recUserTitle"><%=rateBook.getmTitle()%></span> <br>
       			<span style ="font-family :'Gaegu'; font-size:1.5em; color:darkslategray;" id ="recUserWriter">[<%=rateBook.getWriterName() %>]</span> <br>
-      			 
+      		   <% } %>
       			 <div id ="startDiv" style="display: inline;">
+      			 <% if(rateBook != null) {%>
       			 <%for(int i = 0; i < 10; i= i+2){ 
       			 	if(i < rateBook.getAvgPoint()) {
       			 %>      			 
@@ -292,7 +299,9 @@
           		</div>
           		
           		<div class="button-container-2" style ="margin-right:20px;">
+          		 
               		<span class="mas" id ="recUserPrice"><%=rateBook.getmPrice()%>원</span>
+              	 <%} %>
               		<button type="button" name="Hover">
                 	Price
               	</button>
@@ -300,6 +309,7 @@
             
             <div style ="text-align: center; margin-bottom: 20px; font-family: Gugi; font-size: 2em; margin-top:10px;">반디들의
              <b style ="color:#A35776">소리</b></div>
+             <% if(comArray != null) {%>
 	             <% for(int i = 0; i < comArray.size(); i++) { %>
 		      		<div class = "w3-row  comment_box">
 		              <div class = "w3-col l10 s10 m10 comment_id">
@@ -318,7 +328,7 @@
 		                <%=comArray.get(i).getWritedDate()%>
 		              </div> 
 		            </div>
-	            <% } %>
+	            <% } } %>
       		</div>
 		</div>
 	</div>

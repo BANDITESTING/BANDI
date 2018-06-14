@@ -33,7 +33,7 @@ public class jdeleteUserServlet extends HttpServlet {
 		
 		if(ls.deleteUser(user) == 0){
 			
-			session.invalidate();
+			result = 0;
 		} else {
 			result = -1;
 		}

@@ -45,6 +45,13 @@ public class User implements Serializable
 		this.mPassword = mPassword;
 	}
 
+	public User(String name, String birth, String phone) 
+	{
+		this.mName = name;
+		this.mIdentified = birth;
+		this.mPhone = phone;
+	}
+
 	public int getmUser_UID() {
 		return mUser_UID;
 	}

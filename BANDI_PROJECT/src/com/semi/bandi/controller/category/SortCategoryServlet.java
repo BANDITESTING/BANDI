@@ -34,22 +34,24 @@ public class SortCategoryServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String CategoryCode = request.getParameter("CategoryCode");
 		String orderBy = request.getParameter("category");
+		String sStart = request.getParameter("start");
+		String sEnd = request.getParameter("end");
+		response.setContentType("application/json; charset=UTF-8");
+		Gson gson = new Gson();
 		
-	
+		// Shield for null Point Error
+		if(CategoryCode == null || orderBy == null || sStart == null || sEnd == null)  { gson.toJson("error",response.getWriter()); return; }
+		
+		int start = Integer.parseInt(sStart);
+		int end  = Integer.parseInt(sEnd);
 		
 		CategoryService cs = new CategoryService();
-		
+
 		if(CategoryCode == null || orderBy == null) return;
-		ArrayList<Category> list = cs.bookCategoryAndCode(CategoryCode,orderBy);
+		ArrayList<Category> list = cs.bookCategoryAndCode(CategoryCode,orderBy, start, end);
 		
-		
-		
-		
-		response.setContentType("application/json; charset=UTF-8");
-		new Gson().toJson(list, response.getWriter());
-		
-		
-		
+		if(list == null)  { gson.toJson("error",response.getWriter()); return; }
+		else gson.toJson(list,response.getWriter());
 	}
 
 	/**

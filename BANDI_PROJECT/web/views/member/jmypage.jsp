@@ -27,7 +27,7 @@
 }
 
 #tel{
-	width:50px;
+	width:150px;
     height:23;
 }
 
@@ -84,6 +84,8 @@
 				<li class="active"><a href="jmypage.jsp">My Page</a></li>
 				<li class="active"><a href="jchange_Pwd.jsp">비밀번호 변경</a></li>
             	<li class="active"><a href="jdeleteUser.jsp">회원 탈퇴</a></li>
+            	<li class="active"><a href="<%= request.getContextPath()%>/cart.ct">장바구니</a></li>
+                <li class="active"><a href="<%= request.getContextPath()%>/check.ct">주문 상세보기</a></li>
             </ul>
         </div>
         <div role="main" class="col-xs-10 col-xs-offset-2 col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2 col-lg-10 col-lg-offset-2">
@@ -145,9 +147,7 @@
                 	<tr>
                     	<th class="col-sm-2">휴대폰</th>
                         <td class="col-sm-8">
-                        	<input type="text" maxlength="3" name="tel1" size="2" id="tel1">-
-                            <input type="text" maxlength="4" name="tel2" size="2" id="tel2">-
-                            <input type="text" maxlength="4" name="tel3" size="2" id="tel3">
+                        	<input type="text" maxlength="11" name="tel" size="11" id="tel" value="<%=user.getmPhone()%>">
                             <input type="hidden" name="userId" value="<%=user.getmEmail()%>">
                         </td>
                     </tr>
@@ -161,7 +161,7 @@
                     <tr>
                     	<th class="col-sm-2">주소</th>
                     	<td class="col-sm-8">
-                    		<input type="text" id="address2" name="address2" style="width:500px"/>
+                    		<input type="text" id="address2" name="address2" style="width:700px"/>
                     	</td>
                     </tr>
                     <tr>
@@ -210,11 +210,7 @@
 				$(this).prop('checked', true);
 		});
 		
-		var phoneArr = '<%=user.getmPhone()%>'.split('-');
 		
-		$('input[name*="tel"]').each(function(index){
-			$(this).val(phoneArr[index]);
-		});
 	});
 	
 	$('#searchAdd').on('click', function(event){
@@ -261,7 +257,7 @@
         }).open();
 	});
 	
-	var addArr = '<%=user.getmAddress()%>'.split(', ');
+	var addArr = '<%=user.getmAddress()%>'.split('| ');
 	
 	$('input[name*="address"]').each(function(index){
 		$(this).val(addArr[index]);

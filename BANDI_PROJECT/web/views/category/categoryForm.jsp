@@ -19,14 +19,12 @@
 	
 	int PageCount = (Integer)session.getAttribute("PageCount");
 	
-	PageCount = (PageCount/8) + 1;
-	
-	System.out.println("a"+array);
-	System.out.println("b"+rateBook);
-	System.out.println("c"+bookArray);
-	System.out.println("d"+CategoryCode);
-	System.out.println("e"+banner);
-	System.out.println("f"+PageCount);
+	if(array == null || rateBook == null || bookArray == null || CategoryCode == null || banner == null || PageCount == 0)
+	{
+		response.sendRedirect(request.getContextPath() + "/views/common/errorPage.jsp");
+			
+		return;
+	}
 	
 %>
 <!DOCTYPE html>
@@ -38,16 +36,34 @@
 		<link href="<%=request.getContextPath()%>/resources/css/admin/bootstrap.min.css" rel="stylesheet">
         <script src="<%=request.getContextPath()%>/resources/js/main/jquery-3.3.1.min.js"></script>
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-        <link href="<%=request.getContextPath()%>/resources/css/category/category.css?ver=6" rel="stylesheet">
+        <link href="<%=request.getContextPath()%>/resources/css/category/category.css?ver=8" rel="stylesheet">
         <link rel="stylesheet"
 			href="http://fonts.googleapis.com/earlyaccess/jejugothic.css">
 		<script src ="<%=request.getContextPath()%>/resources/js/main/owl.carousel.js"></script>
+		<script src ="<%=request.getContextPath()%>/resources/js/category/category.js"></script>
+		
 		<link href = "<%=request.getContextPath()%>/resources/css/main/owl.carousel.css" rel ="stylesheet">
 		<link href = "<%=request.getContextPath()%>/resources/css/main/owl.theme.default.css" rel = "stylesheet">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Gugi">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Gaegu">
      
 </head>
+<style>
+.pagingArray{
+	display:inline-block;
+}
+
+.selectNavBar{
+	
+}
+
+.selectNavBar>a{
+	text-decoration : none;
+	color : orange;
+}
+
+
+</style>
 
 <body>
 	<%@include file ="../common/Header.jsp" %>
@@ -62,24 +78,24 @@
         	   		<!-- Left Item Box -->
 	        	   <div class="w3-col m3 jg">
 						<ul class="leftbar leftdiv" style="min-width: inherit;">
-							<li><span id="A%" class="gSearch"><a href="<%=request.getContextPath()%>/category.do?code=A">문학</a></span>
+							<li><span id="A" class="gSearch"><a href="<%=request.getContextPath()%>/category.do?code=A">문학</a></span>
 								<ul>
 									<li><span id="A1" class="gSearch">&nbsp;&nbsp;&nbsp;<a href="<%=request.getContextPath()%>/category.do?code=A1"> 소설</a></span></li>
 									<li><span id="A2" class="gSearch">&nbsp;&nbsp;&nbsp;<a href="<%=request.getContextPath()%>/category.do?code=A2"> 시</a></span></li>
 									<li><span id="A3" class="gSearch">&nbsp;&nbsp;&nbsp;<a href="<%=request.getContextPath()%>/category.do?code=A3"> 에세이</a></span></li>
 								</ul></li>
-							<li><span id="B%" class="gSearch"><a href="<%=request.getContextPath()%>/category.do?code=B"> 인문</a></span>
+							<li><span id="B" class="gSearch"><a href="<%=request.getContextPath()%>/category.do?code=B"> 인문</a></span>
 								<ul>
 									<li><span id="B1" class="gSearch">&nbsp;&nbsp;&nbsp;<a href="<%=request.getContextPath()%>/category.do?code=B1"> 역사/문화</a></span></li>
 									<li><span id="B2" class="gSearch">&nbsp;&nbsp;&nbsp;<a href="<%=request.getContextPath()%>/category.do?code=B2"> 종교</a></span></li>
 									<li><span id="B3" class="gSearch">&nbsp;&nbsp;&nbsp;<a href="<%=request.getContextPath()%>/category.do?code=B3"> 심리</a></span></li>
 								</ul></li>
-							<li><span id="C%" class="gSearch"><a href="<%=request.getContextPath()%>/category.do?code=C">과학</a></span>
+							<li><span id="C" class="gSearch"><a href="<%=request.getContextPath()%>/category.do?code=C">과학</a></span>
 								<ul>
 									<li><span id="C1" class="gSearch">&nbsp;&nbsp;&nbsp;<a href="<%=request.getContextPath()%>/category.do?code=C1"> 기술/공학</a></span></li>
 									<li><span id="C2" class="gSearch">&nbsp;&nbsp;&nbsp;<a href="<%=request.getContextPath()%>/category.do?code=C2"> 컴퓨터/IT</a></span></li>
 								</ul></li>
-							<li><span id="D%" class="gSearch"><a href="<%=request.getContextPath()%>/category.do?code=D">취미</a></span>
+							<li><span id="D" class="gSearch"><a href="<%=request.getContextPath()%>/category.do?code=D">취미</a></span>
 								<ul>
 									<li><span id="D1" class="gSearch">&nbsp;&nbsp;&nbsp;<a href="<%=request.getContextPath()%>/category.do?code=D1"> 가정(요리)</a></span></li>
 									<li><span id="D2" class="gSearch">&nbsp;&nbsp;&nbsp;<a href="<%=request.getContextPath()%>/category.do?code=D2"> 운동(건강)</a></span></li>
@@ -87,12 +103,12 @@
 									<li><span id="D4" class="gSearch">&nbsp;&nbsp;&nbsp;<a href="<%=request.getContextPath()%>/category.do?code=D4"> 음악(대중문화)</a></span></li>
 									<li><span id="D5" class="gSearch">&nbsp;&nbsp;&nbsp;<a href="<%=request.getContextPath()%>/category.do?code=D5"> 스포츠</a></span></li>
 								</ul></li>
-							<li><span id="E%" class="gSearch"><a href="<%=request.getContextPath()%>/category.do?code=E">교육</a></span>
+							<li><span id="E" class="gSearch"><a href="<%=request.getContextPath()%>/category.do?code=E">교육</a></span>
 								<ul>
 									<li><span id="E1" class="gSearch">&nbsp;&nbsp;&nbsp;<a href="<%=request.getContextPath()%>/category.do?code=E1"> 어린이/청소년</a></span></li>
 									<li><span id="E2" class="gSearch">&nbsp;&nbsp;&nbsp;<a href="<%=request.getContextPath()%>/category.do?code=E2"> 참고서(초/중/고)</a></span></li>
 								</ul></li>
-							<li><span id="F%" class="gSearch"><a href="<%=request.getContextPath()%>/category.do?code=F">사회</a></span>
+							<li><span id="F" class="gSearch"><a href="<%=request.getContextPath()%>/category.do?code=F">사회</a></span>
 								<ul>
 									<li><span id="F1" class="gSearch">&nbsp;&nbsp;&nbsp;<a href="<%=request.getContextPath()%>/category.do?code=F1"> 정치/사회</a></span></li>
 									<li><span id="F2" class="gSearch">&nbsp;&nbsp;&nbsp;<a href="<%=request.getContextPath()%>/category.do?code=F2"> 경제/경영</a></span></li>
@@ -121,8 +137,8 @@
 	        	   			<%if(bookArray != null) { %>
 							<% for(int i = 0; i < bookArray.size(); i++) { %>
 							 <div class="item">
-							          <img src ="<%=request.getContextPath()%>/resources/bookimage/<%=bookArray.get(i).getmImagePath()%>?ver=1" class ="owl_carousel_img_sheet w3-hover-shadow" 
-							          id="<%=bookArray.get(i).getmISBN()%>" onclick="imageEvent(this);">
+							          <img src ="<%=request.getContextPath()%>/resources/bookimage/<%=bookArray.get(i).getmImagePath()%>?ver=2" class ="owl_carousel_img_sheet w3-hover-shadow" 
+							          id="<%=bookArray.get(i).getmISBN()%>" onclick="imageEvent(id);">
 							        </div>
 							    <% }} %>
       						</div>
@@ -142,7 +158,7 @@
 	        	   		<div class="w3-row" style="margin-top:30px; border:3px dashed #5F4B8B;">
 	        	   			<div class ="w3-col l4 w3-center">
 	        	   				<img src ="<%=request.getContextPath()%>/resources/bookimage/<%=rateBook.get(j).getcImage()%>" 
-	        	   				class ="rankImage userbookimg" id ="" name="<%=rateBook.get(j).getcISBN()%>">
+	        	   				class ="rankImage userbookimg" id ="" name="<%=rateBook.get(j).getcISBN()%>" onclick="imageEvent(name)">
 	        	   			</div>
 	        	   			
 	        	   			<div class ="w3-col l8 w3-center">
@@ -193,29 +209,37 @@
         		<%for(int i =0 ; i < array.size(); i++) { %>
         			<div class = "w3-col l3 m3 s3 showArray" style="text-align:center"> 
         				<img class = "rankImage orderImage" src="<%=request.getContextPath()%>/resources/bookimage/<%=array.get(i).getcImage()%>" 
-        				name ="<%=array.get(i).getcISBN()%>" style="width: 100%; padding-left: 20px; padding-right: 20px;"/>	
+        				name ="<%=array.get(i).getcISBN()%>" style="width: 100%; padding-left: 20px; padding-right: 20px;" onclick="imageEvent(name)"/>
+        				<!-- <div class="w3-display-hover w3-display-middle"> -->      
+                  			<%-- <a href="<%=request.getContextPath()%>/detail.show?ISBN=<%=array.get(i).getcISBN()%>" class="main_spec_view_a"><span>상세보기</span></a> --%>
+              			<!-- </div> -->	
         				<span class= "orderTitle"><%if(array.get(i).getcTitle().length() >= 12){%><%=array.get(i).getcTitle().substring(0, 12)+".."%> <%}else{ %> <%=array.get(i).getcTitle() %><%} %></span><br>
         				<span class ="orderWriter"><%=array.get(i).getcWriter()%></span>
         			</div>
         		<%} %>
-        		<div class="w3-center">
-					<div class="w3-bar pagination">
+        	</div>
+        	
+        		<div class = "w3-center">
+					<div class="w3-row pagingArray">
+						
 						<%
-							int listBtn = PageCount;
-							if(PageCount > 5) listBtn =5;
+							boolean nextArrow = false;
+							int listBtn = (int)(Math.ceil(PageCount/8.0));
+							
+							if(listBtn > 5) {listBtn = 5; nextArrow = true;}	
 						%>
+						
+						<!-- <button onclick="categorybackBtn(name);" class="pagingFirst" name = "1"> &lt; </button> --> 
 					 	<%for(int i = 1; i <= listBtn; i++) {%>
-					 		<button onclick="location.href='/myWeb/cPage.do?currentPage=<%=i%>'"> <%=i%></button>
-					 	<%}%>
-					 	
-					 	<%if(PageCount > 5) {%>
-					 		<button onclick="location.href='/myWeb/cPage.do?currentPage=<%=6%>'"> ></button> 
+					 		<button onclick="categoryPageBtn(name);" name="<%=i%>" class= "pagingmiddle myButt one"> <%=i%></button>
+					 	<%} %>
+					 		
+					 	<%if(nextArrow) {%>
+					 		<button onclick="categoryJumpBtn(name);" class="pagingLast myButt one" name ="1">&gt;</button> 
 					 	<%} %>
 					 	
 					</div>
 				</div>
-        		
-        	</div>
         	
         </div>
         
@@ -225,8 +249,168 @@
 		
         <script>
         
+        var showCount = 8;
+        var showCountDouble = 8.0;
+        var buttonCount = 5;
+   
+        // Page When Click Arrow Button
+        function categoryJumpBtn(i)
+        {
+        	// 1. IMAGE
+        	var num = (showCount * buttonCount * i) + 1;
+        	categoryNextImage(num);
+        	
+        	// 2. Button [startAndEnd]
+        	categoryNextButton(i, num);
+        }
+         
+        //NEXT BUTTON
+        function categoryNextButton(categoryBtn ,num)
+        {
+        	var start = num;
+        	
+        	$cRecent = $('#cRecent');
+    		$cTitle  = $('#cTitle');
+    		$cWriter = $('#cWriter');
+    		$cBS    = $('#cBS');
+    		
+        	var order = "ISSUE_DATE";
+        	if($cRecent.hasClass('thick1Ck') == true) order= "ISSUE_DATE";
+    		if($cTitle.hasClass('thick2Ck') == true) order= "TITLE";
+    		if($cWriter.hasClass('thick3Ck') == true) order= "WRITER_NAME";
+    		if($cBS.hasClass('thick4Ck') == true) order= "QUANTITY";
+        	
+        	var categoryCode = "<%=CategoryCode%>";
+        	$.ajax({
+	        	url: "/BANDI/startAndEnd.do",
+				type: "POST",
+				data:{"category":order,
+						"CategoryCode":categoryCode,
+						"start":start,
+					},
+				success: function(data){
+					// MAKE BUTTON
+					$prevBtn = $('.pagingFirst');
+    	    		$nextBtn = $('.pagingLast');
+    	    		$pageBtn = $('.pagingmiddle');
+    				
+    				$prevBtn.remove();
+    				$nextBtn.remove();
+    				$pageBtn.remove();
+    				
+    				$pageArray = $('.pagingArray');
+    				
+    				var count = Math.ceil(data/showCountDouble);
+    				
+    				var nextFlag = false;
+    				if(count > buttonCount)
+    					{count = buttonCount; nextFlag= true;}
+    				
+    				var prevBtn = categoryBtn - 1;
+    				
+    				if(prevBtn >= 0)
+    					$pageArray.append("<button onclick='categoryJumpBtn(name);' class='pagingFirst myButt one' name ='"+prevBtn+"'> &lt; </button>");
+    				
+    				var starting = categoryBtn * buttonCount;
+    				for(var i = 1; i <= count; i++)
+    				{
+    					var btnNum = starting + i;
+    					$pageArray.append("<button onclick='categoryPageBtn(name);' name ='"+ btnNum +"' class ='pagingmiddle myButt one'>" + btnNum + "</button>");
+    				}
+    				
+    				var nextBtn = categoryBtn + 1;
+    				if(nextFlag)
+    					$pageArray.append("<button onclick='categoryJumpBtn(name);' class='pagingLast myButt one' name ='"+nextBtn+"'> &gt; </button>");
+				},error: function(data){ console.log(data);}
+        	});
+        }
+        
+        //NEXT IMAGE
+        function categoryNextImage(num)
+        {
+        	var start = num; //41
+        	var end  =  num + showCount - 1;// 
+        	
+        	$cRecent = $('#cRecent');
+    		$cTitle  = $('#cTitle');
+    		$cWriter = $('#cWriter');
+    		$cBS    = $('#cBS');
+    		
+    		var order = "ISSUE_DATE";
+        	if($cRecent.hasClass('thick1Ck') == true) order= "ISSUE_DATE";
+    		if($cTitle.hasClass('thick2Ck') == true) order= "TITLE";
+    		if($cWriter.hasClass('thick3Ck') == true) order= "WRITER_NAME";
+    		if($cBS.hasClass('thick4Ck') == true) order= "QUANTITY";
+        	
+        	var categoryCode = "<%=CategoryCode%>";
+        	$.ajax({
+	        	url: "/BANDI/sortCategory.do",
+				type: "POST",
+				data:{"category":order,
+						"CategoryCode":categoryCode,
+						"start":start,
+						"end":end
+					},
+				success: function(data){
+					rePaintImage(data);
+				},error: function(data){ console.log(data);}
+        	});
+        }
+        
+        function settingClickedBtn(name)
+        {
+        	$('.pagingmiddle').removeClass('selectedButton');
+        	$('.pagingmiddle').each(function(inx){
+        		if($(this).attr('name') == name) $(this).addClass('selectedButton');
+        	});
+        	
+        }
+        
+        
+        // When Button Press
+        function categoryPageBtn(i)
+        {
+        	// 버튼을 눌렀을 시 , 이미지 갱신.
+        	var start = ((i-1)*showCount) + 1;
+        	var end = i*showCount;
+        	settingClickedBtn(i);
+        	$cRecent = $('#cRecent');
+    		$cTitle  = $('#cTitle');
+    		$cWriter = $('#cWriter');
+    		$cBS    = $('#cBS');
+        	var order =  "ISSUE_DATE";
+        	if($cRecent.hasClass('thick1Ck') == true) order= "ISSUE_DATE";
+    		if($cTitle.hasClass('thick2Ck') == true) order= "TITLE";
+    		if($cWriter.hasClass('thick3Ck') == true) order= "WRITER_NAME";
+    		if($cBS.hasClass('thick4Ck') == true) order= "QUANTITY";
+        	
+        	var categoryCode = "<%=CategoryCode%>";
+        	$.ajax({
+	        	url: "/BANDI/sortCategory.do",
+				type: "POST",
+				data:{"category":order,
+						"CategoryCode":categoryCode,
+						"start":start,
+						"end":end
+					},
+				success: function(data){
+					rePaintImage(data);
+				},error: function(data){ console.log(data);}
+        	});
+        }
+        
         $(function(){
     		$('#cRecent').addClass('thick1Ck');
+    		var categoryCode = "<%=CategoryCode%>";
+    		
+    		$('li span').each(function(idx){
+    			if($(this).attr('id') == categoryCode)
+    			{
+    				$(this).addClass('selectNavBar');
+    			}
+    		});
+    		
+    		settingClickedBtn(1);
     	});
         
         function orderBtn(id)
@@ -239,11 +423,35 @@
         		case "cWriter": order= "WRITER_NAME"; break;
         		case "cBS": order= "QUANTITY"; break;
         		default:
-        			order = "RE";
+        			order = "ISSUE_DATE";
         	}
         	
         	orderByBook(order);
         }
+        
+        // rePaint Image View -HANSTAR
+       	function rePaintImage(data)
+       	{
+       		$('.showArray').remove();
+			$('.orderImage').remove();
+			$('.orderTitle').remove();
+			$('.orderWriter').remove();
+			
+			/*  MAKE IMAGE, WHEN PRESS BUTTON ABOUT CATEGORY BUTTON */
+			for(var idx in data){
+				
+				if(data[idx].cTitle.length >= 10){
+					var titleLength = data[idx].cTitle.substring(0,12)+"..";
+				}else{
+					var titleLength = data[idx].cTitle;
+				}
+			
+    			var iTag = '<img class = "rankImage orderImage" src="/BANDI/resources/bookimage/'+ data[idx].cImage + '" name ="' +data[idx].cISBN + '" style="width: 100%; padding-left: 20px; padding-right: 20px; " onclick="imageEvent(name)"/>';
+    			var tTage =  '<span class ="orderTitle">'+ titleLength  +'</span><br>';
+    			var wtag = '<span class ="orderWriter">'+data[idx].cWriter +'</span>';
+    			$('#showArrayParent').append('<div class = "w3-col l3 m3 s3 showArray" style="text-align:center">'+ iTag +tTage + wtag + '</div>');		
+			}
+       	}
         
         function orderByBook(order)
     	{
@@ -251,6 +459,10 @@
     		$cTitle  = $('#cTitle');
     		$cWriter = $('#cWriter');
     		$cBS    = $('#cBS');
+    		
+    		$prevBtn = $('.pagingFirst');
+    		$nextBtn = $('.pagingLast');
+    		$pageBtn = $('.pagingmiddle');
     		
     		if($cRecent.hasClass('thick1Ck') == true) $cRecent.removeClass('thick1Ck');
     		if($cTitle.hasClass('thick2Ck') == true) $cTitle.removeClass('thick2Ck');
@@ -272,31 +484,52 @@
     			url: "/BANDI/sortCategory.do",
     			type: "POST",
     			data:{"category":order,
-    					"CategoryCode":categoryCode
+    					"CategoryCode":categoryCode,
+    					"start":1,
+    					"end":8
     				},
     			success: function(data){
-    				$('.showArray').remove();
-    				$('.orderImage').remove();
-    				$('.orderTitle').remove();
-    				$('.orderWriter').remove();
     				
-    				for(var idx in data){
-    					
-    					
-    					if(data[idx].cTitle.length >= 10){
-    						var titleLength = data[idx].cTitle.substring(0,12)+"..";
-    					}else{
-    						var titleLength = data[idx].cTitle;
+    				rePaintImage(data);
+    				
+    				$prevBtn = $('.pagingFirst');
+    	    		$nextBtn = $('.pagingLast');
+    	    		$pageBtn = $('.pagingmiddle');
+    				
+    				$prevBtn.remove();
+    				$nextBtn.remove();
+    				$pageBtn.remove();
+    				
+    				/* MAKE PAGE BUTTON [FIRST]*/ 
+    				$.ajax({
+    					url: "/BANDI/makeCategoryBtns.make",
+    					type:"POST",
+    					data:{
+    						"category":order,
+        					"CategoryCode":categoryCode
+    					},
+    					success: function(data){
+    						if(data != "error")
+    						{
+    							// total count Button [WARNING]
+    							var btnPage = Math.ceil(data/showCountDouble);
+    							
+    							var nextFlag = (btnPage > buttonCount) ? true : false;
+    							if(btnPage > buttonCount) btnPage = buttonCount;
+    							
+    							$pageArray = $('.pagingArray');
+    							for(var i =1; i <= btnPage; i++)
+    								$pageArray.append("<button onclick='categoryPageBtn(name);' name ='" + i + "' class ='pagingmiddle myButt one'> " + i +"</button>");
+    							
+    							if(nextFlag)
+    								$pageArray.append("<button onclick='categoryJumpBtn(name);' class='pagingLast myButt one' name ='1'> &gt; </button>");
+    							
+    							settingClickedBtn(1);
+    						}
+    						
+    					}, error: function(data){    						
     					}
-    				
-    					console.log(data[idx].cTitle.length);
-    					console.log(data[idx].cTitle.substring(1,9)+"..");
-            			var iTag = '<img class = "rankImage orderImage" src="/BANDI/resources/bookimage/'+ data[idx].cImage + '" name ="' +data[idx].cISBN + '" style="width: 100%; padding-left: 20px; padding-right: 20px;"/>';
-            			var tTage =  '<span class ="orderTitle">'+ titleLength  +'</span><br>';
-            			var wtag = '<span class ="orderWriter">'+data[idx].cWriter +'</span>';
-            			$('#showArrayParent').append('<div class = "w3-col l3 m3 s3 showArray" style="text-align:center">'+ iTag +tTage + wtag + '</div>');
-            			
-    				}
+    				});
     			},
     			error: function(request,status,error)
     			{
@@ -305,37 +538,11 @@
     		});
     	}
         
-        jQuery(document).ready(function($) {
-            $('.loop').owlCarousel({
-              center: false,
-              items: 2,
-              loop: true,
-              margin: 40,
-              autoplay:true,
-              autoplayTimeout: 2000,
-              autoplayHoverPause:true,
-              responsive:{
-                
-                100 : {
-                  items : 1
-                },
-
-                400 : {
-                  items : 2
-                },
-
-                600: {
-                  items : 3
-                },
-                
-                1100: {
-                  items: 3
-                }, 
-              }
-            }); 
-
-            
-          });
+             
+        function imageEvent(id)
+    	{
+    		window.location.href = "<%=request.getContextPath()%>/detail.show?ISBN="+id;
+    	}  
         </script>
 </body>
 </html>

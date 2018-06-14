@@ -59,7 +59,7 @@ ul {
 	padding: 3px;
 	padding-right: 3%;
 	background: #5F4B8B;
-	height: 1200px;
+	height: 110vh;
 }
 
 .leftbar {
@@ -76,7 +76,6 @@ ul {
 
 .leftbar>li>span {
 	text-align: center;
-	text-decoration: none;
 	font-size: 15pt;
 	color: white;
 }
@@ -87,16 +86,18 @@ ul {
 	color: lightgray;
 	font-size: 16pt;
 }
+
 .leftbar>li>ul{
 	min-width:inherit;
 	width:inherit;
 }
+
 .leftbar>li>ul>li{
 	margin-top:2%;
 }
+
 .leftbar>li>ul>li>span {
 	text-align: left;
-	text-decoration: none;
 	font-size: 11pt;
 	color: rgb(230, 230, 230);
 }
@@ -112,8 +113,17 @@ ul {
 }
 
 .bookTitle {
-	font-size: 17pt;
+	font-size: 15pt;
 	font-style: bold;
+}
+
+.price {
+	font-size: 13pt;
+	color: red;
+}
+
+.bookData{
+	color: gray;
 }
 
 .booklist {
@@ -130,11 +140,8 @@ ul {
 	color: black;
 }
 
-.page-item.active .page-link {
-  z-index: 1;
-  color: #fff;
-  background-color: #000;
-  border-color: #000;
+.pagination li a{
+	text-decoration: none;
 }
 
 input[type=number]::-webkit-inner-spin-button,

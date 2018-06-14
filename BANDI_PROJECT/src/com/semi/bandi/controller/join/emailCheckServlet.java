@@ -21,11 +21,7 @@ public class emailCheckServlet extends HttpServlet {
 		
 		JoinService js = new JoinService();
 		
-		System.out.println(email);
-		
 		int emailcheck = js.emailCheck(email);
-		
-		System.out.println(emailcheck);
 		
 		response.getWriter().print(emailcheck);
 	}

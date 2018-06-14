@@ -33,50 +33,54 @@ public class PageCategoryServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
+    // When Make Button Page
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		CategoryService cService = new CategoryService();
 		String CategoryCode = request.getParameter("CategoryCode");
-		String orderBy = request.getParameter("category");
+		int page = Integer.parseInt(request.getParameter("pageCount"));
+		CategoryService cs = new CategoryService();
 		
-		int startPage;
-		int endPage;
-		int maxPage;
-		int currentPage;
-		int limit;
-		
+		int startPage; 
+		int endPage; 
+		int maxPage;  
+		int currentPage; 
+		int limit;       
+
 		currentPage = 1;
+
 		limit = 8;
-		
-	
-		if(request.getParameter("currentPage") != null){
-			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		// 받아온 페이지가 없으면???
+		if(request.getParameter("pageCount") == null){
+			currentPage
+			 = Integer.parseInt(request.getParameter("currentPage"));
+		}
+			
+			if(CategoryCode == null) return;
+			int listCount = cs.PagingCount(CategoryCode);
+			System.out.println("페이지수 : "+listCount);
+			
+			maxPage = (int)((double)listCount / limit + 0.875);
+			startPage
+			 = (((int)((double)currentPage / limit + 0.875)) - 1) * limit + 1;
+			
+			// 한 화면에 표시할 마지막 페이지 번호
+			endPage
+			 = startPage + limit - 1;
+			
+			if( maxPage < endPage){
+				endPage = maxPage;
+			}
+			
+			// 페이지 관련 변수 전달용 VO 생성
+			CategoryPaging cPaging
+			 = new CategoryPaging(currentPage, listCount, limit, startPage, endPage, maxPage);
+			
+			
+			
+			response.setContentType("application/json; charset=UTF-8");
+			new Gson().toJson(cPaging, response.getWriter());
 		}
 		
-		
-		int listCount = cService.PageCategoryCount(CategoryCode,orderBy,currentPage, limit);
-		System.out.println("총 게시글 수 : "+listCount);
-		
-		maxPage = (int)((double)listCount / limit + 0.875);
-		
-		startPage = (((int)((double)currentPage / limit + 0.875)) -1) * limit +1;
-		
-		endPage = startPage + limit - 1;
-		
-		if( maxPage < endPage) {
-			endPage = maxPage;
-		}
-		
-		CategoryPaging cPaging = new CategoryPaging(currentPage, listCount, limit, startPage, endPage, maxPage);
-		System.out.println("CP : "+cPaging);
-		
-		
 	
-		
-		
-		System.out.println("리스트 크기 : "+listCount);
-		
-	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

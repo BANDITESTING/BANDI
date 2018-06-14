@@ -24,8 +24,8 @@ public class jchangeMyInfoServlet extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		User user = (User) session.getAttribute("user");
 		
-		user.setmPhone(request.getParameter("tel1") + "-" + request.getParameter("tel2") + "-" + request.getParameter("tel3"));
-		user.setmAddress(request.getParameter("address1") + ", " + request.getParameter("address2") + ", " + request.getParameter("address3"));
+		user.setmPhone(request.getParameter("tel"));
+		user.setmAddress(request.getParameter("address1") + "| " + request.getParameter("address2") + "| " + request.getParameter("address3"));
 		
 		LoginService ls = new LoginService();
 		

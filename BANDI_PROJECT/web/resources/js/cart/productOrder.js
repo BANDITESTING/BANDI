@@ -4,6 +4,7 @@ $(function() {
 	var keyTotal = parseInt($('#priceTotal').text().replace(",", ""));
 	var bookList = "";
 	var quanList = "";
+	var pointPrice = 0;
 
 	$('.bookImg').each(function(index, item) {
 	
@@ -82,6 +83,7 @@ $(function() {
 				$('#priceTotal').text((chkTotal + 3000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 				$('#payTotal').text((chkTotal + 3000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 				keyTotal = chkTotal + 3000;
+				pointPrice = parseInt($('#orderTotal').text().replace(",", "")) + 3000;
 				
 			} else {
 				
@@ -105,6 +107,7 @@ $(function() {
 					keyTotal = chkTotal;
 				
 				}
+				pointPrice = parseInt($('#orderTotal').text().replace(",", ""));
 				
 			}
 			
@@ -116,6 +119,7 @@ $(function() {
 				$('#priceTotal').text((chkTotal + 3000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 				$('#payTotal').text((chkTotal + 3000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 				keyTotal = chkTotal + 3000;
+				pointPrice = pointPrice = parseInt($('#orderTotal').text().replace(",", "")) + 5500;
 				
 			} else {
 				
@@ -139,6 +143,7 @@ $(function() {
 					keyTotal = chkTotal;
 				
 				}
+				pointPrice = parseInt($('#orderTotal').text().replace(",", "")) + 2500;
 				
 			}
 			
@@ -183,8 +188,8 @@ $(function() {
 
 				$('#pointT').val(allPoint);
 				$('#discount').text(allPoint.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-				$('#priceTotal').text((keyTotal - allPoint).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-				$('#payTotal').text((keyTotal - allPoint).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+				$('#priceTotal').text((pointPrice - allPoint).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+				$('#payTotal').text((pointPrice - allPoint).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 				
 			}
 		} else {
@@ -203,17 +208,24 @@ $(function() {
 		
 		var point = parseInt($('#pointT').val());
 		
+		if (pointPrice == 0) {
+			pointPrice = pointPrice = parseInt($('#orderTotal').text().replace(",", ""));
+		}
+		console.log(pointPrice);
+		
 		if (point < allPoint) {		// 보유 포인트보다 큰 포인트를 사용하지 못하게 막는 부분
 
 			if ($('#pointT').val() != "") {
 
-				$('#priceTotal').text((keyTotal - point).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+				$('#priceTotal').text((pointPrice - point).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 				$('#discount').text(point.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+				$('#pointAll').prop("checked", false);
 				
 			} else {
 
 				$('#discount').text("0");
-				$('#priceTotal').text(keyTotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+				$('#priceTotal').text(pointPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+				$('#pointAll').prop("checked", false);
 				
 			}
 			
@@ -222,10 +234,12 @@ $(function() {
 			alert("보유 포인트보다 많이 사용할 수 없습니다.");
 			$('#pointT').val(allPoint);
 			$('#pointAll').prop("checked", true);
+			$('#discount').text("10,000");
+			$('#priceTotal').text((pointPrice - 10000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 			
 		}
 		
-		$('#payTotal').text($('#priceTotal').text().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+//		$('#payTotal').text($('#priceTotal').text().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 		
 	});
 	

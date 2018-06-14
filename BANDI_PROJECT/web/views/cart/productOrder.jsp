@@ -74,7 +74,7 @@
 			                            	<a href = "<%=request.getContextPath()%>/detail.show?ISBN=<%= cartList.get(i-1).getIsbn()%>" style="font-size:12pt;">
 			                            		<img id="bookImg<%= i %>" class="bookImg" src="<%=request.getContextPath()%>/resources/bookimage/<%= cartList.get(i-1).getImage() %>" alt="<%= cartList.get(i-1).getTitle() %>" style="margin-right:5%; margin-left:5%;">
 			                            		<% if (cartList.get(i-1).getTitle().length() > 17) {%>
-			                            			<%=cartList.get(i-1).getTitle().substring(0, 17) %>...
+			                            			<%=cartList.get(i-1).getTitle().substring(0, 18) %>...
 			                            		<% } else { %>
 			                            			<%=cartList.get(i-1).getTitle() %>
 			                            		<% } %>
@@ -170,7 +170,7 @@
 		                        </tr> 
 		                        <tr>
 		                            <th style="vertical-align:middle;">주소</th>
-		                            <td class="text-left" style="padding-left:3%;"><%= user.getmAddress() %></td> 
+		                            <td class="text-left" style="padding-left:3%;"><%= user.getmAddress().replace("|", " ") %></td> 
 		                        </tr>  
 		                        <tr>
 		                            <th style="vertical-align:middle;">택배기사 메세지</th>
@@ -259,7 +259,7 @@
 		            </div>
 		
 		            <!-- 04. 결제 정보 -->
-		            <div class="d-flex align-items-center" style="padding-top:5%;">
+		            <!-- <div class="d-flex align-items-center" style="padding-top:5%;">
 		                <b style="color:rgb(132, 141, 197); font-size: 20pt;">04</b>&nbsp;&nbsp;&nbsp;<b>결제 정보</b>
 		            </div>
 		            <div class="row" style="padding-top:2%;">
@@ -281,7 +281,7 @@
 		                        <td style="text-align:left;"><input type="radio" name="pay" id="other1"><label for="other1">&nbsp;&nbsp;휴대폰 결제</label></td>
 		                    </tr>
 		                </table>
-		            </div>
+		            </div> -->
 		
 		            <!-- 최종 결제 금액 표시 -->
 		            <div class="row text-right" style="padding-top:5%;">

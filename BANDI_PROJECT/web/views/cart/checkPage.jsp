@@ -7,6 +7,9 @@
 	DecimalFormat df = new DecimalFormat("###,###");
 	int bookTotal = 0;
 	int forCnt = 0;
+	System.out.println("1 : " + orderTable);
+	System.out.println("2 : " + orderDetail);
+	System.out.println("3 : " + orderCnt);
 %>
 <!DOCTYPE html>
 <html>
@@ -73,7 +76,7 @@
 		                <p><h5><b>- 배송 정보</b></h5></p>
 		            </div>
 		            
-		            <% if (orderDetail != null) {
+		            <% if (orderDetail != null || orderCnt!= null || orderTable != null) {
 		            	for (int i = 0 ; i < orderTable.size() ; i++) { %>
 		            
 			            <div class="deliveryContain" style="padding-top:2%;">

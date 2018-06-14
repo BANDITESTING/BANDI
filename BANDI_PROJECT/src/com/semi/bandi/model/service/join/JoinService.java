@@ -43,7 +43,15 @@ public class JoinService {
 		
 		int result = JoinDao.emailCheck(con, email);
 		
-		System.out.println(result);
+		close(con);
+		
+		return result;
+	}
+	public int moblieCheck(String phone) 
+	{
+		Connection con = getInstance();
+		
+		int result = JoinDao.moblieCheck(con, phone);
 		
 		close(con);
 		

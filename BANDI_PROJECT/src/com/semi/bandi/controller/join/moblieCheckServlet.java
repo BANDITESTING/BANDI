@@ -9,21 +9,21 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.semi.bandi.model.service.join.JoinService;
 
-@WebServlet("/emailcheck.me")
-public class emailCheckServlet extends HttpServlet {
+@WebServlet("/mCheck.do")
+public class moblieCheckServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    public emailCheckServlet() {}
+    public moblieCheckServlet() {}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		String email = request.getParameter("email");
+		String phone = request.getParameter("phone");
 		
 		JoinService js = new JoinService();
 		
-		int emailcheck = js.emailCheck(email);
+		int result = js.moblieCheck(phone);
 		
-		response.getWriter().print(emailcheck);
+		response.getWriter().print(result);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -46,7 +46,6 @@ public class JoinDao {
 			if(rset.next()){
 				join = new Join();
 				
-				
 				join.setEmail(j.getEmail());
 				join.setPwd(rset.getString("PASSWORD"));
 				join.setAddress(rset.getString("ADDRESS"));
@@ -74,7 +73,7 @@ public class JoinDao {
 		try {
 			String query = prop.getProperty("insertJoin");
 			pstmt = con.prepareStatement(query);
-			System.out.println(j);
+			
 			pstmt.setString(1, j.getEmail());
 			pstmt.setString(2, j.getPwd());
 			pstmt.setString(3, j.getName());
@@ -102,8 +101,6 @@ public class JoinDao {
 		
 		String query = "SELECT COUNT(*) FROM BANDI_USER WHERE E_MAIL=?";
 		
-		System.out.println(email);
-		
 		try {
 			pstmt = con.prepareStatement(query);
 			
@@ -115,7 +112,6 @@ public class JoinDao {
 			{
 				result = rset.getInt("COUNT(*)");
 				
-				System.out.println(result);
 			}
 			
 		} catch (SQLException e) {
@@ -125,7 +121,36 @@ public class JoinDao {
 			close(rset);
 			close(pstmt);
 		}
-		System.out.println(result);
+		
+		return result;
+	}
+
+	public static int moblieCheck(Connection con, String phone) 
+	{
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String query = "SELECT COUNT(*) FROM BANDI_USER WHERE PHONE = ?";
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, phone);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next())
+			{
+				result = rset.getInt("COUNT(*)");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
 		return result;
 	}
 }

@@ -40,19 +40,19 @@ public class SearchBookDao {
 		String dynamicSQL = "";
 		
 		if(option.equals("totalSearch")){
-			dynamicSQL = " WHERE REPLACE(TITLE, ' ') LIKE '%'|| '"+getText+"' ||'%'"
-					+ " OR REPLACE(WRITER_NAME, ' ') LIKE '%'|| '"+getText+"' ||'%'"
-					+ " OR REPLACE(PUBLISHER, ' ') LIKE '%'|| '"+getText+"' ||'%'";
+			dynamicSQL = " WHERE LOWER(REPLACE(TITLE, ' ')) LIKE '%'|| '"+getText+"' ||'%'"
+					+ " OR LOWER(REPLACE(WRITER_NAME, ' ')) LIKE '%'|| '"+getText+"' ||'%'"
+					+ " OR LOWER(REPLACE(PUBLISHER, ' ')) LIKE '%'|| '"+getText+"' ||'%'";
 		} else if(option.equals("bookSearch")){
-			dynamicSQL = " WHERE REPLACE(TITLE, ' ') LIKE '%'|| '"+getText+"' ||'%'";
+			dynamicSQL = " WHERE LOWER(REPLACE(TITLE, ' ')) LIKE '%'|| '"+getText+"' ||'%'";
 		} else if(option.equals("authorSearch")){
-			dynamicSQL = " WHERE REPLACE(WRITER_NAME, ' ') LIKE '%'|| '"+getText+"' ||'%'";
+			dynamicSQL = " WHERE LOWER(REPLACE(WRITER_NAME, ' ')) LIKE '%'|| '"+getText+"' ||'%'";
 		} else if(option.equals("publisherSearch")){
-			dynamicSQL = " WHERE REPLACE(PUBLISHER, ' ') LIKE '%'|| '"+getText+"' ||'%'";
+			dynamicSQL = " WHERE LOWER(REPLACE(PUBLISHER, ' ')) LIKE '%'|| '"+getText+"' ||'%'";
 		}
 		
 		String sql = prop.getProperty("searchBook1")+dynamicSQL+prop.getProperty("searchBook2");
-		
+
 		try {
 			pstmt = con.prepareStatement(sql);
 			
@@ -110,15 +110,15 @@ public class SearchBookDao {
 		String dynamicSQL = "";
 		
 		if(option.equals("totalSearch")){
-			dynamicSQL = " WHERE REPLACE(TITLE, ' ') LIKE '%'|| '"+getText+"' ||'%'"
-					+ " OR REPLACE(WRITER_NAME, ' ') LIKE '%'|| '"+getText+"' ||'%'"
-					+ " OR REPLACE(PUBLISHER, ' ') LIKE '%'|| '"+getText+"' ||'%')";
+			dynamicSQL = " WHERE LOWER(REPLACE(TITLE, ' ')) LIKE '%'|| '"+getText+"' ||'%'"
+					+ " OR LOWER(REPLACE(WRITER_NAME, ' ')) LIKE '%'|| '"+getText+"' ||'%'"
+					+ " OR LOWER(REPLACE(PUBLISHER, ' ')) LIKE '%'|| '"+getText+"' ||'%')";
 		} else if(option.equals("bookSearch")){
-			dynamicSQL = " WHERE REPLACE(TITLE, ' ') LIKE '%'|| '"+getText+"' ||'%')";
+			dynamicSQL = " WHERE LOWER(REPLACE(TITLE, ' ')) LIKE '%'|| '"+getText+"' ||'%')";
 		} else if(option.equals("authorSearch")){
-			dynamicSQL = " WHERE REPLACE(WRITER_NAME, ' ') LIKE '%'|| '"+getText+"' ||'%')";
+			dynamicSQL = " WHERE LOWER(REPLACE(WRITER_NAME, ' ')) LIKE '%'|| '"+getText+"' ||'%')";
 		} else if(option.equals("publisherSearch")){
-			dynamicSQL = " WHERE REPLACE(PUBLISHER, ' ') LIKE '%'|| '"+getText+"' ||'%')";
+			dynamicSQL = " WHERE LOWER(REPLACE(PUBLISHER, ' ')) LIKE '%'|| '"+getText+"' ||'%')";
 		}
 		
 		String sql = prop.getProperty("genreCount")+dynamicSQL+" group by genre_code";
@@ -153,18 +153,18 @@ public class SearchBookDao {
 
 		if(option.equals("totalSearch")){
 			dynamicSQL = " WHERE GENRE_CODE LIKE '"+genreCode+"'"
-					+ " AND(REPLACE(TITLE, ' ') LIKE '%'|| '"+getText+"' ||'%'"
-					+ " OR REPLACE(WRITER_NAME, ' ') LIKE '%'|| '"+getText+"' ||'%'"
-					+ " OR REPLACE(PUBLISHER, ' ') LIKE '%'|| '"+getText+"' ||'%')";
+					+ " AND (LOWER(REPLACE(TITLE, ' ')) LIKE '%'|| '"+getText+"' ||'%'"
+					+ " OR LOWER(REPLACE(WRITER_NAME, ' ')) LIKE '%'|| '"+getText+"' ||'%'"
+					+ " OR LOWER(REPLACE(PUBLISHER, ' ')) LIKE '%'|| '"+getText+"' ||'%')";
 		} else if(option.equals("bookSearch")){
 			dynamicSQL = " WHERE GENRE_CODE LIKE '"+genreCode+"'"
-					+ "AND(REPLACE(TITLE, ' ') LIKE '%'|| '"+getText+"' ||'%')";
+					+ "AND (LOWER(REPLACE(TITLE, ' ')) LIKE '%'|| '"+getText+"' ||'%')";
 		} else if(option.equals("authorSearch")){
 			dynamicSQL = " WHERE GENRE_CODE LIKE '"+genreCode+"'"
-					+ "AND(REPLACE(WRITER_NAME, ' ') LIKE '%'|| '"+getText+"' ||'%')";
+					+ "AND (LOWER(REPLACE(WRITER_NAME, ' ')) LIKE '%'|| '"+getText+"' ||'%')";
 		} else if(option.equals("publisherSearch")){
 			dynamicSQL = " WHERE GENRE_CODE LIKE '"+genreCode+"'"
-					+ "AND(REPLACE(PUBLISHER, ' ') LIKE '%'|| '"+getText+"' ||'%')";
+					+ "AND (LOWER(REPLACE(PUBLISHER, ' ')) LIKE '%'|| '"+getText+"' ||'%')";
 		}
 
 		String sql = prop.getProperty("searchBook1")+dynamicSQL+prop.getProperty("searchBook2");		
@@ -228,15 +228,15 @@ public class SearchBookDao {
 		String dynamicSQL = "";
 		
 		if(option.equals("totalSearch")){
-			dynamicSQL = " WHERE REPLACE(TITLE, ' ') LIKE '%'|| '"+getText+"' ||'%'"
-					+ " OR REPLACE(WRITER_NAME, ' ') LIKE '%'|| '"+getText+"' ||'%'"
-					+ " OR REPLACE(PUBLISHER, ' ') LIKE '%'|| '"+getText+"' ||'%')";
+			dynamicSQL = " WHERE LOWER(REPLACE(TITLE, ' ')) LIKE '%'|| '"+getText+"' ||'%'"
+					+ " OR LOWER(REPLACE(WRITER_NAME, ' ')) LIKE '%'|| '"+getText+"' ||'%'"
+					+ " OR LOWER(REPLACE(PUBLISHER, ' ')) LIKE '%'|| '"+getText+"' ||'%')";
 		} else if(option.equals("bookSearch")){
-			dynamicSQL = " WHERE REPLACE(TITLE, ' ') LIKE '%'|| '"+getText+"' ||'%')";
+			dynamicSQL = " WHERE LOWER(REPLACE(TITLE, ' ')) LIKE '%'|| '"+getText+"' ||'%')";
 		} else if(option.equals("authorSearch")){
-			dynamicSQL = " WHERE REPLACE(WRITER_NAME, ' ') LIKE '%'|| '"+getText+"' ||'%')";
+			dynamicSQL = " WHERE LOWER(REPLACE(WRITER_NAME, ' ')) LIKE '%'|| '"+getText+"' ||'%')";
 		} else if(option.equals("publisherSearch")){
-			dynamicSQL = " WHERE REPLACE(PUBLISHER, ' ') LIKE '%'|| '"+getText+"' ||'%')";
+			dynamicSQL = " WHERE LOWER(REPLACE(PUBLISHER, ' ')) LIKE '%'|| '"+getText+"' ||'%')";
 		}
 		
 		String sql = prop.getProperty("listCount")+dynamicSQL;	
@@ -271,22 +271,22 @@ public class SearchBookDao {
 		
 		if(option.equals("totalSearch")){
 			dynamicSQL = " WHERE GENRE_CODE LIKE '"+genreCode+"'"
-					+ " AND (REPLACE(TITLE, ' ') LIKE '%'|| '"+getText+"' ||'%'"
-					+ " OR REPLACE(WRITER_NAME, ' ') LIKE '%'|| '"+getText+"' ||'%'"
-					+ " OR REPLACE(PUBLISHER, ' ') LIKE '%'|| '"+getText+"' ||'%'))";
+					+ " AND (LOWER(REPLACE(TITLE, ' ')) LIKE '%'|| '"+getText+"' ||'%'"
+					+ " OR LOWER(REPLACE(WRITER_NAME, ' ')) LIKE '%'|| '"+getText+"' ||'%'"
+					+ " OR LOWER(REPLACE(PUBLISHER, ' ')) LIKE '%'|| '"+getText+"' ||'%'))";
 		} else if(option.equals("bookSearch")){
 			dynamicSQL = " WHERE GENRE_CODE LIKE '"+genreCode+"'"
-					+ "AND (REPLACE(TITLE, ' ') LIKE '%'|| '"+getText+"' ||'%'))";
+					+ "AND (LOWER(REPLACE(TITLE, ' ')) LIKE '%'|| '"+getText+"' ||'%'))";
 		} else if(option.equals("authorSearch")){
 			dynamicSQL = " WHERE GENRE_CODE LIKE '"+genreCode+"'"
-					+ "AND (REPLACE(WRITER_NAME, ' ') LIKE '%'|| '"+getText+"' ||'%'))";
+					+ "AND (LOWER REPLACE(WRITER_NAME, ' ')) LIKE '%'|| '"+getText+"' ||'%'))";
 		} else if(option.equals("publisherSearch")){
 			dynamicSQL = " WHERE GENRE_CODE LIKE '"+genreCode+"'"
-					+ "AND (REPLACE(PUBLISHER, ' ') LIKE '%'|| '"+getText+"' ||'%'))";
+					+ "AND (LOWER REPLACE(PUBLISHER, ' ')) LIKE '%'|| '"+getText+"' ||'%'))";
 		}
 		
 		String sql = prop.getProperty("listCount")+dynamicSQL;	
-		
+
 		try {
 			
 			stmt = con.createStatement();

@@ -74,7 +74,7 @@
 			                            	<a href = "<%=request.getContextPath()%>/detail.show?ISBN=<%= cartList.get(i-1).getIsbn()%>" style="font-size:12pt;">
 			                            		<img id="bookImg<%= i %>" class="bookImg" src="<%=request.getContextPath()%>/resources/bookimage/<%= cartList.get(i-1).getImage() %>" alt="<%= cartList.get(i-1).getTitle() %>" style="margin-right:5%; margin-left:5%;">
 			                            		<% if (cartList.get(i-1).getTitle().length() > 12) {%>
-			                            			<%=cartList.get(i-1).getTitle().substring(0, 13) %>...
+			                            			<%=cartList.get(i-1).getTitle().substring(0, 12) %>...
 			                            		<% } else { %>
 			                            			<%=cartList.get(i-1).getTitle() %>
 			                            		<% } %>

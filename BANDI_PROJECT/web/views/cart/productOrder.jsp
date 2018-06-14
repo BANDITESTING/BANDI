@@ -170,7 +170,7 @@
 		                        </tr> 
 		                        <tr>
 		                            <th style="vertical-align:middle;">주소</th>
-		                            <td class="text-left" style="padding-left:3%;"><%= user.getmAddress() %></td> 
+		                            <td class="text-left" style="padding-left:3%;"><%= user.getmAddress().replace("|", " ") %></td> 
 		                        </tr>  
 		                        <tr>
 		                            <th style="vertical-align:middle;">택배기사 메세지</th>

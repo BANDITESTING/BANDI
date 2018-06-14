@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
- <div class ="w3-container" style =" padding-top:30px; margin-top:100px; background: #5F4B8B">
+ <div class ="w3-container" style =" padding-top:30px; margin-top:100px; background: #9F86AA">
  	<img src ="/BANDI/resources/images/common/bandi.png" class ="w3-left" style ="padding-left: 20%;border-radius: 15px;">
  	<div style  ="display: block; padding-right: 20%;" class ="w3-right">
 	 	<h5 style ="color:snow;" class = >반디불이 책방  서울시 강남구 역삼동  대표이사: 김한결</h5>

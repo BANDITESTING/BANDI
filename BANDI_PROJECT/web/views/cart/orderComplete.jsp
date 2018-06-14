@@ -94,7 +94,7 @@
 		                    </tr>
 		                    <tr>
 		                        <th>주소</th>
-		                        <td class="text-left" style="padding-left:3%;"><%= orderDetail.getShipping() %></td>
+		                        <td class="text-left" style="padding-left:3%;"><%= orderDetail.getShipping().replace(",", " ") %></td>
 		                    </tr>
 		                    <tr>
 		                        <th>휴대폰 번호</th>

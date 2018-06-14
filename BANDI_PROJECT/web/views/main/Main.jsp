@@ -46,6 +46,21 @@
 <link rel="shortcut icon" href="<%=request.getContextPath()%>/resources/images/ico/bandicon.ico">
 
 <title>반딧불이 책방</title>
+<style>
+
+@media only screen and (min-width: 1651px) {
+	.bannerImage{
+		display:block;
+		border: 2px solid black;
+	}
+}
+
+@media only screen and (max-width: 1650px) {
+	.bannerImage{
+		display:none;	
+	}
+}
+</style>
 </head>
 <body>
 	 <header>
@@ -167,6 +182,10 @@
   	</div>
 	<!-- CATEGORY BUTTON END [BESTSELLER] -->
 	
+	<!-- Event Banner -->
+	<img src ="<%=request.getContextPath()%>/resources/images/eventBanner/flower.png"
+	style ="width:10em; height:30em; right:120px; position:absolute;" class ="bannerImage">
+	
 	<!--  Best Seller Book[VIEW] START -->
 	<div class="w3-content" style="max-width:1100px; margin-top:10px;margin-bottom:10px">
 		<div class="w3-row">
@@ -211,6 +230,9 @@
     	</div>
 	</div>
 	
+	<img src ="<%=request.getContextPath()%>/resources/images/eventBanner/bandibanner.jpg"
+	style ="width:10em; height:30em; right:120px; position:absolute;" class ="bannerImage">
+		
 	<div class="w3-content" style="max-width:1100px; margin-top:10px;margin-bottom:40px; text-align: center;">
 	    <div class ="w3-row">
 	      <div class ="w3-col l2 m4 s4" style ="padding:15px;">

@@ -78,6 +78,33 @@ public class LoginService {
 		
 		return result;
 	}
+
+	public User findId(User user) 
+	{
+		LoginDao lDao = new LoginDao();
+		Connection con = getInstance();
+		
+		User result = lDao.findId(user, con);
+		
+		close(con);
+		
+		return result;
+	}
+
+	public int findPwd(User user) 
+	{
+		Connection con = getInstance();
+		LoginDao lDao = new LoginDao();
+		
+		int result = lDao.findPwd(user, con);
+		
+		if(result > 0) commit(con);
+		else rollback(con);
+		
+		close(con);
+
+		return result;
+	}
 }
 
 

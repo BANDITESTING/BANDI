@@ -14,7 +14,7 @@ import com.semi.bandi.model.vo.User;
 public class LoginDao {
 
 	public User loginMember(Connection con, User user) {
-		// TODO Auto-generated method stub
+		
 		if(con==null) return null;
 		
 		PreparedStatement pstmt = null;
@@ -148,6 +148,63 @@ public class LoginDao {
 			
 		} catch (SQLException e) {
 			
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public User findId(User user, Connection con) 
+	{
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		User result = null;
+		
+		String query = "SELECT * FROM BANDI_USER WHERE NAME = ? AND BIRTHDAY = ? AND PHONE = ?";
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, user.getmName());
+			pstmt.setString(2, user.getmIdentified());
+			pstmt.setString(3, user.getmPhone());
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()){
+				result = new User();
+				result.setmEmail(rset.getString("E_MAIL"));
+			}
+			
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int findPwd(User user, Connection con) 
+	{
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "UPDATE BANDI_USER SET PASSWORD = ? WHERE NAME IN (SELECT NAME FROM BANDI_USER WHERE E_MAIL = ? AND NAME = ?)";
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, user.getmPassword());
+			pstmt.setString(2, user.getmEmail());
+			pstmt.setString(3, user.getmName());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close(pstmt);

@@ -42,6 +42,8 @@
 				<li class="active"><a href="jmypage.jsp">My Page</a></li>
 				<li class="active"><a href="jchange_Pwd.jsp">비밀번호 변경</a></li>
             	<li class="active"><a href="jdeleteUser.jsp">회원 탈퇴</a></li>
+            	<li class="active"><a href="<%= request.getContextPath()%>/cart.ct">장바구니</a></li>
+                <li class="active"><a href="<%= request.getContextPath()%>/check.ct">주문 상세보기</a></li>
             </ul>
         </div>
         <div role="main" class="col-xs-10 col-xs-offset-2 col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2 col-lg-10 col-lg-offset-2">
@@ -55,13 +57,13 @@
                 		<tr>
                 			<td class="col-sm-2">이메일</td>
                 			<td class="col-sm-8 form-group">
-                   	  		  	<input type="text" style="width:200px; height:23px" id="mEmail" value="<%=user.getmEmail()%>"/>
+                   	  		  	<input type="text" style="width:350px; height:23px" id="mEmail" value="<%=user.getmEmail()%>"/>
                 			</td>
                 		</tr>
                 		<tr>
                     		<td class="col-sm-2">비밀번호</td>
                      	    <td class="col-sm-8 form-group">
-                   	  		  	<input type="password" style="width:200px; height:23px" id="mPassword">
+                   	  		  	<input type="password" style="width:350px; height:23px" id="mPassword">
                         	</td>
                     	</tr>
                 	</table>
@@ -75,23 +77,27 @@
                     <tr>
                         <td class="col-sm-2">새 비밀번호</td>
                         <td class="col-sm-8 form-group">   
-                        	<input type="password" style="width:200px; height:23px" id="newPwd1" name="mPassword">
+                        	<input type="password" style="width:350px; height:23px" id="newPwd1" name="mPassword">
                         	<input type="hidden" name="userId" value="<%=user.getmEmail()%>">
                         </td>
                     </tr>
                     <tr>
                         <td class="col-sm-2">새 비밀번호 확인</td>
                         <td class="col-sm-8 form-group">
-                        	<input type="password" style="width:200px; height:23px" id="newPwd2" name="newPwd2">
+                        	<input type="password" style="width:350px; height:23px" id="newPwd2" name="newPwd2">
                         </td>
                     </tr>
                 </table>
+                <br /><br />
                 <div class="border:1px solid black">
+                	<p><strong>비밀번호 사용이 불가한 경우는 아래와 같습니다.</strong></p>
                 	<ol>
-                    	<li>그거안돼</li>
-                        <li>이거안돼</li>
-                        <li>그것도안돼</li>
+                    	<li>지금 사용하시는 비밀번호와 동일한 경우</li>
+                        <li>8자리 미만의 비밀번호일 경우</li>
+                        <li>15자리 초과의 비밀번호일 경우</li>
+                        <li>아이디와 같은 비밀번호의 경우</li>
                     </ol>
+                    <p>가장 최적의 비밀번호 조합은 13~15자리의 영문+숫자+특수문자를 조합하였을 때이며, 비밀번호 안전도가 가장 높습니다.</p>
                 </div>
            		<div class="col-sm-11 text-center">
            	    	<button class="btn btn-lg btn-primary" type="submit" id="modiPwd">수정</button>
@@ -121,9 +127,12 @@
 					event.preventDefault();
 				});
 				
+				var reg_pwd = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,15}$/;
+				
 				$("#modiPwd").on('click', function(event){
 					if($("#newPwd1").val() == "" || $("#newPwd2").val() == "") alert("비밀번호를 입력해주세요.");
-					else if($("#newPwd1").val() != $("#newPwd2").val()) alert("비밀번호가 다릅니다.");
+					else if(!reg_pwd.test($('#newPwd1').val())) alert("비밀번호는 영문자, 숫자, 특수문자(!@#$%^&*)를 포함한 8~15글자입니다.");
+					else if($("#newPwd1").val() != $("#newPwd2").val()) alert("동일한 비밀번호를 입력해주세요.");
 					else return;
 					
 					event.preventDefault();

@@ -66,7 +66,7 @@
           <div class="form-group">
           	<label for="userAge">생년월일</label>
           	<div>
-          	<input id="userBirth" name="userBirth" type="text" class="form-control" />
+          		<input id="userBirth" name="userBirth" type="text" class="form-control" placeholder="클릭해주세요." readonly/>
           	</div>
           </div>
           <div class="form-group">
@@ -74,7 +74,7 @@
             <div class="input-group">
             <input type="text" class="form-control" id="addr1" name="addr1">
               <span class="input-group-btn">
-              <button class="btn btn-success" type="button" onclick="daumPostcode();">우편번호<i class="fa fa-mail-forward spaceLeft"></i></button>
+              	<button class="btn btn-success" type="button" onclick="daumPostcode();">우편번호<i class="fa fa-mail-forward spaceLeft"></i></button>
               </span>
             </div>
           </div>
@@ -87,8 +87,14 @@
           </div>
           <div>
             <label for="phone">휴대폰 번호</label>
-              <input type="tel" class="form-control" id="phone" name="phone" placeholder="-없이 입력해 주세요">
+          	<div class="input-group">
+            <input type="tel" class="form-control" id="phone" name="phone" placeholder="-없이 입력해 주세요">
+            	<span class="input-group-btn">
+              		<button class="btn btn-success" type="button" id="mCheckbtn">중복체크<i class="fa fa-mail-forward spaceLeft"></i></button>
+              	</span>
+          	</div>
           </div>
+          	<br />
             <div class="form-group">
                 <label>약관 동의</label>
               <div class="input-group">
@@ -98,6 +104,7 @@
               <a href="#">이용약관</a>에 동의합니다.
               </div>
             </div>
+            <br /><br />
             <div class="form-group text-center">
              <button type="button" class="btn btn-info" id="signUp">회원가입<i class="fa fa-check spaceLeft"></i></button>
               <button type="button" class="btn btn-warning" id="goMain" >메인으로<i class="fa fa-times spaceLeft"></i></button>
@@ -109,7 +116,7 @@
       <script>
      	 $(function() {
     	  $("#userBirth").datepicker({
-    		  changeMonth: true, changeYear: true, dateFormat: "yy-mm-dd", showButtonPanel: true, yearRange: "c-99:c+99", maxDate: "+0d"
+    		  changeMonth: true, changeYear: true, dateFormat: "yy-mm-dd", showButtonPanel: true, yearRange: "c-120:c+120", maxDate: "+0d"
     	  });
     	});
      	 
@@ -119,11 +126,18 @@
     	
   		// 인증번호 값 받아옴
       	var result;
+    	
+    	// 이메일 정규식
+    	var reg_email = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+    	
       	//이메일 인증번호 넘기기
       	$('#emailOk').on('click', function(){
       		if($('#email').val() == ""){
       			alert("이메일을 입력해주세요.");
+      		} else if(!reg_email.test($('#email').val())){
+    			alert("이메일을 제대로 입력해주세요.");
       		} else {
+      				// 이메일 중복 체크
       	        	$.ajax({
       	        		url : '/BANDI/emailcheck.me',
       	        		type : 'post',
@@ -204,12 +218,33 @@
                 }
             }).open();
         }
+        
+        // 핸드폰 정규식
+        var reg_phone = /^(01[016789]{1})\d{3,4}\d{4}$/;
 		
+        // 핸드폰 중복체크
+        $('#mCheckbtn').on('click', function(event){
+        	var phone = $('#phone').val();
+        	if(!reg_phone.test(phone)){
+        		alert("핸드폰 번호를 정확하게 입력해주세요.");
+        	} else {
+	        	$.ajax({
+	        		url: '/BANDI/mCheck.do',
+	        		type: 'post',
+	        		data: {phone : $('#phone').val()},
+	        		success: function(data){
+	        			if(data == '1') alert("이미 가입된 회원 전화번호 입니다.");
+	        			else alert("가입이 가능한 전화번호 입니다.");
+	        		}
+	        	});
+        	}
+        });
         
         //메인으로 버튼
         $('#goMain').on('click', function(){
         	location.href = '<%=request.getContextPath()%>/main/Main.jsp';
-        })
+        });
+        
         
         
         //회원가입에 쓸 정규식 
@@ -241,27 +276,23 @@
         	 var pwd = $('#userPwd').val();
         	 var pwd2 = $('#userPwd2').val();
              var name = $('#userName').val();
-             var phone = $('#phone').val();
-             var birthArr = $('#userBirth').val().split('-');
-             var birth = birthArr[0]+birthArr[1]+birthArr[2];			 
+             var birth = $('#userBirth').val().split('-');
+             /* var birth = birthArr[0]+birthArr[1]+birthArr[2];			 
 			 var birthMin = 19000101;
-			 var birthMax = 20180101;
+			 var birthMax = 20180101; */
              if( !reg_pwd.test(pwd) ){
                  alert("비밀번호는 영문자, 숫자, 특수문자(!@#$%^&*)를 포함한 8~15글자입니다");
              }else if(pwd != pwd2){
              	 alert("동일한 비밀번호를 입력해주세요")
              }else if(!reg_name.test(name)){
             	 alert("이름은 한글 2~10글자까지 입력해주세요");	
-             }else if(!reg_phone.test(phone)){
+             }/*else if(!reg_phone.test(phone)){
                  alert("올바른 휴대폰 번호를 입력해주세요");
-             }else if(birth < birthMin && birthMax < birth){
+             } else if(birth < birthMin && birthMax < birth){
             	 alert("올바른 생년월일을 입력해주세요");
-             }else return;
+             } */else return;
              event.preventDefault();
-        });
-		
-        
-            
+        });  
       </script>
   </body>
 </html>

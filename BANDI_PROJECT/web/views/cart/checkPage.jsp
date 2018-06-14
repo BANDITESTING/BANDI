@@ -62,9 +62,9 @@
 		                    <tr>
 		                        <th>휴대폰 번호</th>
 		                        <td class="text-left" style="padding-left:3%;"><%= user.getmPhone() %></td>
-		                        <th>주소</th>
-		                        <td class="text-left" style="padding-left:3%;"><%= user.getmAddress().replace("|", " ")%></td>
-	                        </tr>
+		                        <th>이메일</th>
+		                        <td class="text-left" style="padding-left:3%;"><%= user.getmAddress() %></td>
+		                    </tr>
 		                </table>
 		            </div>
 		
@@ -79,7 +79,7 @@
 			            <div class="deliveryContain" style="padding-top:2%;">
 				            <div class="row" style="background:rgb(247, 247, 247); vertical-align: middle;">
 				                <div class="col-md-6" style="margin-top:1%; margin-bottom:1%;  vertical-align: middle;">
-				                    <p><%= orderTable.get(i).getShipping().replace(",", " ") %></p>
+				                    <p><%= orderTable.get(i).getShipping() %></p>
 				                </div>
 				                <div class="col-md-6 text-right" style="margin-top:1%; margin-bottom:1%; vertical-align: middle;"> 
 				                	<input type="button" class="btn6 allCancleBtn" value="주문 전체 취소">&nbsp;&nbsp;&nbsp;
@@ -113,8 +113,8 @@
 				                            <td class="text-left tdBook" style="vertical-align:middle;">
 				                            	<a href = "<%=request.getContextPath()%>/detail.show?ISBN=<%= orderDetail.get(j).getIsbn()%>" style="font-size:12pt;">
 				                            		<img class="bookImg" src="<%=request.getContextPath()%>/resources/bookimage/<%= orderDetail.get(j).getImage() %>" alt="<%= orderDetail.get(j).getTitle() %>" style="margin-right:5%; margin-left:5%;">
-				                            		<% if (orderDetail.get(j).getTitle().length() > 9) {%>
-				                            			<%=orderDetail.get(j).getTitle().substring(0, 8) %>...
+				                            		<% if (orderDetail.get(j).getTitle().length() > 10) {%>
+				                            			<%=orderDetail.get(j).getTitle().substring(0, 10) %>...
 				                            		<% } else { %>
 				                            			<%=orderDetail.get(j).getTitle() %>
 				                            		<% } %>
@@ -145,7 +145,7 @@
 				                    </tr>
 				                    <tr>
 				                        <th class="orderTh">주소</th>
-				                        <td class="text-left" style="padding-left:3%;"><%= orderTable.get(i).getShipping().replace(",", " ") %></td>
+				                        <td class="text-left" style="padding-left:3%;"><%= orderTable.get(i).getShipping() %></td>
 				                    </tr>
 				                    <tr>
 				                        <th class="orderTh">휴대폰 번호</th>

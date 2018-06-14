@@ -3,7 +3,7 @@
 <%@ page import="com.semi.bandi.model.vo.*, java.util.*, java.text.*" %>
 <%
 	ArrayList<Cart> cartList = (ArrayList<Cart>)request.getAttribute("cartList");
-	DecimalFormat df = new DecimalFormat("###,###");
+	DecimalFormat df = new DecimalFormat("###,###,###,###,###");
 	int bookTotal = 0;
 	double pointRate = (Double)request.getAttribute("pointRate");
 %>
@@ -74,7 +74,7 @@
 			                            	<a href = "<%=request.getContextPath()%>/detail.show?ISBN=<%= cartList.get(i-1).getIsbn()%>" style="font-size:12pt;">
 			                            		<img id="bookImg<%= i %>" class="bookImg" src="<%=request.getContextPath()%>/resources/bookimage/<%= cartList.get(i-1).getImage() %>" alt="<%= cartList.get(i-1).getTitle() %>" style="margin-right:5%; margin-left:5%;">
 			                            		<% if (cartList.get(i-1).getTitle().length() > 12) {%>
-			                            			<%=cartList.get(i-1).getTitle().substring(0, 11) %>...
+			                            			<%=cartList.get(i-1).getTitle().substring(0, 12) %>...
 			                            		<% } else { %>
 			                            			<%=cartList.get(i-1).getTitle() %>
 			                            		<% } %>
@@ -125,24 +125,24 @@
 		                            <td id="total"><%= df.format(bookTotal) %> 원</td>
 		                            <td id="delivery">
 		                            	<% if (bookTotal > 30000 || cartList == null) { %>
-		                            		0 원
+		                            		0 
 		                            	<% } else {%>
-		                            		2,500 원
-		                            	<% } %>
+		                            		2,500
+		                            	<% } %> 원
 		                            </td>
 		                            <td id="orderPrice">
 		                            	<% if (bookTotal > 30000 || cartList == null) { %>
-		                            		<%= df.format(bookTotal) %> 원
+		                            		<%= df.format(bookTotal) %>
 		                            	<% } else { %>
-		                            		<%= df.format((bookTotal + 2500)) %> 원
-		                            	<% } %>                       
+		                            		<%= df.format((bookTotal + 2500)) %>
+		                            	<% } %>       원                 
 		                            </td>
 		                            <td id="point">
 		                            	<% if (bookTotal > 30000 || cartList == null) { %>
-		                            		<%= df.format(bookTotal * pointRate) %> P
+		                            		<%= df.format(bookTotal * pointRate) %>
 		                            	<% } else { %>
-		                            		<%= df.format((bookTotal + 2500) * pointRate) %> P
-		                            	<% } %> 
+		                            		<%= df.format((bookTotal + 2500) * pointRate) %>
+		                            	<% } %>  P
 		                           	</td>
 		                        </tr>
 		                    </tbody>

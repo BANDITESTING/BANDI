@@ -62,9 +62,9 @@
 		                    <tr>
 		                        <th>휴대폰 번호</th>
 		                        <td class="text-left" style="padding-left:3%;"><%= user.getmPhone() %></td>
-		                        <th>이메일</th>
-		                        <td class="text-left" style="padding-left:3%;"><%= user.getmAddress() %></td>
-		                    </tr>
+		                        <th>주소</th>
+		                        <td class="text-left" style="padding-left:3%;"><%= user.getmAddress().replace("|", " ")%></td>
+	                        </tr>
 		                </table>
 		            </div>
 		

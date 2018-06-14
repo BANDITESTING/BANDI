@@ -11,12 +11,7 @@ $(function() {
 		quanList += $(this).parent().parent().siblings().find('.bookQuan').text() + ",";
 		
 	});
-	
-	// 결제 관련 [START]
-	var IMP = window.IMP; // 생략가능
-	IMP.init('imp16979355'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
-	// 결제 관련 [END]
-	
+		
 	// 장바구니로 돌아가는 기능
 	$('#returnBtn').on('click', function() {
 		
@@ -236,15 +231,21 @@ $(function() {
 	
 	// 결제 완료 기능 (order table에 담을 데이터 전달 기능)
 	$('#payBtn').on('click', function() {
+		var IMP = window.IMP; // 생략가능
+		IMP.init('imp16979355'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
 		// 주문 결제 기능
 		IMP.request_pay({
-		    merchant_uid : 'merchant_' + new Date().getTime(),
+			pg : 'inicis', // version 1.1.0부터 지원.
+	        pay_method : 'card',
+			merchant_uid : 'merchant_' + new Date().getTime(),
 		    name : '반디책방',
 		    amount : $('#payTotal').text().replace(",", ""),
+//		    amount : 200,
 		    buyer_email : email,
 		    buyer_name : name,
 		    buyer_tel : tel,
-		    buyer_addr : address
+		    buyer_addr : address,
+	        buyer_postcode : '123-456'
 		}, function(rsp) {
 		    if ( rsp.success ) {
 		        var msg = '결제가 완료되었습니다.';

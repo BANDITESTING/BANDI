@@ -79,7 +79,7 @@
 			            <div class="deliveryContain" style="padding-top:2%;">
 				            <div class="row" style="background:rgb(247, 247, 247); vertical-align: middle;">
 				                <div class="col-md-6" style="margin-top:1%; margin-bottom:1%;  vertical-align: middle;">
-				                    <p><%= orderTable.get(i).getShipping() %></p>
+				                    <p><%= orderTable.get(i).getShipping().replace(",", " ") %></p>
 				                </div>
 				                <div class="col-md-6 text-right" style="margin-top:1%; margin-bottom:1%; vertical-align: middle;"> 
 				                	<input type="button" class="btn6 allCancleBtn" value="주문 전체 취소">&nbsp;&nbsp;&nbsp;
@@ -145,7 +145,7 @@
 				                    </tr>
 				                    <tr>
 				                        <th class="orderTh">주소</th>
-				                        <td class="text-left" style="padding-left:3%;"><%= orderTable.get(i).getShipping() %></td>
+				                        <td class="text-left" style="padding-left:3%;"><%= orderTable.get(i).getShipping().replace(",", " ") %></td>
 				                    </tr>
 				                    <tr>
 				                        <th class="orderTh">휴대폰 번호</th>

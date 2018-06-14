@@ -73,7 +73,7 @@
 			                            <td class="text-left tdBook" style="vertical-align:middle;">
 			                            	<a href = "<%=request.getContextPath()%>/detail.show?ISBN=<%= cartList.get(i-1).getIsbn()%>" style="font-size:12pt;">
 			                            		<img id="bookImg<%= i %>" class="bookImg" src="<%=request.getContextPath()%>/resources/bookimage/<%= cartList.get(i-1).getImage() %>" alt="<%= cartList.get(i-1).getTitle() %>" style="margin-right:5%; margin-left:5%;">
-			                            		<% if (cartList.get(i-1).getTitle().length() > 10) {%>
+			                            		<% if (cartList.get(i-1).getTitle().length() > 17) {%>
 			                            			<%=cartList.get(i-1).getTitle().substring(0, 18) %>...
 			                            		<% } else { %>
 			                            			<%=cartList.get(i-1).getTitle() %>

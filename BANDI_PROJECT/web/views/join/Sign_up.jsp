@@ -58,7 +58,7 @@
           </div>
           <div class="form-group">
               <label for="userGender">성별</label>
-                <div class="input-group">
+                <div class="input-group" id="gendergroup">
                  	<input type="radio" id="man" name="gender" value="M">남성 &nbsp;
 					<input type="radio" id="woman" name="gender" value="F">여성 &nbsp;
                 </div>
@@ -276,8 +276,7 @@
         	 var pwd = $('#userPwd').val();
         	 var pwd2 = $('#userPwd2').val();
              var name = $('#userName').val();
-             var birth = $('#userBirth').val().split('-');
-             /* var birth = birthArr[0]+birthArr[1]+birthArr[2];			 
+             /* var birth = $('#userBirth').val().split('-');			 
 			 var birthMin = 19000101;
 			 var birthMax = 20180101; */
              if( !reg_pwd.test(pwd) ){
@@ -286,11 +285,17 @@
              	 alert("동일한 비밀번호를 입력해주세요")
              }else if(!reg_name.test(name)){
             	 alert("이름은 한글 2~10글자까지 입력해주세요");	
-             }/*else if(!reg_phone.test(phone)){
-                 alert("올바른 휴대폰 번호를 입력해주세요");
-             } else if(birth < birthMin && birthMax < birth){
-            	 alert("올바른 생년월일을 입력해주세요");
-             } */else return;
+             }else if($("#man").val() == "" || $("#woman").val() == ""){
+                 alert("성별을 입력해주세요.");
+             }else if($("#userBirth").val() == ""){
+                 alert("생년월일을 입력해주세요.");
+             }else if($("#addr1").val() == "" || $("#addr2").val() == ""){
+                 alert("주소를 입력해주세요.");
+             }else if($("#phone").val() == ""){
+				 alert("전화번호를 입력해주세요.");
+             } else if($("#addr3").val() == ""){
+            	 $("#addr3").val(" ");
+             } return;
              event.preventDefault();
         });  
       </script>

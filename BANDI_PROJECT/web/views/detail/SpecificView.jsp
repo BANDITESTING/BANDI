@@ -78,7 +78,6 @@
     <link href="https://fonts.googleapis.com/css?family=Black+And+White+Picture|Black+Han+Sans|Dokdo|Gugi|Hi+Melody|Gamja+Flower|Jua|Poor Story|" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/css/detail/component.css" />
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/css/detail/demo.css" />
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/css/detail/nomarlize.css" />
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src ="<%=request.getContextPath()%>/resources/js/detail/owl.carousel.js"></script>  

@@ -112,6 +112,7 @@ public class DetailViewServlet extends HttpServlet {
 			
 			//페이징 처리한 댓글 상세 내용 보기 (페이징 처리한 댓글)
 			ArrayList<Review> pagingReview = new ReviewService().pagingReview(isbn, currentPage, limit);
+			System.out.println("페이징리뷰사이즈"+pagingReview.size());
 			
 			//top4 이미지 가져오기
 			ArrayList<Top4> top4 = new ReviewService().top4();

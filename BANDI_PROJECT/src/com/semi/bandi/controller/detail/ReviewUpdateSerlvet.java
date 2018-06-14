@@ -30,21 +30,21 @@ public class ReviewUpdateSerlvet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("업테이트 서블릿");
+		
 		//isbn값 
 		String isbn = request.getParameter("ISBN");
 		
 		//bookUid	
 		int bookUid = Integer.parseInt(request.getParameter("bookUid"));
-		System.out.println(bookUid);
+		
 		
 		//userUid
 		int userUid = Integer.parseInt(request.getParameter("userUid"));
-		System.out.println(userUid);
+		
 		
 		//userName
 		String userName = request.getParameter("userName");
-		System.out.println(userName);
+		
 		
 		//리뷰 평점, 제목, 내용 	
 		int rate = Integer.parseInt(request.getParameter("rate"));

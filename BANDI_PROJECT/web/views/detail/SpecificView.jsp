@@ -634,8 +634,8 @@
     
   //리뷰 수정 모달용 별점기능
     $('.starRating2 a').on('click', function(){ 	
-    	$('.starRating2').children('a').removeClass('star');
-    	$(this).addClass('star2').prevAll('a').addClass('star');
+    	$('.starRating2').children('a').removeClass('star2');
+    	$(this).addClass('star2').prevAll('a').addClass('star2');
     
     });
  	

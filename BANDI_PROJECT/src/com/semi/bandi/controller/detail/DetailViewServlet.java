@@ -54,7 +54,7 @@ public class DetailViewServlet extends HttpServlet {
 		currentPage = 1;
 		
 		// 한 페이지에 보여질 게시글 수
-		limit = 10;
+		limit = 5;
 		
 		
 		// 만약에 전달받는 페이지가 있을 경우

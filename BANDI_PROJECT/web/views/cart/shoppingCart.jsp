@@ -165,6 +165,16 @@
         	var bookTotal ="<%=bookTotal%>";
         	var user_uid = "<%= user.getmUser_UID() %>";
         	var point = "<%=pointRate%>";
+        	
+        	$(".quan").on('keyup keypress blur change', function(e) {
+
+            	if($(this).val() > 100){
+            		$(this).val('100');
+              		return false;
+            	}
+
+          	});
+        	
         </script>
         
         <footer>

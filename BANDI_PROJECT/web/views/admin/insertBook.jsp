@@ -174,6 +174,43 @@
 	</div>
 	
 	<script>
+		$("#quant").on('keyup keypress blur change', function(e) {
+
+        	if($(this).val() > 999){
+          		$(this).val('999');
+          		return false;
+        	}
+
+      	});
+		
+		$("#month").on('keyup keypress blur change', function(e) {
+
+        	if($(this).val() > 12){
+          		$(this).val('12');
+          		return false;
+        	}
+
+      	});
+		
+		$("#day").on('keyup keypress blur change', function(e) {
+
+        	if($(this).val() > 31){
+          		$(this).val('31');
+          		return false;
+        	}
+
+      	});
+		
+		$("#year").on('keyup keypress blur change', function(e) {
+
+        	if($(this).val() > 999){
+          		
+          		return false;
+        	}
+
+      	});
+	
+	
 		ISBN_CHECK = false;
 		IMG_CHECK = false;
 	

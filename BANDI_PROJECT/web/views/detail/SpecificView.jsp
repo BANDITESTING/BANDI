@@ -116,7 +116,7 @@
 	              		<%= noUser %>
 	              	<% } %>
                 </span><br><br>
-                <input id="quantity" style="font-family:'Jua'; font-size: 20px;" type="number" max="100" min="1" value="1" step="1"><br><br>
+                <input id="quantity" style="font-family:'Jua'; font-size: 20px;" type="number" max="100" min="1" value="1" step="1"> <br><br>
                 <i class="fa fa-plane" style="font-size:20px"></i><span style="font-family:'Jua'; font-size: 20px;">해외배송 가능</span><br>
                 <button id="basket" class="btn btn-info" style="font-family:'Jua'; font-size: 20px;" onclick="bascketGo()">
                 	장바구니
@@ -518,6 +518,11 @@
     nav:true,
     navText:["<span id='left' class='fa fa-chevron-left'>Previous / </span>",   "<span id='right'>&nbsp;Next<span> <span id='right' class='fa fa-chevron-right'></span>"]
     });
+    
+    function quantRestrict(event)
+    {
+    	console.log(event);
+    }
  	
    
 	//책소개 열기 접기
@@ -766,6 +771,15 @@
 			}
     	});
     }
+    
+    $("#quantity").on('keyup keypress blur change', function(e) {
+
+        if($(this).val() > 100){
+          $(this).val('100');
+          return false;
+        }
+
+      });
     
    
   	//장바구니

@@ -54,14 +54,14 @@ $(function() {
 					
 				}
 			});
+			location.href="/BANDI/order.ct?bookUID=" + bookUIDList + "&quan=" + cartQUANTITY;
 			
 		} else {
 			
-			alert("주문할 도서를 선택해주세요.");
+			alert("주문할 도서가 없습니다.");
 			
 		}
 
-		location.href="/BANDI/order.ct?bookUID=" + bookUIDList + "&quan=" + cartQUANTITY;
 	});
 	
 	// '전체상품 주문하기' 버튼 기능구현
@@ -75,7 +75,11 @@ $(function() {
 				
 		});
 				
-		location.href="/BANDI/order.ct?bookUID=" + bookUIDList + "&quan=" + cartQUANTITY;
+		if (bookUIDList.length != 0) {
+			location.href="/BANDI/order.ct?bookUID=" + bookUIDList + "&quan=" + cartQUANTITY;
+		} else {
+			alert("주문할 도서가 없습니다.");
+		}
 	});
 	
 	// 전체 선택 체크 박스 선택 시

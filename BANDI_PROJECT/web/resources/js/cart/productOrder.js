@@ -178,12 +178,19 @@ $(function() {
 		if ($(this).prop("checked") == true) {
 			
 			if ($('#pointT').val() == "") {
-
-				$('#pointT').val(allPoint);
-				$('#discount').text(allPoint.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-				$('#priceTotal').text((chkTotal - allPoint).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-				$('#payTotal').text((chkTotal - allPoint).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 				
+				if (allPoint < parseInt($('#priceTotal').text().replace(",", ""))) {
+					$('#pointT').val(allPoint);
+					$('#discount').text(allPoint.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+					$('#priceTotal').text((chkTotal - allPoint).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+					$('#payTotal').text((chkTotal - allPoint).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+				} else {
+					alert("결제금액보다 많은 포인트를 사용할 수 없습니다.");
+					$('#pointT').val($('#priceTotal').text());
+					$('#discount').text($('#priceTotal').text());
+					$('#priceTotal').text(0);
+					$('#payTotal').text(0);
+				}
 			} else {
 
 				$('#pointT').val(allPoint);
@@ -194,10 +201,11 @@ $(function() {
 			}
 		} else {
 			
-			$('#pointT').val("");
+			console.log($('#pointT').val());
 			$('#discount').text("0");
-			$('#priceTotal').text((chkTotal + allPoint).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-			$('#payTotal').text((chkTotal + allPoint).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+			$('#priceTotal').text((chkTotal + parseInt($('#pointT').val().replace(",", ""))).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+			$('#payTotal').text((chkTotal + parseInt($('#pointT').val().replace(",", ""))).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+			$('#pointT').val("");
 			
 		}
 		
@@ -209,7 +217,7 @@ $(function() {
 		var point = parseInt($('#pointT').val());
 		
 		if (pointPrice == 0) {
-			pointPrice = pointPrice = parseInt($('#orderTotal').text().replace(",", ""));
+			pointPrice = parseInt($('#orderTotal').text().replace(",", ""));
 		}
 		console.log(pointPrice);
 		
@@ -235,12 +243,14 @@ $(function() {
 				alert("보유 포인트보다 많이 사용할 수 없습니다.");
 				$('#pointT').val(allPoint);
 				$('#pointAll').prop("checked", true);
-				$('#discount').text("10,000");
-				$('#priceTotal').text((pointPrice - 10000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+				$('#discount').text(allPoint);
+				$('#priceTotal').text((pointPrice - allPoint).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 			} else {	
 				alert("1포인트 이상 사용해주세요.");
 				$('#discount').text("1");
 				$('#pointT').val(1);
+				$('#pointAll').prop("checked", false);
+				$('#priceTotal').text((pointPrice - 1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 			}
 		}
 		
